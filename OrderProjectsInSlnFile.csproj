@@ -81,6 +81,7 @@
     <Reference Include="System" />
     <Reference Include="System.Design" />
     <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Community.VisualStudio.VSCT" Version="16.0.29.6" PrivateAssets="all" />

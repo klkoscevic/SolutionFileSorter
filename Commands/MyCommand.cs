@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Windows.Forms;
 
 namespace OrderProjectsInSlnFile
 {
@@ -26,7 +27,7 @@ namespace OrderProjectsInSlnFile
 
             if (string.IsNullOrEmpty(solutionFilePath) || !File.Exists(solutionFilePath))
             {
-                Debug.WriteLine($"Solution file '{solutionFilePath}' does not exist.");
+                System.Windows.Forms.MessageBox.Show($"Solution file '{solutionFilePath}' does not exist.", "File does not exist", MessageBoxButtons.OK, MessageBoxIcon.Information)
                 return;
             }
 
@@ -34,6 +35,7 @@ namespace OrderProjectsInSlnFile
             {
                 List<ProjectLine> projectLines = new List<ProjectLine>();
                 List<int> lineNumber = new List<int>();
+
                 string[] linesInFile = File.ReadAllLines(solutionFilePath);
                 string patternProject = @"^Project\(""\{[A-Z0-9-]+\}""\) = ""([^""]+)"",.+(}"")$";
 
@@ -70,10 +72,11 @@ namespace OrderProjectsInSlnFile
                 }
 
                 File.WriteAllLines(solutionFilePath, linesInFile);
+                System.Windows.Forms.MessageBox.Show("Your projects in the .sln file are sorted alphabetically.", "Sorting is done!", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"An error occurred: {ex.Message}");
+                System.Windows.Forms.MessageBox.Show(ex.Message, "An error occurred", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
