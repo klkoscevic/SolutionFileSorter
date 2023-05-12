@@ -24,7 +24,7 @@ namespace OrderProjectsInSlnFile
         {
             string solutionFilePath = GetSolutionPath();
 
-            if (solutionFilePath == "" || !File.Exists(solutionFilePath))
+            if (string.IsNullOrEmpty(solutionFilePath) || !File.Exists(solutionFilePath))
             {
                 Debug.WriteLine($"Solution file '{solutionFilePath}' does not exist.");
                 return;
@@ -36,16 +36,9 @@ namespace OrderProjectsInSlnFile
                 List<int> lineNumber = new List<int>();
                 string[] linesInFile = File.ReadAllLines(solutionFilePath);
                 string patternProject = @"^Project\(""\{[A-Z0-9-]+\}""\) = ""([^""]+)"",.+(}"")$";
-                string patternGlobal = @"^Global";
 
                 for (int i = 0; i < linesInFile.Length; i++)
                 {
-                    var matchesGlobal = Regex.Matches(linesInFile[i], patternGlobal);
-                    if (matchesGlobal.Count > 0)
-                    {
-                        break;
-                    }
-
                     var matchesProject = Regex.Matches(linesInFile[i], patternProject);
                     if (matchesProject.Count > 0)
                     {
