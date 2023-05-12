@@ -16,6 +16,7 @@ namespace OrderProjectsInSlnFile
             public string Line { get; set; }
             public string Name { get; set; }
         }
+
         protected override async Task ExecuteAsync(OleMenuCmdEventArgs e)
         {
             OrderProjects();
@@ -27,7 +28,8 @@ namespace OrderProjectsInSlnFile
 
             if (string.IsNullOrEmpty(solutionFilePath) || !File.Exists(solutionFilePath))
             {
-                System.Windows.Forms.MessageBox.Show($"Solution file '{solutionFilePath}' does not exist.", "File does not exist", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                System.Windows.Forms.MessageBox.Show($"Solution file '{solutionFilePath}' does not exist.", "File does not exist", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                
                 return;
             }
 
@@ -37,11 +39,13 @@ namespace OrderProjectsInSlnFile
                 List<int> lineNumber = new List<int>();
 
                 string[] linesInFile = File.ReadAllLines(solutionFilePath);
+
                 string patternProject = @"^Project\(""\{[A-Z0-9-]+\}""\) = ""([^""]+)"",.+(}"")$";
 
                 for (int i = 0; i < linesInFile.Length; i++)
                 {
                     var matchesProject = Regex.Matches(linesInFile[i], patternProject);
+
                     if (matchesProject.Count > 0)
                     {
                         lineNumber.Add(i);
@@ -49,6 +53,7 @@ namespace OrderProjectsInSlnFile
                         {
                             string line = match.Value;
                             string projectName = match.Groups[1].Value;
+
                             projectLines.Add(new ProjectLine { Line = line, Name = projectName });
                         }
                     }
@@ -61,6 +66,7 @@ namespace OrderProjectsInSlnFile
                     if (i == lineNumber[0])
                     {
                         linesInFile[i] = projectLines[0].Line;
+
                         projectLines.RemoveAt(0);
                         lineNumber.RemoveAt(0);
 
@@ -72,6 +78,7 @@ namespace OrderProjectsInSlnFile
                 }
 
                 File.WriteAllLines(solutionFilePath, linesInFile);
+                
                 System.Windows.Forms.MessageBox.Show("Your projects in the .sln file are sorted alphabetically.", "Sorting is done!", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
