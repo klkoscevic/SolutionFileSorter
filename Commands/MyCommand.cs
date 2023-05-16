@@ -5,17 +5,13 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
+using OrderProjectsInSlnFile.Classes;
 
 namespace OrderProjectsInSlnFile
 {
     [Command(PackageIds.MyCommand)]
     internal sealed class MyCommand : BaseCommand<MyCommand>
     {
-        class ProjectLine
-        {
-            public string Line { get; set; }
-            public string Name { get; set; }
-        }
 
         protected override async Task ExecuteAsync(OleMenuCmdEventArgs e)
         {
@@ -29,14 +25,13 @@ namespace OrderProjectsInSlnFile
             if (string.IsNullOrEmpty(solutionFilePath) || !File.Exists(solutionFilePath))
             {
                 System.Windows.Forms.MessageBox.Show($"Solution file '{solutionFilePath}' does not exist.", "File does not exist", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                
+
                 return;
             }
 
             try
             {
-                List<ProjectLine> projectLines = new List<ProjectLine>();
-                List<int> lineNumber = new List<int>();
+                ProjectLines projectLines = new ProjectLines();
 
                 string[] linesInFile = File.ReadAllLines(solutionFilePath);
 
@@ -48,37 +43,41 @@ namespace OrderProjectsInSlnFile
 
                     if (matchesProject.Count > 0)
                     {
-                        lineNumber.Add(i);
+
                         foreach (Match match in matchesProject)
                         {
                             string line = match.Value;
                             string projectName = match.Groups[1].Value;
 
-                            projectLines.Add(new ProjectLine { Line = line, Name = projectName });
+                            ProjectLine projectLine = new ProjectLine { Line = line, Name = projectName };
+
+                            projectLines.Enqueue(i, projectLine);
                         }
                     }
                 }
 
-                projectLines = projectLines.OrderBy(p => p.Name).ToList();
+                projectLines.Sort();
 
-                for (int i = 0; i < linesInFile.Length; i++)
+                Tuple<int, string> projectLinesDequeue = projectLines.Dequeue();
+                int nums = 0;
+                while (projectLinesDequeue != null)
                 {
-                    if (i == lineNumber[0])
+                    for (int i = nums; i < linesInFile.Length; i++)
                     {
-                        linesInFile[i] = projectLines[0].Line;
-
-                        projectLines.RemoveAt(0);
-                        lineNumber.RemoveAt(0);
-
-                        if (lineNumber.Count == 0)
+                        if (i == projectLinesDequeue.Item1)
                         {
+                            linesInFile[i] = projectLinesDequeue.Item2;
+                            nums++;
                             break;
                         }
+                        nums ++;
                     }
+
+                     projectLinesDequeue = projectLines.Dequeue();
                 }
 
                 File.WriteAllLines(solutionFilePath, linesInFile);
-                
+
                 System.Windows.Forms.MessageBox.Show("Your projects in the .sln file are sorted alphabetically.", "Sorting is done!", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
