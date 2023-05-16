@@ -10,5 +10,6 @@ namespace OrderProjectsInSlnFile.Classes
     {
         public string Line { get; set; }
         public string Name { get; set; }
+        public string GUID { get; set; }
     }
 }

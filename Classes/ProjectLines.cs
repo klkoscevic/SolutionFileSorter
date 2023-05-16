@@ -7,11 +7,6 @@ using System.Threading.Tasks;
 
 namespace OrderProjectsInSlnFile.Classes
 {
-    class ProjectLine
-    {
-        public string Line { get; set; }
-        public string Name { get; set; }
-    }
     class ProjectLines
     {
         private readonly List<ProjectLine> projectLines = new List<ProjectLine>();
@@ -38,6 +33,28 @@ namespace OrderProjectsInSlnFile.Classes
             string line = projectLines[0].Line;
             projectLines.RemoveAt(0);
             return Tuple.Create(lineNumbers.Dequeue(), line);
+        }
+
+        public void AddProjectName(ProjectLines projectLinesName)
+        {
+            List<ProjectLine> projectLineNames = projectLinesName.GetProjectLines();
+
+            foreach (ProjectLine projectLine in projectLines)
+            {
+                foreach (ProjectLine projectLineName in projectLineNames)
+                {
+                    if(projectLine.GUID == projectLineName.GUID)
+                    {
+                        projectLine.Name = projectLineName.Name;
+                        break;
+                    }
+                }
+            }
+        }
+
+        private List<ProjectLine> GetProjectLines()
+        {
+            return projectLines;
         }
     }
 }
