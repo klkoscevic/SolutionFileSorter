@@ -3,7 +3,7 @@
     <Metadata>
         <Identity Id="OrderProjectsInSlnFile.174ef47e-feac-4a26-9e71-7566c9439c82" Version="1.0" Language="en-US" Publisher="Company" />
         <DisplayName>OrderProjectsInSlnFile</DisplayName>
-        <Description xml:space="preserve">Clicking the button will arrange the projects in the .sln file alphabetically.Clicking the button will arrange the projects in the .sln file alphabetically.</Description>
+        <Description xml:space="preserve">Clicking the button will arrange the projects in the .sln file alphabetically.</Description>
         <Icon>Resources\Icon.png</Icon>
         <PreviewImage>Resources\Icon.png</PreviewImage>
     </Metadata>

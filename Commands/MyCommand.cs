@@ -7,6 +7,9 @@ using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using OrderProjectsInSlnFile.Classes;
 using EnvDTE80;
+using Microsoft.VisualStudio.PlatformUI;
+using OrderProjectsInSlnFile.Forms;
+using System.Threading.Tasks;
 
 namespace OrderProjectsInSlnFile
 {
@@ -16,11 +19,15 @@ namespace OrderProjectsInSlnFile
 
         protected override async Task ExecuteAsync(OleMenuCmdEventArgs e)
         {
-            OrderProjects();
+
+            var options = await General.GetLiveInstanceAsync();
+
+            OrderProjects(options);
         }
 
-        public void OrderProjects()
+        public void OrderProjects(General options)
         {
+
             string solutionFilePath = GetSolutionPath();
 
             if (string.IsNullOrEmpty(solutionFilePath) || !File.Exists(solutionFilePath))
@@ -82,7 +89,15 @@ namespace OrderProjectsInSlnFile
 
                 File.WriteAllLines(solutionFilePath, linesInFile);
 
-                System.Windows.Forms.MessageBox.Show("Your projects in the .sln file are sorted alphabetically.", "Sorting is done!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                if (!options.DoNotShowMesssageAnymore)
+                {
+                    MyMessageDialog dialogForm = new MyMessageDialog();
+                    DialogResult result = dialogForm.ShowDialog();
+                    if (result == DialogResult.OK)
+                    {
+                        options.DoNotShowMesssageAnymore = dialogForm.DoNotShowMesssageAnymoreChecked;
+                    }
+                }
             }
             catch (Exception ex)
             {
@@ -130,5 +145,5 @@ namespace OrderProjectsInSlnFile
 
             return solutionPath;
         }
-    }
+    } 
 }
