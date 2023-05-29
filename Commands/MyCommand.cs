@@ -42,12 +42,22 @@ namespace OrderProjectsInSlnFile
                 ProjectLines projectLines = new ProjectLines();
                 ProjectLines guidLines = new ProjectLines();
 
-                string[] linesInFile = File.ReadAllLines(solutionFilePath);
+                var linesInFile = new List<string>();
+                System.Text.Encoding encoding;
+                using (var reader = new StreamReader(solutionFilePath))
+                {
+                    string line = null;
+                    while ((line = reader.ReadLine()) != null)
+                    {
+                        linesInFile.Add(line);
+                    }
+                    encoding = reader.CurrentEncoding;
+                }
 
                 string patternProject = @"^Project\(""\{[A-Z0-9-]+\}""\) = ""([^""]+)"",.+\{([A-Z0-9-]+)\}""$";
                 string patternGuid = @"^\s+\{([A-Z0-9-]+).+";
 
-                for (int i = 0; i < linesInFile.Length; i++)
+                for (int i = 0; i < linesInFile.Count(); i++)
                 {
                     var matchesProject = Regex.Matches(linesInFile[i], patternProject);
                     var matchesGuid = Regex.Matches(linesInFile[i], patternGuid);
@@ -87,7 +97,14 @@ namespace OrderProjectsInSlnFile
                 linesInFile = ChangeLines(projectLines, linesInFile);
                 linesInFile = ChangeLines(guidLines, linesInFile);
 
-                File.WriteAllLines(solutionFilePath, linesInFile);
+                using (var writer = new StreamWriter(solutionFilePath, false, encoding))
+                {
+                    foreach (var line in linesInFile)
+                    {
+                        writer.WriteLine(line);
+                    }
+                    writer.Flush();
+                }
 
                 if (!options.DoNotShowMesssageAnymore)
                 {
@@ -104,13 +121,13 @@ namespace OrderProjectsInSlnFile
                 System.Windows.Forms.MessageBox.Show(ex.Message, "An error occurred", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
-        private string[] ChangeLines(ProjectLines projectLines, string[] linesInFile)
+        private List<string> ChangeLines(ProjectLines projectLines, List<string> linesInFile)
         {
             Tuple<int, string> projectLinesDequeue = projectLines.Dequeue();
             int nums = 0;
             while (projectLinesDequeue != null)
             {
-                for (int i = nums; i < linesInFile.Length; i++)
+                for (int i = nums; i < linesInFile.Count; i++)
                 {
                     nums++;
 
@@ -145,5 +162,5 @@ namespace OrderProjectsInSlnFile
 
             return solutionPath;
         }
-    } 
+    }
 }
