@@ -10,16 +10,16 @@ using EnvDTE80;
 using Microsoft.VisualStudio.PlatformUI;
 using OrderProjectsInSlnFile.Forms;
 using System.Threading.Tasks;
+using Microsoft.VisualStudio.Shell;
+using Microsoft.VisualStudio.Shell.Interop;
 
 namespace OrderProjectsInSlnFile
 {
     [Command(PackageIds.MyCommand)]
     internal sealed class MyCommand : BaseCommand<MyCommand>
     {
-
         protected override async Task ExecuteAsync(OleMenuCmdEventArgs e)
         {
-
             var options = await General.GetLiveInstanceAsync();
 
             OrderProjects(options);
@@ -27,8 +27,7 @@ namespace OrderProjectsInSlnFile
 
         public void OrderProjects(General options)
         {
-
-            string solutionFilePath = GetSolutionPath();
+            var solutionFilePath = ((OrderProjectsInSlnFilePackage)Package).SolutionFilename;
 
             if (string.IsNullOrEmpty(solutionFilePath) || !File.Exists(solutionFilePath))
             {
