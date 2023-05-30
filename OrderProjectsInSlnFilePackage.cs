@@ -23,10 +23,10 @@ namespace OrderProjectsInSlnFile
             await JoinableTaskFactory.SwitchToMainThreadAsync(cancellationToken);
             await this.RegisterCommandsAsync();
 
-            Dte = (DTE)await GetServiceAsync(typeof(DTE)).ConfigureAwait(false);
-            solutionFilename = Dte.Solution.FileName;
+            dte = (DTE)await GetServiceAsync(typeof(DTE)).ConfigureAwait(false);
+            solutionFilename = dte.Solution.FileName;
 
-            var solutionEvents = Dte.Events.SolutionEvents;
+            var solutionEvents = dte.Events.SolutionEvents;
             solutionEvents.Opened += SolutionEvents_Opened;
             solutionEvents.AfterClosing += SolutionEvents_AfterClosing;
         }
@@ -34,19 +34,18 @@ namespace OrderProjectsInSlnFile
         private void SolutionEvents_Opened()
         {
             ThreadHelper.ThrowIfNotOnUIThread();
-            solutionFilename = Dte.Solution.FileName;
+            solutionFilename = dte.Solution.FileName;
+            dte.Solution.IsDirty = false;
         }
 
         private void SolutionEvents_AfterClosing()
         {
-            // TODO: order projects here if not ordered already.
+            // TODO: order projects here if not ordered already and corresponding option (e.g. "Sort automatically on exit") is set.
 
             solutionFilename = string.Empty;
         }
 
-        private DTE Dte;
+        private DTE dte;
         private string solutionFilename;
-
-        public string SolutionFilename => solutionFilename;
     }
 }

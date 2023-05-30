@@ -22,12 +22,16 @@ namespace OrderProjectsInSlnFile
         {
             var options = await General.GetLiveInstanceAsync();
 
-            OrderProjects(options);
+            await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
+            DTE dte = await Package.GetServiceAsync(typeof(DTE)) as DTE;
+
+            OrderProjects(options, dte.Solution);
         }
 
-        public void OrderProjects(General options)
+        public void OrderProjects(General options, EnvDTE.Solution solution)
         {
-            var solutionFilePath = ((OrderProjectsInSlnFilePackage)Package).SolutionFilename;
+            ThreadHelper.ThrowIfNotOnUIThread();
+            var solutionFilePath = solution.FileName;
 
             if (string.IsNullOrEmpty(solutionFilePath) || !File.Exists(solutionFilePath))
             {
@@ -104,6 +108,8 @@ namespace OrderProjectsInSlnFile
                     }
                     writer.Flush();
                 }
+                // Reset IsDirty flag to avoid another "Save .sln file" message box.
+                solution.IsDirty = false;
 
                 if (!options.DoNotShowMesssageAnymore)
                 {
