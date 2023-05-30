@@ -47,6 +47,7 @@
   <ItemGroup>
     <Compile Include="Classes\ProjectLine.cs" />
     <Compile Include="Classes\ProjectLines.cs" />
+    <Compile Include="Commands\SolutionFile.cs" />
     <Compile Include="Forms\MyMessageDialog.cs">
       <SubType>Form</SubType>
     </Compile>
