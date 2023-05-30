@@ -142,9 +142,12 @@ namespace OrderProjectsInSlnFile
                     DialogResult result = dialogForm.ShowDialog();
                     if (result == DialogResult.OK)
                     {
-                        options.DoNotShowMesssageAnymore = dialogForm.DoNotShowMesssageAnymoreChecked;
+                        if (options.DoNotShowMesssageAnymore != dialogForm.DoNotShowMesssageAnymoreChecked) {
+                            options.DoNotShowMesssageAnymore = dialogForm.DoNotShowMesssageAnymoreChecked;
+                            options.Save();
+                        }
+                        }
                     }
-                }
             }
             catch (Exception ex)
             {

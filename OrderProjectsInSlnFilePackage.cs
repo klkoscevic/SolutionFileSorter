@@ -58,6 +58,7 @@ namespace OrderProjectsInSlnFile
 
         private void SolutionEvents_BeforeClosing()
         {
+            ThreadHelper.ThrowIfNotOnUIThread();
             wasDirtyBeforeSave = dte.Solution.IsDirty;
         }
 
