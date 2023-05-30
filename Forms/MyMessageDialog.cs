@@ -15,13 +15,27 @@ namespace OrderProjectsInSlnFile.Forms
         public MyMessageDialog()
         {
             InitializeComponent();
+            pictureBox.Paint += PictureBox_Paint;
         }
+
+        public MyMessageDialog(string solutionFilename) : this()
+        {
+            labelCaption.Text = string.Format(caption, solutionFilename);
+        }
+
+        const string caption = "Projects in '{0}' file are now sorted alphabetically.";
+
+        private void PictureBox_Paint(object sender, PaintEventArgs e)
+        {
+            e.Graphics.DrawIcon(SystemIcons.Information, 0, 0);
+        }
+
         public bool DoNotShowMesssageAnymoreChecked
         {
             get { return DoNotShowMesssageAnymore.Checked; }
         }
 
-        private void btnOk_click(object sender, EventArgs e)
+        private void BtnOk_click(object sender, EventArgs e)
         {
             DialogResult = DialogResult.OK;
             Close();
