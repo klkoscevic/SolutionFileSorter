@@ -26,7 +26,7 @@ namespace OrderProjectsInSlnFile
 
         public void OrderProjects(General options)
         {
-            string solutionFilePath = GetSolutionPath();
+            var solutionFilePath = ((OrderProjectsInSlnFilePackage)Package).SolutionFilename;
 
             if (string.IsNullOrEmpty(solutionFilePath) || !File.Exists(solutionFilePath))
             {
@@ -141,24 +141,5 @@ namespace OrderProjectsInSlnFile
 
             return linesInFile;
         }
-        private string GetSolutionPath()
-        {
-            string currentDirectory = Environment.CurrentDirectory;
-            string solutionPath = null;
-
-            while (currentDirectory != null)
-            {
-                string[] solutionFiles = System.IO.Directory.GetFiles(currentDirectory, "*.sln");
-                if (solutionFiles.Length > 0)
-                {
-                    solutionPath = solutionFiles[0];
-                    break;
-                }
-
-                currentDirectory = System.IO.Directory.GetParent(currentDirectory)?.FullName;
-            }
-
-            return solutionPath;
-        }
-    }
+    } 
 }
