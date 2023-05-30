@@ -20,8 +20,10 @@
         <Parent guid="OrderProjectsInSlnFile" id="MyMenuGroup" />
         <Icon guid="ImageCatalogGuid" id="SortAscending" />
         <CommandFlag>IconIsMoniker</CommandFlag>
+        <CommandFlag>DynamicVisibility</CommandFlag>
+        <CommandFlag>DefaultDisabled</CommandFlag>
         <Strings>
-          <ButtonText>Sort projects in .sln file</ButtonText>
+          <ButtonText>&amp;Sort projects in .sln file</ButtonText>
           <LocCanonicalName>.OrderProjectsInSlnFile.MyCommand</LocCanonicalName>
         </Strings>
       </Button>
