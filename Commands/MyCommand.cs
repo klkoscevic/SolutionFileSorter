@@ -28,6 +28,20 @@ namespace OrderProjectsInSlnFile
             OrderProjects(options, dte.Solution);
         }
 
+        // Called every time menu with command is opened. Updates Enabled/Disabled state depending if a solution is opened or not.
+        protected override void BeforeQueryStatus(EventArgs e)
+        {
+            base.BeforeQueryStatus(e);
+            _ = UpdateCommandStateAsync();
+        }
+
+        private async Task UpdateCommandStateAsync()
+        {
+            await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
+            DTE dte = await Package.GetServiceAsync(typeof(DTE)) as DTE;
+            Command.Enabled = !string.IsNullOrEmpty(dte.Solution.FileName);
+        }
+
         public void OrderProjects(General options, EnvDTE.Solution solution)
         {
             ThreadHelper.ThrowIfNotOnUIThread();
