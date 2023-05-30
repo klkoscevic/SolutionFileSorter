@@ -13,10 +13,16 @@ namespace OrderProjectsInSlnFile
 
     public class General : BaseOptionModel<General>
     {
-        [Category("Message box")]
+        [Category("General")]
         [DisplayName("Do not show message box")]
         [Description("Determines whether the message box about sorting the .sln file will be displayed.")]
         [DefaultValue(false)]
         public bool DoNotShowMesssageAnymore { get; set; }
+
+        [Category("General")]
+        [DisplayName("Sort projects after closing solution")]
+        [Description("Determines whether the sorting the .sln file will be done after closing solution.")]
+        [DefaultValue(false)]
+        public bool SortProjectsAfterClosingSolution { get; set; }
     }
 }

@@ -10,18 +10,36 @@ using EnvDTE80;
 using Microsoft.VisualStudio.PlatformUI;
 using OrderProjectsInSlnFile.Forms;
 using System.Threading.Tasks;
+using Community.VisualStudio.Toolkit;
 
 namespace OrderProjectsInSlnFile
 {
     [Command(PackageIds.MyCommand)]
     internal sealed class MyCommand : BaseCommand<MyCommand>
     {
+        public async Task ExecutePublicAsync(OleMenuCmdEventArgs e)
+        {
+            await ExecuteAsync(e);
+        }
 
         protected override async Task ExecuteAsync(OleMenuCmdEventArgs e)
         {
             var options = await General.GetLiveInstanceAsync();
 
+            await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
+            DTE dte = null;
+
+            try { 
+                dte = await Package.GetServiceAsync(typeof(DTE)) as DTE;
+            }
+            catch { }
+
             OrderProjects(options);
+
+            if (dte != null)
+            {
+                dte.Solution.IsDirty = false;
+            }
         }
 
         public void OrderProjects(General options)

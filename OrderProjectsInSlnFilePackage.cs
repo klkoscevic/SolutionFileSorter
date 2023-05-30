@@ -5,6 +5,7 @@ global using Task = System.Threading.Tasks.Task;
 using EnvDTE;
 using Microsoft.VisualStudio.Shell.Interop;
 using System.Diagnostics;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Threading;
 
@@ -24,30 +25,47 @@ namespace OrderProjectsInSlnFile
             await JoinableTaskFactory.SwitchToMainThreadAsync(cancellationToken);
             await this.RegisterCommandsAsync();
 
-            Dte = (DTE)await GetServiceAsync(typeof(DTE)).ConfigureAwait(false);
+            dte = (DTE)await GetServiceAsync(typeof(DTE)).ConfigureAwait(false);
+            options = await General.GetLiveInstanceAsync();
 
-            solutionFilename = Dte.Solution.FileName;
+            solutionFilename = dte.Solution.FileName;
 
-            var solutionEvents = Dte.Events.SolutionEvents;
+            var solutionEvents = dte.Events.SolutionEvents;
             solutionEvents.Opened += SolutionEvents_Opened;
+            solutionEvents.BeforeClosing += SolutionEvents_BeforeClosing;
             solutionEvents.AfterClosing += SolutionEvents_AfterClosing;
+
         }
 
         private void SolutionEvents_Opened()
         {
             ThreadHelper.ThrowIfNotOnUIThread();
-            solutionFilename = Dte.Solution.FileName;
+            solutionFilename = dte.Solution.FileName;
+
+            dte.Solution.IsDirty = false;
+            wasDirtyBeforeSave = false;
         }
 
-        private void SolutionEvents_AfterClosing()
+        private async void SolutionEvents_AfterClosing()
         {
-            // TODO: order projects here if not ordered already.
+            if (wasDirtyBeforeSave && options.SortProjectsAfterClosingSolution)
+            {
+                var myCommand = new MyCommand();
+                await myCommand.ExecutePublicAsync(new OleMenuCmdEventArgs(null, IntPtr.Zero));
+            }
 
             solutionFilename = string.Empty;
         }
 
-        private DTE Dte;
+        private void SolutionEvents_BeforeClosing()
+        {
+            wasDirtyBeforeSave = dte.Solution.IsDirty;
+        }
+
+        private DTE dte;
+        private General options;
         private string solutionFilename;
+        private bool wasDirtyBeforeSave;
 
         public string SolutionFilename => solutionFilename;
     }
