@@ -34,7 +34,6 @@ namespace OrderProjectsInSlnFile
             solutionEvents.Opened += SolutionEvents_Opened;
             solutionEvents.BeforeClosing += SolutionEvents_BeforeClosing;
             solutionEvents.AfterClosing += SolutionEvents_AfterClosing;
-
         }
 
         private void SolutionEvents_Opened()
