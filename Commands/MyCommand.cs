@@ -127,7 +127,7 @@ namespace OrderProjectsInSlnFile
 
                 if (!options.DoNotShowMesssageAnymore)
                 {
-                    MyMessageDialog dialogForm = new MyMessageDialog();
+                    MyMessageDialog dialogForm = new MyMessageDialog(Path.GetFileName(solutionFilePath));
                     DialogResult result = dialogForm.ShowDialog();
                     if (result == DialogResult.OK)
                     {
