@@ -17,11 +17,6 @@ namespace OrderProjectsInSlnFile
     [Command(PackageIds.MyCommand)]
     internal sealed class MyCommand : BaseCommand<MyCommand>
     {
-        public async Task ExecutePublicAsync(OleMenuCmdEventArgs e)
-        {
-            await ExecuteAsync(e);
-        }
-
         protected override async Task ExecuteAsync(OleMenuCmdEventArgs e)
         {
             var options = await General.GetLiveInstanceAsync();
