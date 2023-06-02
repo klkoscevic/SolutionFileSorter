@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrderProjectsInSlnFile", "O
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "UnitTests\UnitTests.csproj", "{3FED2DC7-98B7-4519-8D94-CA34CB5C3279}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleOrderProjectsInSlnFile", "ConsoleOrderProjectsInSlnFile\ConsoleOrderProjectsInSlnFile.csproj", "{623CC6FC-C3A5-4E4B-A920-17E19F801572}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,6 +43,18 @@ Global
 		{3FED2DC7-98B7-4519-8D94-CA34CB5C3279}.Release|arm64.Build.0 = Release|Any CPU
 		{3FED2DC7-98B7-4519-8D94-CA34CB5C3279}.Release|x86.ActiveCfg = Release|Any CPU
 		{3FED2DC7-98B7-4519-8D94-CA34CB5C3279}.Release|x86.Build.0 = Release|Any CPU
+		{623CC6FC-C3A5-4E4B-A920-17E19F801572}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{623CC6FC-C3A5-4E4B-A920-17E19F801572}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{623CC6FC-C3A5-4E4B-A920-17E19F801572}.Debug|arm64.ActiveCfg = Debug|Any CPU
+		{623CC6FC-C3A5-4E4B-A920-17E19F801572}.Debug|arm64.Build.0 = Debug|Any CPU
+		{623CC6FC-C3A5-4E4B-A920-17E19F801572}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{623CC6FC-C3A5-4E4B-A920-17E19F801572}.Debug|x86.Build.0 = Debug|Any CPU
+		{623CC6FC-C3A5-4E4B-A920-17E19F801572}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{623CC6FC-C3A5-4E4B-A920-17E19F801572}.Release|Any CPU.Build.0 = Release|Any CPU
+		{623CC6FC-C3A5-4E4B-A920-17E19F801572}.Release|arm64.ActiveCfg = Release|Any CPU
+		{623CC6FC-C3A5-4E4B-A920-17E19F801572}.Release|arm64.Build.0 = Release|Any CPU
+		{623CC6FC-C3A5-4E4B-A920-17E19F801572}.Release|x86.ActiveCfg = Release|Any CPU
+		{623CC6FC-C3A5-4E4B-A920-17E19F801572}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
