@@ -45,12 +45,12 @@ namespace OrderProjectsInSlnFile
             wasDirtyBeforeSave = false;
         }
 
-        private async void SolutionEvents_AfterClosing()
+        private void SolutionEvents_AfterClosing()
         {
             if (wasDirtyBeforeSave && options.SortProjectsAfterClosingSolution)
             {
                 var myCommand = new MyCommand();
-                await myCommand.ExecutePublicAsync(new OleMenuCmdEventArgs(null, IntPtr.Zero));
+                myCommand.OrderProjects(options, solutionFilename);
             }
 
             solutionFilename = string.Empty;
@@ -66,6 +66,8 @@ namespace OrderProjectsInSlnFile
         private General options;
         private string solutionFilename;
         private bool wasDirtyBeforeSave;
+        private OrderProjectsInSlnFilePackage orderProjectsPackage;
+
 
         public string SolutionFilename => solutionFilename;
     }

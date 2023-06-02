@@ -27,20 +27,18 @@ namespace OrderProjectsInSlnFile
             var options = await General.GetLiveInstanceAsync();
 
             await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
-            DTE dte = null;
 
-            try
+            DTE dte = await Package.GetServiceAsync(typeof(DTE)) as DTE;
+
+            if (System.Windows.MessageBox.Show("Are you sure you want to sort projects in current solution file?",
+                                              "Sorting .sln file",
+                                              System.Windows.MessageBoxButton.YesNo,
+                                              System.Windows.MessageBoxImage.Question) == System.Windows.MessageBoxResult.Yes)
             {
-                dte = await Package.GetServiceAsync(typeof(DTE)) as DTE;
+                OrderProjects(options);
             }
-            catch { }
 
-            OrderProjects(options);
-
-            if (dte != null)
-            {
-                dte.Solution.IsDirty = false;
-            }
+            dte.Solution.IsDirty = false;
         }
 
         // Called every time menu with command is opened. Updates Enabled/Disabled state depending if a solution is opened or not.
@@ -56,10 +54,12 @@ namespace OrderProjectsInSlnFile
             DTE dte = await Package.GetServiceAsync(typeof(DTE)) as DTE;
             Command.Enabled = !string.IsNullOrEmpty(dte.Solution.FileName);
         }
-
-        public void OrderProjects(General options)
+        public void OrderProjects(General options, string solutionFilePath = null)
         {
-            var solutionFilePath = ((OrderProjectsInSlnFilePackage)Package).SolutionFilename;
+            if (string.IsNullOrEmpty(solutionFilePath))
+            {
+                solutionFilePath = ((OrderProjectsInSlnFilePackage)Package).SolutionFilename;
+            }
 
             if (string.IsNullOrEmpty(solutionFilePath) || !File.Exists(solutionFilePath))
             {
