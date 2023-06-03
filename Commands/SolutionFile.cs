@@ -17,7 +17,7 @@ namespace OrderProjectsInSlnFile
             }
         }
 
-        public IEnumerable<string> Sort()
+        public void Sort()
         {
             var projectLines = new ProjectLines();
             var guidLines = new ProjectLines();
@@ -64,8 +64,6 @@ namespace OrderProjectsInSlnFile
 
             linesInFile = ChangeLines(projectLines, linesInFile);
             linesInFile = ChangeLines(guidLines, linesInFile);
-
-            return linesInFile;
         }
 
         private List<string> ChangeLines(ProjectLines projectLines, List<string> linesInFile)
@@ -92,5 +90,6 @@ namespace OrderProjectsInSlnFile
         }
 
         private List<string> linesInFile = new List<string>();
+        public List<string> LinesInFile => linesInFile;
     }
 }

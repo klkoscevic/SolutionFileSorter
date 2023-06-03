@@ -28,11 +28,11 @@ namespace ConsoleOrderProjectsInSlnFile
                 encoding = reader.CurrentEncoding;
             }
 
-            var lines = slnFile.Sort();
+            slnFile.Sort();
 
             using (var writer = new StreamWriter(solutionFilePath, false, encoding))
             {
-                foreach (var line in lines)
+                foreach (var line in slnFile.LinesInFile)
                 {
                     writer.WriteLine(line);
                 }

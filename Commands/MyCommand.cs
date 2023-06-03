@@ -12,6 +12,7 @@ using OrderProjectsInSlnFile.Forms;
 using System.Threading.Tasks;
 using Community.VisualStudio.Toolkit;
 using System;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace OrderProjectsInSlnFile
 {
@@ -35,6 +36,7 @@ namespace OrderProjectsInSlnFile
             }
 
             dte.Solution.IsDirty = false;
+            ((OrderProjectsInSlnFilePackage)Package).IsSorted = true;
         }
 
         // Called every time menu with command is opened. Updates Enabled/Disabled state depending if a solution is opened or not.
@@ -75,7 +77,8 @@ namespace OrderProjectsInSlnFile
                     encoding = reader.CurrentEncoding;
                 }
 
-                var linesInFile = solutionFile.Sort();
+                solutionFile.Sort();
+                var linesInFile = solutionFile.LinesInFile;
 
                 using (var writer = new StreamWriter(solutionFilePath, false, encoding))
                 {
@@ -85,6 +88,7 @@ namespace OrderProjectsInSlnFile
                     }
                     writer.Flush();
                 }
+
 
                 if (!options.DoNotShowMesssageAnymore)
                 {
@@ -103,6 +107,39 @@ namespace OrderProjectsInSlnFile
             catch (Exception ex)
             {
                 System.Windows.Forms.MessageBox.Show(ex.Message, "An error occurred", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        public bool IsProjectSorted(string solutionFilePath)
+        {
+            if (string.IsNullOrEmpty(solutionFilePath) || !File.Exists(solutionFilePath))
+            {
+                System.Windows.Forms.MessageBox.Show($"Solution file '{solutionFilePath}' does not exist.", "File does not exist", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                throw new Exception();
+            }
+
+            SolutionFile solutionFileSorted = null;
+            SolutionFile solutionFileNotChanged = null;
+
+            using (var reader = new StreamReader(solutionFilePath))
+            {
+                solutionFileSorted = new SolutionFile(reader);
+            }
+            using (var reader = new StreamReader(solutionFilePath))
+            {
+                solutionFileNotChanged = new SolutionFile(reader);
+            }
+
+            solutionFileSorted.Sort();
+
+            try
+            {
+                Assert.IsTrue(solutionFileSorted.LinesInFile.SequenceEqual(solutionFileNotChanged.LinesInFile));
+                return true;
+            }
+            catch
+            {
+                return false;
             }
         }
     }
