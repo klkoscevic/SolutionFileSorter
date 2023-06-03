@@ -41,7 +41,7 @@ namespace OrderProjectsInSlnFile
             ThreadHelper.ThrowIfNotOnUIThread();
             solutionFilename = dte.Solution.FileName;
 
-            isSorted = myCommand.IsProjectSorted(solutionFilename);
+            isSorted = helper.IsSlnFileSorted(solutionFilename);
 
             dte.Solution.IsDirty = false;
             wasDirtyBeforeSave = false;
@@ -49,6 +49,8 @@ namespace OrderProjectsInSlnFile
 
         private void SolutionEvents_AfterClosing()
         {
+            var myCommand = new MyCommand();
+
             if (options.SortProjectsAfterClosingSolution && !isSorted)
             {
                 myCommand.OrderProjects(options, solutionFilename);
@@ -66,7 +68,7 @@ namespace OrderProjectsInSlnFile
             ThreadHelper.ThrowIfNotOnUIThread();
             wasDirtyBeforeSave = dte.Solution.IsDirty;
 
-            isSorted = isSorted && !wasDirtyBeforeSave ? myCommand.IsProjectSorted(solutionFilename) : isSorted;
+            isSorted = isSorted && !wasDirtyBeforeSave ? helper.IsSlnFileSorted(solutionFilename) : isSorted;
         }
 
 
@@ -76,7 +78,7 @@ namespace OrderProjectsInSlnFile
         private bool wasDirtyBeforeSave;
         private bool isSorted;
         private OrderProjectsInSlnFilePackage orderProjectsPackage;
-        private MyCommand myCommand = new MyCommand();
+        private Helper helper = new Helper();
 
 
         public string SolutionFilename => solutionFilename;

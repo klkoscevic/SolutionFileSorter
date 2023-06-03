@@ -109,38 +109,5 @@ namespace OrderProjectsInSlnFile
                 System.Windows.Forms.MessageBox.Show(ex.Message, "An error occurred", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
-
-        public bool IsProjectSorted(string solutionFilePath)
-        {
-            if (string.IsNullOrEmpty(solutionFilePath) || !File.Exists(solutionFilePath))
-            {
-                System.Windows.Forms.MessageBox.Show($"Solution file '{solutionFilePath}' does not exist.", "File does not exist", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                throw new Exception();
-            }
-
-            SolutionFile solutionFileSorted = null;
-            SolutionFile solutionFileNotChanged = null;
-
-            using (var reader = new StreamReader(solutionFilePath))
-            {
-                solutionFileSorted = new SolutionFile(reader);
-            }
-            using (var reader = new StreamReader(solutionFilePath))
-            {
-                solutionFileNotChanged = new SolutionFile(reader);
-            }
-
-            solutionFileSorted.Sort();
-
-            try
-            {
-                Assert.IsTrue(solutionFileSorted.LinesInFile.SequenceEqual(solutionFileNotChanged.LinesInFile));
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
-        }
     }
 }
