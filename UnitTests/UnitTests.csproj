@@ -55,8 +55,14 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <None Include="Resources\SolutionWithFilesAndFolders.original" />
-    <None Include="Resources\SolutionWithFilesAndFolders.sorted" />
+    <EmbeddedResource Include="Resources\SolutionWithFilesAndFolders.original" />
+    <EmbeddedResource Include="Resources\SolutionWithFilesAndFolders.sorted" />
+    <EmbeddedResource Include="Resources\SolutionWithASingleProject.original" />
+    <EmbeddedResource Include="Resources\SolutionWithASingleProject.sorted" />
+    <EmbeddedResource Include="Resources\SolutionWithTwoProjectsThatAreSortedAlready.original" />
+    <EmbeddedResource Include="Resources\SolutionWithTwoProjectsThatAreSortedAlready.sorted" />
+    <EmbeddedResource Include="Resources\SolutionWithTwoProjectsThatAreNotSorted.original" />
+    <EmbeddedResource Include="Resources\SolutionWithTwoProjectsThatAreNotSorted.sorted" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\OrderProjectsInSlnFile.csproj">

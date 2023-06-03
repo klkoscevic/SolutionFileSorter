@@ -25,29 +25,59 @@ namespace UnitTests
             {
                 slnFile = new SolutionFile(reader);
             }
-            var lines = slnFile.Sort();
+            slnFile.Sort();
 
             IEnumerable<string> original = sln.Split(new string[] { "\r\n" }, StringSplitOptions.None);
 
-            Assert.IsTrue(lines.SequenceEqual(original));
+            Assert.IsTrue(slnFile.LinesInFile.SequenceEqual(original));
         }
 
         [TestMethod]
         public void SortDoesntChangeContentForSolutionWithASingleProject()
         {
-            Assert.Fail();
+            var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("UnitTests.Resources.SolutionWithASingleProject.original");
+            SolutionFile slnFile = null;
+            using (var reader = new StreamReader(stream))
+            {
+                slnFile = new SolutionFile(reader);
+            }
+            slnFile.Sort();
+
+            var expected = ReadLinesFromResource("UnitTests.Resources.SolutionWithASingleProject.sorted");
+
+            Assert.IsTrue(slnFile.LinesInFile.SequenceEqual(expected));
         }
 
         [TestMethod]
         public void SortDoesntChangeContentForSolutionWithTwoProjectsThatAreSortedAlready()
         {
-            Assert.Fail();
+            var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("UnitTests.Resources.SolutionWithTwoProjectsThatAreSortedAlready.original");
+            SolutionFile slnFile = null;
+            using (var reader = new StreamReader(stream))
+            {
+                slnFile = new SolutionFile(reader);
+            }
+            slnFile.Sort();
+
+            var expected = ReadLinesFromResource("UnitTests.Resources.SolutionWithTwoProjectsThatAreSortedAlready.sorted");
+
+            Assert.IsTrue(slnFile.LinesInFile.SequenceEqual(expected));
         }
 
         [TestMethod]
         public void SortReordersContentForSolutionWithTwoProjectsThatAreNotSorted()
         {
-            Assert.Fail();
+            var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("UnitTests.Resources.SolutionWithTwoProjectsThatAreNotSorted.original");
+            SolutionFile slnFile = null;
+            using (var reader = new StreamReader(stream))
+            {
+                slnFile = new SolutionFile(reader);
+            }
+            slnFile.Sort();
+
+            var expected = ReadLinesFromResource("UnitTests.Resources.SolutionWithTwoProjectsThatAreNotSorted.sorted");
+
+            Assert.IsTrue(slnFile.LinesInFile.SequenceEqual(expected));
         }
 
         [TestMethod]
@@ -59,11 +89,11 @@ namespace UnitTests
             {
                 slnFile = new SolutionFile(reader);
             }
-            var lines = slnFile.Sort();
+            slnFile.Sort();
 
             var expected = ReadLinesFromResource("UnitTests.Resources.SolutionWithFilesAndFolders.sorted");
 
-            Assert.IsTrue(lines.SequenceEqual(expected));
+            Assert.IsTrue(slnFile.LinesInFile.SequenceEqual(expected));
         }
 
         private IEnumerable<string> ReadLinesFromResource(string resource)

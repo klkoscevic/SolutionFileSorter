@@ -23,7 +23,7 @@ namespace OrderProjectsInSlnFile
             var guidLines = new ProjectLines();
 
             string patternProject = @"^Project\(""\{[A-Z0-9-]+\}""\) = ""([^""]+)"",.+\{([A-Z0-9-]+)\}""$";
-            string patternGuid = @"^\s+\{([A-Z0-9-]+).+";
+            string patternGuid = @"^\s+\{([A-Z0-9-]+)\}\..+";
 
             for (int i = 0; i < linesInFile.Count; i++)
             {
