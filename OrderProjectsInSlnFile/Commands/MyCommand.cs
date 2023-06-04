@@ -1,17 +1,7 @@
 ﻿using EnvDTE;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Text.RegularExpressions;
-using System.Windows.Forms;
-using OrderProjectsInSlnFile.Classes;
-using EnvDTE80;
-using Microsoft.VisualStudio.PlatformUI;
 using OrderProjectsInSlnFile.Forms;
-using System.Threading.Tasks;
-using Microsoft.VisualStudio.Shell;
-using Microsoft.VisualStudio.Shell.Interop;
+using System.IO;
+using System.Windows.Forms;
 
 namespace OrderProjectsInSlnFile
 {
@@ -62,26 +52,13 @@ namespace OrderProjectsInSlnFile
 
             try
             {
-                SolutionFile solutionFile = null;
+                SolutionParser solutionFile = null;
                 System.Text.Encoding encoding = null;
                 using (var reader = new StreamReader(solutionFilePath))
                 {
-                    solutionFile = new SolutionFile(reader);
+                    solutionFile = new SolutionParser(reader);
                     encoding = reader.CurrentEncoding;
                 }
-
-                var linesInFile = solutionFile.Sort();
-
-                using (var writer = new StreamWriter(solutionFilePath, false, encoding))
-                {
-                    foreach (var line in linesInFile)
-                    {
-                        writer.WriteLine(line);
-                    }
-                    writer.Flush();
-                }
-                // Reset IsDirty flag to avoid another "Save .sln file" message box.
-                solution.IsDirty = false;
 
                 if (!options.DoNotShowMesssageAnymore)
                 {

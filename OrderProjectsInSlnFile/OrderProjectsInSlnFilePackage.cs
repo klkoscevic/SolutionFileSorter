@@ -27,15 +27,7 @@ namespace OrderProjectsInSlnFile
             solutionFilename = dte.Solution.FileName;
 
             var solutionEvents = dte.Events.SolutionEvents;
-            solutionEvents.Opened += SolutionEvents_Opened;
             solutionEvents.AfterClosing += SolutionEvents_AfterClosing;
-        }
-
-        private void SolutionEvents_Opened()
-        {
-            ThreadHelper.ThrowIfNotOnUIThread();
-            solutionFilename = dte.Solution.FileName;
-            dte.Solution.IsDirty = false;
         }
 
         private void SolutionEvents_AfterClosing()
