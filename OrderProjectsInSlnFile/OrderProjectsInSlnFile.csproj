@@ -46,6 +46,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Classes\ProjectEntry.cs" />
+    <Compile Include="Classes\ProjectEntryComparer.cs" />
     <Compile Include="Classes\Range.cs" />
     <Compile Include="Classes\SolutionParser.cs" />
     <Compile Include="Forms\MyMessageDialog.cs">

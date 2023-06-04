@@ -73,6 +73,12 @@
   <ItemGroup>
     <EmbeddedResource Include="Resources\EmptySolution" />
   </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ProjectEntryTests.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\SolutionWithMultipleProjectsOneInSolutionFolder" />
+  </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
