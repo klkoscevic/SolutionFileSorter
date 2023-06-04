@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using OrderProjectsInSlnFile.Forms;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -41,6 +42,36 @@ namespace OrderProjectsInSlnFile
             catch
             {
                 return false;
+            }
+        }
+
+        public bool StartSortingSlnFile(string solutionFilePath, General options)
+        {
+            if (!options.SortAlwaysWithoutAsking)
+            {
+                MyMessageDialogSortSln dialogForm = new MyMessageDialogSortSln(Path.GetFileName(solutionFilePath));
+                DialogResult result = dialogForm.ShowDialog();
+                if (result == DialogResult.Yes)
+                {
+                    changeSettingsForSortAlwaysWithoutAsking(options, dialogForm.SortAlwaysWithoutAskingChecked);
+                    return true;
+                }
+                else if(result == DialogResult.No)
+                {
+                    changeSettingsForSortAlwaysWithoutAsking(options, dialogForm.SortAlwaysWithoutAskingChecked);
+                    return false;
+                }
+            }
+
+            return false;
+        }
+
+        private void changeSettingsForSortAlwaysWithoutAsking(General options, bool check)
+        {
+            if (options.SortAlwaysWithoutAsking != check)
+            {
+                options.SortAlwaysWithoutAsking = check;
+                options.Save();
             }
         }
     } 

@@ -4,8 +4,6 @@ global using System;
 global using Task = System.Threading.Tasks.Task;
 using EnvDTE;
 using Microsoft.VisualStudio.Shell.Interop;
-using System.Diagnostics;
-using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Threading;
 
@@ -29,6 +27,7 @@ namespace OrderProjectsInSlnFile
             options = await General.GetLiveInstanceAsync();
 
             solutionFilename = dte.Solution.FileName;
+            sortSlnFile = false;
 
             var solutionEvents = dte.Events.SolutionEvents;
             solutionEvents.Opened += SolutionEvents_Opened;
@@ -49,14 +48,9 @@ namespace OrderProjectsInSlnFile
 
         private void SolutionEvents_AfterClosing()
         {
-            var myCommand = new MyCommand();
-
-            if (options.SortProjectsAfterClosingSolution && !isSorted)
+            if (sortSlnFile)
             {
-                myCommand.OrderProjects(options, solutionFilename);
-            }
-            else if (wasDirtyBeforeSave && options.SortProjectsAfterClosingSolution)
-            {
+                var myCommand = new MyCommand();
                 myCommand.OrderProjects(options, solutionFilename);
             }
 
@@ -67,8 +61,16 @@ namespace OrderProjectsInSlnFile
         {
             ThreadHelper.ThrowIfNotOnUIThread();
             wasDirtyBeforeSave = dte.Solution.IsDirty;
+            isSorted = isSorted ? helper.IsSlnFileSorted(solutionFilename) : isSorted;
 
-            isSorted = isSorted && !wasDirtyBeforeSave ? helper.IsSlnFileSorted(solutionFilename) : isSorted;
+            if (options.SortAlwaysWithoutAsking && (!isSorted || wasDirtyBeforeSave))
+            {
+                sortSlnFile = true;
+            }
+            else if (!isSorted || wasDirtyBeforeSave)
+            {
+                sortSlnFile = helper.StartSortingSlnFile(solutionFilename, options);
+            }
         }
 
 
@@ -77,6 +79,7 @@ namespace OrderProjectsInSlnFile
         private string solutionFilename;
         private bool wasDirtyBeforeSave;
         private bool isSorted;
+        private bool sortSlnFile;
         private OrderProjectsInSlnFilePackage orderProjectsPackage;
         private Helper helper = new Helper();
 

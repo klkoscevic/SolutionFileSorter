@@ -20,9 +20,9 @@ namespace OrderProjectsInSlnFile
         public bool DoNotShowMesssageAnymore { get; set; }
 
         [Category("General")]
-        [DisplayName("Sort projects after closing solution")]
-        [Description("Determines whether the sorting the .sln file will be done after closing solution.")]
+        [DisplayName("Sort .sln file always without asking")]
+        [Description("Determines whether the sorting the .sln file will always start without asking firts.")]
         [DefaultValue(false)]
-        public bool SortProjectsAfterClosingSolution { get; set; }
+        public bool SortAlwaysWithoutAsking { get; set; }
     }
 }
