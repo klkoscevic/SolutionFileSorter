@@ -8,18 +8,11 @@ namespace UnitTests
     public class ProjectEntryTests
     {
         [TestMethod]
-        public void GetPathReturnsEmptyStringForEntryWithoutParent()
-        {
-            var entry = new ProjectEntry("Name", "GUID", Range.Empty);
-            Assert.AreEqual("", entry.GetFullPath());
-        }
-
-        [TestMethod]
         public void SetParentMethodAssignsParentEntry()
         {
             var parent = new ProjectEntry("Parent", "GUID", Range.Empty);
             var child = new ProjectEntry("Child", "GUID", Range.Empty);
-            child.SetParent(parent);
+            child.SetParent(parent, Range.Empty);
             Assert.AreEqual(parent, child.Parent);
         }
 
@@ -29,30 +22,37 @@ namespace UnitTests
         {
             var parent = new ProjectEntry("Parent", "GUID", Range.Empty);
             var child = new ProjectEntry("Child", "GUID", Range.Empty);
-            child.SetParent(parent);
-            child.SetParent(parent);
+            child.SetParent(parent, Range.Empty);
+            child.SetParent(parent, Range.Empty);
         }
 
         [TestMethod]
-        public void GetParentMethodReturnsParentNameForChildWithSingleParent()
+        public void GetFullPathhReturnsNameEntryForWithoutParent()
+        {
+            var entry = new ProjectEntry("Name", "GUID", Range.Empty);
+            Assert.AreEqual("Name", entry.GetFullPath());
+        }
+
+        [TestMethod]
+        public void GetFullPathMethodReturnsParentNameForChildWithSingleParent()
         {
             var parent = new ProjectEntry("Parent", "GUID", Range.Empty);
             var child = new ProjectEntry("Child", "GUID", Range.Empty);
-            child.SetParent(parent);
-            Assert.AreEqual("Parent", child.GetFullPath());
+            child.SetParent(parent, Range.Empty);
+            Assert.AreEqual(string.Format("Parent{0}Child", ProjectEntry.ParentDelimiter), child.GetFullPath());
         }
 
         [TestMethod]
-        public void GetParentMethodReturnsConcatenatedParentNamesForChildWithMultipleParents()
+        public void GetFullPathMethodReturnsConcatenatedParentNamesForChildWithMultipleParents()
         {
             var grandgrandparent = new ProjectEntry("GrandGrandParent", "GUID", Range.Empty);
             var grandparent = new ProjectEntry("GrandParent", "GUID", Range.Empty);
-            grandparent.SetParent(grandgrandparent);
+            grandparent.SetParent(grandgrandparent, Range.Empty);
             var parent = new ProjectEntry("Parent", "GUID", Range.Empty);
-            parent.SetParent(grandparent);
+            parent.SetParent(grandparent, Range.Empty);
             var child = new ProjectEntry("Child", "GUID", Range.Empty);
-            child.SetParent(parent);
-            Assert.AreEqual(string.Format("GrandGrandParent{0}GrandParent{0}Parent", ProjectEntry.ParentDelimiter), child.GetFullPath());
+            child.SetParent(parent, Range.Empty);
+            Assert.AreEqual(string.Format("GrandGrandParent{0}GrandParent{0}Parent{0}Child", ProjectEntry.ParentDelimiter), child.GetFullPath());
         }
     }
 }
