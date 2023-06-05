@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ProjectEntryComparerTests.cs" />
+    <Compile Include="ProjectSorterTests.cs" />
     <Compile Include="SolutionParserTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
