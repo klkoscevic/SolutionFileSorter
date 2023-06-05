@@ -11,7 +11,7 @@ namespace UnitTests
         public void GetPathReturnsEmptyStringForEntryWithoutParent()
         {
             var entry = new ProjectEntry("Name", "GUID", Range.Empty);
-            Assert.AreEqual("", entry.GetParentPath());
+            Assert.AreEqual("", entry.GetFullPath());
         }
 
         [TestMethod]
@@ -39,7 +39,7 @@ namespace UnitTests
             var parent = new ProjectEntry("Parent", "GUID", Range.Empty);
             var child = new ProjectEntry("Child", "GUID", Range.Empty);
             child.SetParent(parent);
-            Assert.AreEqual("Parent", child.GetParentPath());
+            Assert.AreEqual("Parent", child.GetFullPath());
         }
 
         [TestMethod]
@@ -52,7 +52,7 @@ namespace UnitTests
             parent.SetParent(grandparent);
             var child = new ProjectEntry("Child", "GUID", Range.Empty);
             child.SetParent(parent);
-            Assert.AreEqual(string.Format("GrandGrandParent{0}GrandParent{0}Parent", ProjectEntry.ParentDelimiter), child.GetParentPath());
+            Assert.AreEqual(string.Format("GrandGrandParent{0}GrandParent{0}Parent", ProjectEntry.ParentDelimiter), child.GetFullPath());
         }
     }
 }
