@@ -42,8 +42,8 @@ namespace OrderProjectsInSlnFile
 
         private Range ReadProjectLines()
         {
-            const string patternProject = $"^Project\\(\\\"{patternGuid}\\\"\\) = \\\"([^\\\"]+)\\\", \\\"[^\\\"]+\\\", \\\"({patternGuid})\\\"";
-            const string patternProjectEnd = @"^EndProject";
+            const string patternProject = $"^Project\\(\\\"{patternGuid}\\\"\\)\\s*=\\s*\\\"([^\\\"]+)\\\"\\s*,\\s*\\\"[^\\\"]+\\\"\\s*,\\s*\\\"({patternGuid})\\\"\\s*[\\r?\\n]";
+            const string patternProjectEnd = @"^\s*EndProject\s*[\r?\n]";
 
             var regexProject = new Regex(patternProject, RegexOptions.Multiline);
             var regexProjectEnd = new Regex(patternProjectEnd, RegexOptions.Multiline);
@@ -52,7 +52,7 @@ namespace OrderProjectsInSlnFile
             int projectEnd = 0;
             foreach (Match projectMatch in projectMatches)
             {
-                if (projectMatch.Index <= projectEnd)
+                if (projectMatch.Index < projectEnd)
                 {
                     throw new FileFormatException(MessageProjectEntriesOverlapping);
                 }

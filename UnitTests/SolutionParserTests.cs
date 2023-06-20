@@ -95,7 +95,7 @@ namespace UnitTests
             Assert.AreEqual("{86B087EE-2139-42D2-9A8D-425FC7AF5582}", project.Guid);
             Assert.IsNull(project.Parent);
             Assert.AreEqual(172, project.Content.Start);
-            Assert.AreEqual(322, project.Content.End);
+            Assert.AreEqual(324, project.Content.End);
         }
 
         [TestMethod]
@@ -116,28 +116,112 @@ namespace UnitTests
             Assert.AreEqual("{DABC7AC1-CDA4-4E05-95F7-FCCA53AA5ECA}", pythonApp.Guid);
             Assert.IsNull(pythonApp.Parent);
             Assert.AreEqual(172, pythonApp.Content.Start);
-            Assert.AreEqual(343, pythonApp.Content.End);
+            Assert.AreEqual(345, pythonApp.Content.End);
 
             var mfcApp = projectEntries.FirstOrDefault(pe => pe.Name == "MFCApplication");
             Assert.IsNotNull(mfcApp);
             Assert.AreEqual("{55590147-00C7-4EAE-8CA8-DE4594DA2CAA}", mfcApp.Guid);
             Assert.IsNull(mfcApp.Parent);
             Assert.AreEqual(345, mfcApp.Content.Start);
-            Assert.AreEqual(508, mfcApp.Content.End);
+            Assert.AreEqual(510, mfcApp.Content.End);
 
             var cppConsoleApp = projectEntries.FirstOrDefault(pe => pe.Name == "CppConsoleApplication");
             Assert.IsNotNull(cppConsoleApp);
             Assert.AreEqual("{A423D6CA-39CF-4C15-BCA9-BCAA327B6E44}", cppConsoleApp.Guid);
             Assert.IsNull(cppConsoleApp.Parent);
             Assert.AreEqual(510, cppConsoleApp.Content.Start);
-            Assert.AreEqual(694, cppConsoleApp.Content.End);
+            Assert.AreEqual(696, cppConsoleApp.Content.End);
 
             var csharpConsoleApp = projectEntries.FirstOrDefault(pe => pe.Name == "C#ConsoleApp");
             Assert.IsNotNull(csharpConsoleApp);
             Assert.AreEqual("{6A51BE4B-3BBF-4F26-8528-D21593BAEDE8}", csharpConsoleApp.Guid);
             Assert.IsNull(csharpConsoleApp.Parent);
             Assert.AreEqual(696, csharpConsoleApp.Content.Start);
-            Assert.AreEqual(852, csharpConsoleApp.Content.End);
+            Assert.AreEqual(854, csharpConsoleApp.Content.End);
+        }
+
+        [TestMethod]
+        public void ProjectEntriesReturnsCollectionWithAllElementForSolutionWithFourProjectsInTheRootLfLineEndings()
+        {
+            var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("UnitTests.Resources.SolutionWithFourProjectsInTheRootLfLineEndings");
+            SolutionParser slnFile = null;
+            using (var reader = new StreamReader(stream))
+            {
+                slnFile = new SolutionParser(reader);
+            }
+
+            var projectEntries = slnFile.ProjectEntries;
+            Assert.AreEqual(4, projectEntries.Count());
+
+            var pythonApp = projectEntries.FirstOrDefault(pe => pe.Name == "PythonApplication");
+            Assert.IsNotNull(pythonApp);
+            Assert.AreEqual("{DABC7AC1-CDA4-4E05-95F7-FCCA53AA5ECA}", pythonApp.Guid);
+            Assert.IsNull(pythonApp.Parent);
+            Assert.AreEqual(167, pythonApp.Content.Start);
+            Assert.AreEqual(338, pythonApp.Content.End);
+
+            var mfcApp = projectEntries.FirstOrDefault(pe => pe.Name == "MFCApplication");
+            Assert.IsNotNull(mfcApp);
+            Assert.AreEqual("{55590147-00C7-4EAE-8CA8-DE4594DA2CAA}", mfcApp.Guid);
+            Assert.IsNull(mfcApp.Parent);
+            Assert.AreEqual(338, mfcApp.Content.Start);
+            Assert.AreEqual(501, mfcApp.Content.End);
+
+            var cppConsoleApp = projectEntries.FirstOrDefault(pe => pe.Name == "CppConsoleApplication");
+            Assert.IsNotNull(cppConsoleApp);
+            Assert.AreEqual("{A423D6CA-39CF-4C15-BCA9-BCAA327B6E44}", cppConsoleApp.Guid);
+            Assert.IsNull(cppConsoleApp.Parent);
+            Assert.AreEqual(501, cppConsoleApp.Content.Start);
+            Assert.AreEqual(685, cppConsoleApp.Content.End);
+
+            var csharpConsoleApp = projectEntries.FirstOrDefault(pe => pe.Name == "C#ConsoleApp");
+            Assert.IsNotNull(csharpConsoleApp);
+            Assert.AreEqual("{6A51BE4B-3BBF-4F26-8528-D21593BAEDE8}", csharpConsoleApp.Guid);
+            Assert.IsNull(csharpConsoleApp.Parent);
+            Assert.AreEqual(685, csharpConsoleApp.Content.Start);
+            Assert.AreEqual(841, csharpConsoleApp.Content.End);
+        }
+
+        [TestMethod]
+        public void ProjectEntriesReturnsCollectionWithAllElementForSolutionWithFourProjectsInTheRootWithVariousSpacings()
+        {
+            var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("UnitTests.Resources.SolutionWithFourProjectsInTheRootWithVariousSpacings");
+            SolutionParser slnFile = null;
+            using (var reader = new StreamReader(stream))
+            {
+                slnFile = new SolutionParser(reader);
+            }
+
+            var projectEntries = slnFile.ProjectEntries;
+            Assert.AreEqual(4, projectEntries.Count());
+
+            var pythonApp = projectEntries.FirstOrDefault(pe => pe.Name == "PythonApplication");
+            Assert.IsNotNull(pythonApp);
+            Assert.AreEqual("{DABC7AC1-CDA4-4E05-95F7-FCCA53AA5ECA}", pythonApp.Guid);
+            Assert.IsNull(pythonApp.Parent);
+            Assert.AreEqual(172, pythonApp.Content.Start);
+            Assert.AreEqual(356, pythonApp.Content.End);
+
+            var mfcApp = projectEntries.FirstOrDefault(pe => pe.Name == "MFCApplication");
+            Assert.IsNotNull(mfcApp);
+            Assert.AreEqual("{55590147-00C7-4EAE-8CA8-DE4594DA2CAA}", mfcApp.Guid);
+            Assert.IsNull(mfcApp.Parent);
+            Assert.AreEqual(356, mfcApp.Content.Start);
+            Assert.AreEqual(517, mfcApp.Content.End);
+
+            var cppConsoleApp = projectEntries.FirstOrDefault(pe => pe.Name == "CppConsoleApplication");
+            Assert.IsNotNull(cppConsoleApp);
+            Assert.AreEqual("{A423D6CA-39CF-4C15-BCA9-BCAA327B6E44}", cppConsoleApp.Guid);
+            Assert.IsNull(cppConsoleApp.Parent);
+            Assert.AreEqual(517, cppConsoleApp.Content.Start);
+            Assert.AreEqual(703, cppConsoleApp.Content.End);
+
+            var csharpConsoleApp = projectEntries.FirstOrDefault(pe => pe.Name == "C#ConsoleApp");
+            Assert.IsNotNull(csharpConsoleApp);
+            Assert.AreEqual("{6A51BE4B-3BBF-4F26-8528-D21593BAEDE8}", csharpConsoleApp.Guid);
+            Assert.IsNull(csharpConsoleApp.Parent);
+            Assert.AreEqual(703, csharpConsoleApp.Content.Start);
+            Assert.AreEqual(857, csharpConsoleApp.Content.End);
         }
 
         [TestMethod]

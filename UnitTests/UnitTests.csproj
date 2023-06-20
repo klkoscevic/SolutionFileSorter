@@ -81,6 +81,12 @@
   <ItemGroup>
     <EmbeddedResource Include="Resources\SolutionWithMultipleProjectsOneInSolutionFolder" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\SolutionWithFourProjectsInTheRootWithVariousSpacings" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\SolutionWithFourProjectsInTheRootLfLineEndings" />
+  </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
