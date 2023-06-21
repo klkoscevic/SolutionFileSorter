@@ -87,6 +87,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Resources\SolutionWithFourProjectsInTheRootLfLineEndings" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\SolutionWithProjectNamesContainingCroatianAndGermanCharacters" />
+  </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
