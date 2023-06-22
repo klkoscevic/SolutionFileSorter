@@ -90,6 +90,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Resources\SolutionWithProjectNamesContainingCroatianAndGermanCharacters" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\SolutionWithWhitespacesInProjectAndFolderNames" />
+  </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

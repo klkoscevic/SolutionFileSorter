@@ -13,7 +13,7 @@ namespace UnitTests
         [TestMethod]
         public void SortOnEntriesInTheRootReturnsProjectsSortedAlphabeticallyByTheirNames()
         {
-            IEnumerable< ProjectEntry> projects = new List<ProjectEntry> { new ProjectEntry("m", "guid", Range.Empty), new ProjectEntry("z", "guid", Range.Empty), new ProjectEntry("a", "guid", Range.Empty) };
+            IEnumerable< ProjectEntry> projects = new List<ProjectEntry> { new ProjectEntry("m", "guid", true, Range.Empty), new ProjectEntry("z", "guid", true, Range.Empty), new ProjectEntry("a", "guid", true, Range.Empty) };
 
             var sorted = new ProjectsSorter().GetSorted(projects);
 
@@ -25,14 +25,14 @@ namespace UnitTests
         [TestMethod]
         public void SortOnProjectsInSolutionFoldersReturnsProjectsSortedAlphabeticallyByTheirSolutionFolderNames()
         {
-            var project1 = new ProjectEntry("m", "guid", Range.Empty);
-            project1.SetParent(new ProjectEntry("z", "guid", Range.Empty), Range.Empty);
+            var project1 = new ProjectEntry("m", "guid", false, Range.Empty);
+            project1.SetParent(new ProjectEntry("z", "guid", true, Range.Empty), Range.Empty);
 
-            var project2 = new ProjectEntry("z", "guid", Range.Empty);
-            project2.SetParent(new ProjectEntry("a", "guid", Range.Empty), Range.Empty);
+            var project2 = new ProjectEntry("z", "guid", false, Range.Empty);
+            project2.SetParent(new ProjectEntry("a", "guid", true, Range.Empty), Range.Empty);
 
-            var project3 = new ProjectEntry("a", "guid", Range.Empty);
-            project3.SetParent(new ProjectEntry("c", "guid", Range.Empty), Range.Empty);
+            var project3 = new ProjectEntry("a", "guid", false, Range.Empty);
+            project3.SetParent(new ProjectEntry("c", "guid", true, Range.Empty), Range.Empty);
 
             IEnumerable< ProjectEntry> projects = new List<ProjectEntry> { project1, project2, project3 };
 
@@ -63,12 +63,46 @@ namespace UnitTests
             Assert.AreEqual("Ćup", sorted.ElementAt(3).Name);
             Assert.AreEqual("Def", sorted.ElementAt(4).Name);
             Assert.AreEqual("Ober", sorted.ElementAt(5).Name);
+            Assert.AreEqual("Öffnen", sorted.ElementAt(6).Name);
+            Assert.AreEqual("Ozean", sorted.ElementAt(7).Name);
+            Assert.AreEqual("Ua", sorted.ElementAt(8).Name);
+            Assert.AreEqual("Über", sorted.ElementAt(9).Name);
+            Assert.AreEqual("Unter", sorted.ElementAt(10).Name);
+            Assert.AreEqual("Visual", sorted.ElementAt(11).Name);
+            Assert.AreEqual("Zubar", sorted.ElementAt(12).Name);
+            Assert.AreEqual("Žezlo", sorted.ElementAt(13).Name);
+        }
+
+        [TestMethod]
+        public void SortOnSolutionWithWhitespacesInProjectAndFolderNamesReturnsProjectsSortedAlphabetically()
+        {
+            var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("UnitTests.Resources.SolutionWithWhitespacesInProjectAndFolderNames");
+            SolutionParser slnFile = null;
+            using (var reader = new StreamReader(stream))
+            {
+                slnFile = new SolutionParser(reader);
+            }
+
+            Assert.AreEqual(10, slnFile.ProjectEntries.Count());
+
+            var sorted = new ProjectsSorter().GetSorted(slnFile.ProjectEntries);
+
+            Assert.AreEqual("folder ab c", sorted.ElementAt(0).Name);
+            Assert.AreEqual("ab b", sorted.ElementAt(1).Name);
+            Assert.AreEqual("ab c", sorted.ElementAt(2).Name);
+            Assert.AreEqual("folder abc", sorted.ElementAt(3).Name);
+            Assert.AreEqual("ab a", sorted.ElementAt(4).Name);
+            Assert.AreEqual("folder abc d", sorted.ElementAt(5).Name);
+            Assert.AreEqual("abc", sorted.ElementAt(6).Name);
+            Assert.AreEqual("abc d", sorted.ElementAt(7).Name);
+            Assert.AreEqual("abcd", sorted.ElementAt(8).Name);
+            Assert.AreEqual("abcd ef", sorted.ElementAt(9).Name);
         }
 
         [TestMethod]
         public void IsSortedReturnsFalseForUnsortedEntries()
         {
-            IEnumerable< ProjectEntry> projects = new List<ProjectEntry> { new ProjectEntry("m", "guid", Range.Empty), new ProjectEntry("z", "guid", Range.Empty), new ProjectEntry("a", "guid", Range.Empty) };
+            IEnumerable< ProjectEntry> projects = new List<ProjectEntry> { new ProjectEntry("m", "guid", true, Range.Empty), new ProjectEntry("z", "guid", true, Range.Empty), new ProjectEntry("a", "guid", true, Range.Empty) };
 
             Assert.IsFalse(new ProjectsSorter().IsSorted(projects));
         }
@@ -76,7 +110,7 @@ namespace UnitTests
         [TestMethod]
         public void IsSortedReturnsTrueForSortedEntries()
         {
-            IEnumerable< ProjectEntry> projects = new List<ProjectEntry> { new ProjectEntry("m", "guid", Range.Empty), new ProjectEntry("z", "guid", Range.Empty), new ProjectEntry("a", "guid", Range.Empty) };
+            IEnumerable< ProjectEntry> projects = new List<ProjectEntry> { new ProjectEntry("m", "guid", true, Range.Empty), new ProjectEntry("z", "guid", true, Range.Empty), new ProjectEntry("a", "guid", true, Range.Empty) };
 
             var sorter = new ProjectsSorter();
             
