@@ -57,7 +57,17 @@
         /// </returns>
         public bool Equals(Range other)
         {
-            return Start == other.Start && End == other.End;
+            return other != null && Start == other.Start && End == other.End;
+        }
+
+        public override bool Equals(object obj)
+        {
+            return Equals(obj as Range);
+        }
+
+        public override int GetHashCode()
+        {
+            return (Start, End).GetHashCode();
         }
 
         /// <summary>

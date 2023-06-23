@@ -74,6 +74,39 @@ namespace UnitTests
         }
 
         [TestMethod]
+        public void SortOnSolutionWithMultilineProject()
+        {
+            var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("UnitTests.Resources.SolutionWithVsPackageProject");
+            SolutionParser slnFile = null;
+            using (var reader = new StreamReader(stream))
+            {
+                slnFile = new SolutionParser(reader);
+            }
+
+            Assert.AreEqual(17, slnFile.ProjectEntries.Count());
+
+            var sorted = new ProjectsSorter(new System.Globalization.CultureInfo("hr")).GetSorted(slnFile.ProjectEntries);
+
+            Assert.AreEqual("Libraries", sorted.ElementAt(0).Name);
+            Assert.AreEqual("C++ Libraries", sorted.ElementAt(1).Name);
+            Assert.AreEqual("VS Package", sorted.ElementAt(2).Name);
+            Assert.AreEqual("VSPackage", sorted.ElementAt(3).Name);
+            Assert.AreEqual("VSPackageUI", sorted.ElementAt(4).Name);
+            Assert.AreEqual("VSPackageVSIX", sorted.ElementAt(5).Name);
+            Assert.AreEqual("MFCLibrary", sorted.ElementAt(6).Name);
+            Assert.AreEqual("RaspberryBlink", sorted.ElementAt(7).Name);
+            Assert.AreEqual("C#NetFrameworkClassLibrary", sorted.ElementAt(8).Name);
+            Assert.AreEqual("ClassLibraryC#", sorted.ElementAt(9).Name);
+            Assert.AreEqual("ClassLibraryUniversalWindows", sorted.ElementAt(10).Name);
+            Assert.AreEqual("VbNetClassLibrary", sorted.ElementAt(11).Name);
+            Assert.AreEqual("WpfCustomControlLibrary", sorted.ElementAt(12).Name);
+            Assert.AreEqual("Python projects", sorted.ElementAt(13).Name);
+            Assert.AreEqual("ApplicationInPython", sorted.ElementAt(14).Name);
+            Assert.AreEqual("ConsoleApplication", sorted.ElementAt(15).Name);
+            Assert.AreEqual("WinFormsApp", sorted.ElementAt(16).Name);
+        }
+
+        [TestMethod]
         public void SortOnSolutionWithWhitespacesInProjectAndFolderNamesReturnsProjectsSortedAlphabetically()
         {
             var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("UnitTests.Resources.SolutionWithWhitespacesInProjectAndFolderNames");
