@@ -5,11 +5,17 @@ using System.Text.RegularExpressions;
 
 namespace OrderProjectsInSlnFile
 {
+    /// <summary>
+    /// Parses the content od .sln file.
+    /// </summary>
     public class SolutionParser
     {
+        /// <summary>
+        /// Reads and parsed the content of .sln file.
+        /// </summary>
+        /// <param name="reader"></param>
         public SolutionParser(TextReader reader)
         {
-            // Read entire content into one string instead of reading line by line (which is slower). 
             fileContent = reader.ReadToEnd();
 
             CheckHeader();
@@ -22,11 +28,29 @@ namespace OrderProjectsInSlnFile
             projectNestings = ReadProjectNestings();
         }
 
+        /// <summary>
+        /// Collection of <c>ProjectEntry</c> objects identified in the file.
+        /// </summary>
         public IEnumerable<ProjectEntry> ProjectEntries { get { return projectEntries; } }
 
-        // These ranges will be used to replace contents sorted alphabetically.
+        // Following ranges will be used to replace contents sorted alphabetically.
+
+        /// <summary>
+        /// Range in the .sln file inside which project entries (starting with <c>ProjectStart</c>, ending with <c>ProjectEnd</c>) are defined.
+        /// Range starts with the first project entry, ends with the last project entry.
+        /// </summary>
         public readonly Range projects;
+
+        /// <summary>
+        /// Range in the .sln file inside which project configuration platforms are defined (i.e. content of GlobalSection(ProjectConfigurationPlatforms) section).
+        /// Range start corresponds to the first entry start in the section and end corresponds to the end of last entry.
+        /// </summary>
         public readonly Range projectConfigurationPlatforms = Range.Empty;
+
+        /// <summary>
+        /// Range in the .sln file inside which project nestings are defined (i.e. content of GlobalSection(NestedProjects) section).
+        /// Range start corresponds to the first entry start and end corresponds to the end of last entry.
+        /// </summary>
         public readonly Range projectNestings = Range.Empty;
 
         // Solution file must start with "Microsoft Visual Studio Solution File, Format Version n.00". See e.g. https://stackoverflow.com/a/32753067 
