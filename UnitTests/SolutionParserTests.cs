@@ -241,12 +241,12 @@ namespace UnitTests
             Assert.IsNotNull(pythonApp);
             var configurationPlatforms = pythonApp.ConfigurationPlatforms;
             Assert.AreEqual(6, configurationPlatforms.Count());
-            Assert.IsTrue(configurationPlatforms.Contains(new Range(1183, 1264)));
-            Assert.IsTrue(configurationPlatforms.Contains(new Range(1265, 1342)));
-            Assert.IsTrue(configurationPlatforms.Contains(new Range(1343, 1420)));
-            Assert.IsTrue(configurationPlatforms.Contains(new Range(1421, 1506)));
-            Assert.IsTrue(configurationPlatforms.Contains(new Range(1507, 1588)));
-            Assert.IsTrue(configurationPlatforms.Contains(new Range(1589, 1670)));
+            Assert.IsTrue(configurationPlatforms.Contains(new Range(1183, 1265)));
+            Assert.IsTrue(configurationPlatforms.Contains(new Range(1265, 1343)));
+            Assert.IsTrue(configurationPlatforms.Contains(new Range(1343, 1421)));
+            Assert.IsTrue(configurationPlatforms.Contains(new Range(1421, 1507)));
+            Assert.IsTrue(configurationPlatforms.Contains(new Range(1507, 1589)));
+            Assert.IsTrue(configurationPlatforms.Contains(new Range(1589, 1671)));
 
             var mfcApp = projectEntries.FirstOrDefault(pe => pe.Name == "MFCApplication");
             Assert.IsNotNull(mfcApp);
@@ -262,18 +262,18 @@ namespace UnitTests
             Assert.IsNotNull(csharpConsoleApp);
             configurationPlatforms = csharpConsoleApp.ConfigurationPlatforms;
             Assert.AreEqual(12, configurationPlatforms.Count());
-            Assert.IsTrue(configurationPlatforms.Contains(new Range(3519, 3600)));
-            Assert.IsTrue(configurationPlatforms.Contains(new Range(3601, 3680)));
-            Assert.IsTrue(configurationPlatforms.Contains(new Range(3681, 3758)));
-            Assert.IsTrue(configurationPlatforms.Contains(new Range(3759, 3834)));
-            Assert.IsTrue(configurationPlatforms.Contains(new Range(3835, 3912)));
-            Assert.IsTrue(configurationPlatforms.Contains(new Range(3913, 3988)));
-            Assert.IsTrue(configurationPlatforms.Contains(new Range(3989, 4074)));
-            Assert.IsTrue(configurationPlatforms.Contains(new Range(4075, 4158)));
-            Assert.IsTrue(configurationPlatforms.Contains(new Range(4159, 4240)));
-            Assert.IsTrue(configurationPlatforms.Contains(new Range(4241, 4320)));
-            Assert.IsTrue(configurationPlatforms.Contains(new Range(4321, 4402)));
-            Assert.IsTrue(configurationPlatforms.Contains(new Range(4403, 4482)));
+            Assert.IsTrue(configurationPlatforms.Contains(new Range(3519, 3601)));
+            Assert.IsTrue(configurationPlatforms.Contains(new Range(3601, 3681)));
+            Assert.IsTrue(configurationPlatforms.Contains(new Range(3681, 3759)));
+            Assert.IsTrue(configurationPlatforms.Contains(new Range(3759, 3835)));
+            Assert.IsTrue(configurationPlatforms.Contains(new Range(3835, 3913)));
+            Assert.IsTrue(configurationPlatforms.Contains(new Range(3913, 3989)));
+            Assert.IsTrue(configurationPlatforms.Contains(new Range(3989, 4075)));
+            Assert.IsTrue(configurationPlatforms.Contains(new Range(4075, 4159)));
+            Assert.IsTrue(configurationPlatforms.Contains(new Range(4159, 4241)));
+            Assert.IsTrue(configurationPlatforms.Contains(new Range(4241, 4321)));
+            Assert.IsTrue(configurationPlatforms.Contains(new Range(4321, 4403)));
+            Assert.IsTrue(configurationPlatforms.Contains(new Range(4403, 4483)));
         }
 
         [TestMethod]
