@@ -73,6 +73,8 @@
     <EmbeddedResource Include="Resources\SolutionWithFourProjectsInTheRoot" />
     <EmbeddedResource Include="Resources\SolutionWithSingleProject" />
     <EmbeddedResource Include="Resources\SolutionWithMultipleProjectsOneInSolutionFolder" />
+    <EmbeddedResource Include="Resources\SolutionWithFourProjectsInTheRootLfLineEndings" />
+    <EmbeddedResource Include="Resources\SolutionWithFourProjectsInTheRootWithVariousSpacings" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\OrderProjectsInSlnFile.csproj">
