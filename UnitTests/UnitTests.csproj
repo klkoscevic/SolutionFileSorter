@@ -53,6 +53,7 @@
   <ItemGroup>
     <Compile Include="ProjectEntryComparerTests.cs" />
     <Compile Include="ProjectEntryTests.cs" />
+    <Compile Include="ProjectSorterTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SolutionFileTests.cs" />
     <Compile Include="HelperUnitTests.cs" />
