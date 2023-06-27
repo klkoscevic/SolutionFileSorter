@@ -157,29 +157,29 @@ namespace UnitTests
             Assert.IsNotNull(pythonApp);
             Assert.AreEqual("{DABC7AC1-CDA4-4E05-95F7-FCCA53AA5ECA}", pythonApp.Guid);
             Assert.IsNull(pythonApp.Parent);
-            Assert.AreEqual(172, pythonApp.Content.Start);
-            Assert.AreEqual(345, pythonApp.Content.End);
+            Assert.AreEqual(167, pythonApp.Content.Start);
+            Assert.AreEqual(338, pythonApp.Content.End);
 
             var mfcApp = projectEntries.FirstOrDefault(pe => pe.Name == "MFCApplication");
             Assert.IsNotNull(mfcApp);
             Assert.AreEqual("{55590147-00C7-4EAE-8CA8-DE4594DA2CAA}", mfcApp.Guid);
             Assert.IsNull(mfcApp.Parent);
-            Assert.AreEqual(345, mfcApp.Content.Start);
-            Assert.AreEqual(510, mfcApp.Content.End);
+            Assert.AreEqual(338, mfcApp.Content.Start);
+            Assert.AreEqual(501, mfcApp.Content.End);
 
             var cppConsoleApp = projectEntries.FirstOrDefault(pe => pe.Name == "CppConsoleApplication");
             Assert.IsNotNull(cppConsoleApp);
             Assert.AreEqual("{A423D6CA-39CF-4C15-BCA9-BCAA327B6E44}", cppConsoleApp.Guid);
             Assert.IsNull(cppConsoleApp.Parent);
-            Assert.AreEqual(510, cppConsoleApp.Content.Start);
-            Assert.AreEqual(696, cppConsoleApp.Content.End);
+            Assert.AreEqual(501, cppConsoleApp.Content.Start);
+            Assert.AreEqual(685, cppConsoleApp.Content.End);
 
             var csharpConsoleApp = projectEntries.FirstOrDefault(pe => pe.Name == "C#ConsoleApp");
             Assert.IsNotNull(csharpConsoleApp);
             Assert.AreEqual("{6A51BE4B-3BBF-4F26-8528-D21593BAEDE8}", csharpConsoleApp.Guid);
             Assert.IsNull(csharpConsoleApp.Parent);
-            Assert.AreEqual(696, csharpConsoleApp.Content.Start);
-            Assert.AreEqual(854, csharpConsoleApp.Content.End);
+            Assert.AreEqual(685, csharpConsoleApp.Content.Start);
+            Assert.AreEqual(841, csharpConsoleApp.Content.End);
         }
 
         [TestMethod]
