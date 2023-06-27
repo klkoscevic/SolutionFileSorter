@@ -14,6 +14,7 @@ namespace OrderProjectsInSlnFile
             Guid = guid;
             Parent = null;
             Content = content;
+            Nesting = Range.Empty;
         }
 
         public string Name { get; private set; }
@@ -24,12 +25,14 @@ namespace OrderProjectsInSlnFile
 
         public ProjectEntry Parent { get; private set; }
 
+        public Range Nesting { get; private set; }
+
         public void AddConfigurationPlatform(Range range)
         {
             configurationPlatforms.Add(range);
         }
 
-        public void SetParent(ProjectEntry parent)
+        public void SetParent(ProjectEntry parent, Range nesting)
         {
             if (Parent != null)
             {
@@ -37,6 +40,7 @@ namespace OrderProjectsInSlnFile
                 throw new InvalidOperationException(string.Format(message, Name));
             }
             Parent = parent;
+            Nesting = nesting;
         }
 
         public string GetFullPath()

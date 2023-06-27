@@ -132,7 +132,7 @@ namespace OrderProjectsInSlnFile
                 var child = FindProjectEntryByGuid(childGuid);
                 var parentGuid = match.Groups[2].Value;
                 var parent = FindProjectEntryByGuid(parentGuid);
-                child.SetParent(parent);
+                child.SetParent(parent, new Range(match.Index, match.Index + match.Length));
             }
             return new Range(start, end);
         }

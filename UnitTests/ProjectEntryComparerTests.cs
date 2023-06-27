@@ -69,7 +69,7 @@ namespace UnitTests
         {
             var pe1 = new ProjectEntry("abc", "guid", Range.Empty);
             var parent1 = new ProjectEntry("abc", "guid", Range.Empty);
-            pe1.SetParent(parent1);
+            pe1.SetParent(parent1, Range.Empty);
 
             var pe2 = new ProjectEntry("abc", "guid", Range.Empty);
 
@@ -81,15 +81,15 @@ namespace UnitTests
         {
             var pe1 = new ProjectEntry("abc", "guid", Range.Empty);
             var parent1 = new ProjectEntry("abc", "guid", Range.Empty);
-            pe1.SetParent(parent1);
+            pe1.SetParent(parent1, Range.Empty);
             var grandparent1 = new ProjectEntry("abc", "guid", Range.Empty);
-            parent1.SetParent(grandparent1);
+            parent1.SetParent(grandparent1, Range.Empty);
 
             var pe2 = new ProjectEntry("abc", "guid", Range.Empty);
             var parent2 = new ProjectEntry("abcd", "guid", Range.Empty);
-            pe2.SetParent(parent2);
+            pe2.SetParent(parent2, Range.Empty);
             var grandparent2 = new ProjectEntry("abc", "guid", Range.Empty);
-            parent2.SetParent(grandparent2);
+            parent2.SetParent(grandparent2, Range.Empty);
 
             Assert.IsTrue(comparer.Compare(pe1, pe2) < 0);
         }
@@ -101,13 +101,13 @@ namespace UnitTests
 
             var pe2 = new ProjectEntry("abc", "guid", Range.Empty);
             var parent2 = new ProjectEntry("abc", "guid", Range.Empty);
-            pe2.SetParent(parent2);
+            pe2.SetParent(parent2, Range.Empty);
 
             Assert.IsTrue(comparer.Compare(pe1, pe2) > 0);
 
             var pe3 = new ProjectEntry("abc", "guid", Range.Empty);
             var parent3 = new ProjectEntry("abc def", "guid", Range.Empty);
-            pe3.SetParent(parent3);
+            pe3.SetParent(parent3, Range.Empty);
 
             var pe4 = new ProjectEntry("abc", "guid", Range.Empty);
 
