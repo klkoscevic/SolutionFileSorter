@@ -4,7 +4,9 @@ global using System;
 global using Task = System.Threading.Tasks.Task;
 using EnvDTE;
 using Microsoft.VisualStudio.Shell.Interop;
+using System.IO;
 using System.Runtime.InteropServices;
+using System.Text;
 using System.Threading;
 
 namespace OrderProjectsInSlnFile
@@ -40,10 +42,9 @@ namespace OrderProjectsInSlnFile
             ThreadHelper.ThrowIfNotOnUIThread();
             solutionFilename = dte.Solution.FileName;
 
-            isSorted = helper.IsSlnFileSorted(solutionFilename);
+            isSorted = IsSortedSolution();
 
             dte.Solution.IsDirty = false;
-            wasDirtyBeforeSave = false;
         }
 
         private void SolutionEvents_AfterClosing()
@@ -61,7 +62,7 @@ namespace OrderProjectsInSlnFile
         {
             ThreadHelper.ThrowIfNotOnUIThread();
             wasDirtyBeforeSave = dte.Solution.IsDirty;
-            isSorted = isSorted ? helper.IsSlnFileSorted(solutionFilename) : isSorted;
+            isSorted = isSorted ? IsSortedSolution() : isSorted;
 
             if (options.SortAlwaysWithoutAsking && (!isSorted || wasDirtyBeforeSave))
             {
@@ -69,19 +70,31 @@ namespace OrderProjectsInSlnFile
             }
             else if (!isSorted || wasDirtyBeforeSave)
             {
-                sortSlnFile = helper.StartSortingSlnFile(solutionFilename, options);
+                sortSlnFile = IsSortedSolution();
             }
         }
 
+        private bool IsSortedSolution()
+        {
+            SolutionParser solutionParser = null;
+            using (var reader = new StreamReader(solutionFilename))
+            {
+                solutionParser = new SolutionParser(reader);
+            }
 
-        private DTE dte;
+           var projectsSorter = new ProjectsSorter();
+            return projectsSorter.IsSorted(solutionParser.ProjectEntries);
+
+        }
+
+
+    private DTE dte;
         private General options;
         private string solutionFilename;
-        private bool wasDirtyBeforeSave;
+        private bool wasDirtyBeforeSave = false;
         private bool isSorted;
         private bool sortSlnFile;
         private OrderProjectsInSlnFilePackage orderProjectsPackage;
-        private Helper helper = new Helper();
 
 
         public string SolutionFilename => solutionFilename;

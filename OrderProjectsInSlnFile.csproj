@@ -47,13 +47,9 @@
   <ItemGroup>
     <Compile Include="Classes\ProjectEntry.cs" />
     <Compile Include="Classes\ProjectEntryComparer.cs" />
-    <Compile Include="Classes\ProjectLine.cs" />
-    <Compile Include="Classes\ProjectLines.cs" />
     <Compile Include="Classes\ProjectsSorter.cs" />
     <Compile Include="Classes\Range.cs" />
     <Compile Include="Classes\SolutionParser.cs" />
-    <Compile Include="Commands\Helper.cs" />
-    <Compile Include="Commands\SolutionFile.cs" />
     <Compile Include="Forms\MyMessageDialog.cs">
       <SubType>Form</SubType>
     </Compile>

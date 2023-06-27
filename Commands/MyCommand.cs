@@ -5,7 +5,6 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
-using OrderProjectsInSlnFile.Classes;
 using EnvDTE80;
 using Microsoft.VisualStudio.PlatformUI;
 using OrderProjectsInSlnFile.Forms;
@@ -68,15 +67,16 @@ namespace OrderProjectsInSlnFile
 
             try
             {
-                SolutionParser solutionFile = null;
+                SolutionParser slnFile = null;
                 System.Text.Encoding encoding = null;
 
                 using (var reader = new StreamReader(solutionFilePath))
                 {
-                    solutionFile = new SolutionParser(reader);
+                    slnFile = new SolutionParser(reader);
                     encoding = reader.CurrentEncoding;
                 }
 
+                new ProjectsSorter().GetSorted(slnFile.ProjectEntries);
 
                 if (!options.DoNotShowMesssageAnymore)
                 {
