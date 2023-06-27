@@ -22,6 +22,8 @@ namespace OrderProjectsInSlnFile
             projectNestings = ReadProjectNestings();
         }
 
+        public readonly string fileContent;
+
         public IEnumerable<ProjectEntry> ProjectEntries { get { return projectEntries; } }
 
         // These ranges will be used to replace contents sorted alphabetically.
@@ -77,7 +79,7 @@ namespace OrderProjectsInSlnFile
 
         private Range ReadProjectConfigurationPlatforms()
         {
-            const string projectConfigurationPattern = @"^\s+GlobalSection\(ProjectConfigurationPlatforms\) = postSolution";
+            const string projectConfigurationPattern = @"^\s+GlobalSection\(ProjectConfigurationPlatforms\) = postSolution\s*[\r?\n]";
             var projectConfigurationRegex = new Regex(projectConfigurationPattern, RegexOptions.Multiline);
             var projectConfigurationMatch = projectConfigurationRegex.Match(fileContent, projects.End);
             if (!projectConfigurationMatch.Success)
@@ -98,7 +100,7 @@ namespace OrderProjectsInSlnFile
             foreach (var project in projectEntries)
             {
                 var guid = project.Guid;
-                var guidRegex = new Regex(@$"^\s+({guid})\..*$", RegexOptions.Multiline);
+                var guidRegex = new Regex(@$"^\s+({guid})\..*[\r?\n]", RegexOptions.Multiline);
                 foreach (Match match in guidRegex.Matches(configurationPlatformSection, start))
                 {
                     project.AddConfigurationPlatform(new Range(match.Index, match.Index + match.Length));
@@ -109,7 +111,7 @@ namespace OrderProjectsInSlnFile
 
         private Range ReadProjectNestings()
         {
-            const string projectNestingPattern = @"^\s+GlobalSection\(NestedProjects\) = preSolution";
+            const string projectNestingPattern = @"^\s+GlobalSection\(NestedProjects\) = preSolution\s*[\r?\n]";
             var projectNestingRegex = new Regex(projectNestingPattern, RegexOptions.Multiline);
             var projectNestingMatch = projectNestingRegex.Match(fileContent, projectConfigurationPlatforms.End);
             if (!projectNestingMatch.Success)
@@ -125,7 +127,7 @@ namespace OrderProjectsInSlnFile
             var end = projectConfigurationEndMatch.Index;
             // Limit regex searches up to the end of the section.
             var nestedProjectSection = fileContent.Substring(0, end);
-            const string nestingEntryPattern = @$"^\s+({patternGuid}) = ({patternGuid})\s+$";
+            const string nestingEntryPattern = @$"^\s+({patternGuid}) = ({patternGuid})\s*[\r?\n]";
             var nestingRegex = new Regex(nestingEntryPattern, RegexOptions.Multiline);
             var nestingMatches = nestingRegex.Matches(nestedProjectSection, start);
             foreach (Match match in nestingMatches)
@@ -148,8 +150,6 @@ namespace OrderProjectsInSlnFile
             }
             return found;
         }
-
-        private readonly string fileContent;
 
         private readonly List<ProjectEntry> projectEntries = new List<ProjectEntry>();
 
