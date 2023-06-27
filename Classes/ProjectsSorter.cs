@@ -1,18 +1,28 @@
 ﻿using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 
 namespace OrderProjectsInSlnFile
 {
-    public static class ProjectsSorter
+    public class ProjectsSorter
     {
-        private static ProjectEntryComparer comparer = new ProjectEntryComparer();
+        public ProjectsSorter()
+        {
+        }
 
-        public static IEnumerable<ProjectEntry> GetSorted(IEnumerable<ProjectEntry> projects)
+        public ProjectsSorter(CultureInfo cultureInfo)
+        {
+            comparer = new ProjectEntryComparer(cultureInfo);
+        }
+
+        private readonly ProjectEntryComparer comparer = new ProjectEntryComparer();
+
+        public IEnumerable<ProjectEntry> GetSorted(IEnumerable<ProjectEntry> projects)
         {
             return projects.OrderBy(p => p, comparer);
         }
 
-        public static bool IsSorted(IEnumerable<ProjectEntry> projects)
+        public bool IsSorted(IEnumerable<ProjectEntry> projects)
         {
             if (projects.Count() < 2)
             {
