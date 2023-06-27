@@ -1,6 +1,8 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OrderProjectsInSlnFile;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace UnitTests
 {
@@ -10,8 +12,8 @@ namespace UnitTests
         [TestMethod]
         public void SetParentMethodAssignsParentEntry()
         {
-            var parent = new ProjectEntry("Parent", "GUID", Range.Empty);
-            var child = new ProjectEntry("Child", "GUID", Range.Empty);
+            var parent = new ProjectEntry("Parent", "GUID", true, Range.Empty);
+            var child = new ProjectEntry("Child", "GUID", false, Range.Empty);
             child.SetParent(parent, Range.Empty);
             Assert.AreEqual(parent, child.Parent);
         }
@@ -20,39 +22,54 @@ namespace UnitTests
         [ExpectedException(typeof(InvalidOperationException))]
         public void SetParentThrowsExceptionIfEntryAlreadyHasParent()
         {
-            var parent = new ProjectEntry("Parent", "GUID", Range.Empty);
-            var child = new ProjectEntry("Child", "GUID", Range.Empty);
+            var parent = new ProjectEntry("Parent", "GUID", true, Range.Empty);
+            var child = new ProjectEntry("Child", "GUID", true, Range.Empty);
             child.SetParent(parent, Range.Empty);
             child.SetParent(parent, Range.Empty);
         }
 
         [TestMethod]
-        public void GetFullPathhReturnsNameEntryForWithoutParent()
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void SetParentThrowsExceptionIfParentIsNotSolutionFolder()
         {
-            var entry = new ProjectEntry("Name", "GUID", Range.Empty);
-            Assert.AreEqual("Name", entry.GetFullPath());
-        }
-
-        [TestMethod]
-        public void GetFullPathMethodReturnsParentNameForChildWithSingleParent()
-        {
-            var parent = new ProjectEntry("Parent", "GUID", Range.Empty);
-            var child = new ProjectEntry("Child", "GUID", Range.Empty);
+            var parent = new ProjectEntry("Parent", "GUID", false, Range.Empty);
+            var child = new ProjectEntry("Child", "GUID", true, Range.Empty);
             child.SetParent(parent, Range.Empty);
-            Assert.AreEqual(string.Format("Parent{0}Child", ProjectEntry.ParentDelimiter), child.GetFullPath());
         }
 
         [TestMethod]
-        public void GetFullPathMethodReturnsConcatenatedParentNamesForChildWithMultipleParents()
+        public void GetFullPathMethodReturnsStackWithsNameEntryForAnEntryWithoutParent()
         {
-            var grandgrandparent = new ProjectEntry("GrandGrandParent", "GUID", Range.Empty);
-            var grandparent = new ProjectEntry("GrandParent", "GUID", Range.Empty);
+            var singleEntry = new ProjectEntry("Name", "GUID", true, Range.Empty);
+
+            var pathNames = singleEntry.GetFullPath().Select(entry => entry.Name);
+            Assert.IsTrue(pathNames.SequenceEqual(new string[] { "Name" }));
+        }
+
+        [TestMethod]
+        public void GetFullPathMethodReturnsStackWithParentNameForChildWithSingleParent()
+        {
+            var parent = new ProjectEntry("Parent", "GUID", true, Range.Empty);
+            var child = new ProjectEntry("Child", "GUID", true, Range.Empty);
+            child.SetParent(parent, Range.Empty);
+
+            var pathNames = child.GetFullPath().Select(entry => entry.Name);
+            Assert.IsTrue(pathNames.SequenceEqual(new Stack<string>(new string[] { "Child", "Parent" })));
+        }
+
+        [TestMethod]
+        public void GetFullPathMethodReturnsStackWithParentNamesForChildWithMultipleParents()
+        {
+            var grandgrandparent = new ProjectEntry("GrandGrandParent", "GUID", true, Range.Empty);
+            var grandparent = new ProjectEntry("GrandParent", "GUID", true, Range.Empty);
             grandparent.SetParent(grandgrandparent, Range.Empty);
-            var parent = new ProjectEntry("Parent", "GUID", Range.Empty);
+            var parent = new ProjectEntry("Parent", "GUID", true, Range.Empty);
             parent.SetParent(grandparent, Range.Empty);
-            var child = new ProjectEntry("Child", "GUID", Range.Empty);
+            var child = new ProjectEntry("Child", "GUID", true, Range.Empty);
             child.SetParent(parent, Range.Empty);
-            Assert.AreEqual(string.Format("GrandGrandParent{0}GrandParent{0}Parent{0}Child", ProjectEntry.ParentDelimiter), child.GetFullPath());
+
+            var pathNames = child.GetFullPath().Select(entry => entry.Name);
+            Assert.IsTrue(pathNames.SequenceEqual(new Stack<string>(new string[] { "Child", "Parent", "GrandParent", "GrandGrandParent" })));
         }
     }
 }

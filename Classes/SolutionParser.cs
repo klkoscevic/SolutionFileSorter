@@ -42,7 +42,7 @@ namespace OrderProjectsInSlnFile
 
         private Range ReadProjectLines()
         {
-            const string patternProject = $"^Project\\(\\\"{patternGuid}\\\"\\)\\s*=\\s*\\\"([^\\\"]+)\\\"\\s*,\\s*\\\"[^\\\"]+\\\"\\s*,\\s*\\\"({patternGuid})\\\"\\s*[\\r?\\n]";
+            const string patternProject = $"^Project\\(\\\"({patternGuid})\\\"\\)\\s*=\\s*\\\"([^\\\"]+)\\\"\\s*,\\s*\\\"[^\\\"]+\\\"\\s*,\\s*\\\"({patternGuid})\\\"\\s*[\\r?\\n]";
             const string patternProjectEnd = @"^\s*EndProject\s*[\r?\n]";
 
             var regexProject = new Regex(patternProject, RegexOptions.Multiline);
@@ -63,11 +63,13 @@ namespace OrderProjectsInSlnFile
                     throw new FileFormatException(MessageProjectEndNotFound);
                 }
 
-                var projectName = projectMatch.Groups[1].Value;
-                var guid = projectMatch.Groups[2].Value;
+                var typeGuid = projectMatch.Groups[1].Value;
+                var isSolutionFolder = typeGuid == SolutionFolderGuid;
+                var projectName = projectMatch.Groups[2].Value;
+                var guid = projectMatch.Groups[3].Value;
                 var projectStart = projectMatch.Index;
                 projectEnd = projectEndMatch.Index + projectEndMatch.Length;
-                var projectEntry = new ProjectEntry(name: projectName, guid: guid, content: new Range(projectStart, projectEnd));
+                var projectEntry = new ProjectEntry(projectName, guid: guid, isSolutionFolder: isSolutionFolder, content: new Range(projectStart, projectEnd));
                 projectEntries.Add(projectEntry);
             }
             return projectEntries.Any() ? new Range(projectEntries.First().Content.Start, projectEntries.Last().Content.End) : Range.Empty;
@@ -157,6 +159,8 @@ namespace OrderProjectsInSlnFile
         // This regex is used in several places so we make it a class member to avoid multiple initalization.
         const string endGlobalSectionPattern = @"^\s+EndGlobalSection";
         private readonly Regex endGlobalSectionRegex = new Regex(endGlobalSectionPattern, RegexOptions.Multiline);
+
+        private const string SolutionFolderGuid = "{2150E333-8FDC-42A3-9474-1A3956D46DE8}";
 
         private const string MessageInvalidFile = "Not a valid Microsoft Visual Studio Solution File";
         private const string MessageProjectEntriesOverlapping = "Project entries are overlapping";

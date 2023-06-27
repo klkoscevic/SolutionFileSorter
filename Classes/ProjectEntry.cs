@@ -8,14 +8,17 @@ namespace OrderProjectsInSlnFile
     public class ProjectEntry
     {
         // Prefer using constructor instead of public setters in order to protect data from uncontrolled changes
-        public ProjectEntry(string name, string guid, Range content)
+        public ProjectEntry(string name, string guid, bool isSolutionFolder, Range content)
         {
             Name = name;
             Guid = guid;
+            IsSolutionFolder = isSolutionFolder;
             Parent = null;
             Content = content;
             Nesting = Range.Empty;
         }
+
+        public bool IsSolutionFolder { get; private set; }
 
         public string Name { get; private set; }
 
@@ -36,34 +39,33 @@ namespace OrderProjectsInSlnFile
         {
             if (Parent != null)
             {
-                const string message = "'{0}' entry already has a parent";
-                throw new InvalidOperationException(string.Format(message, Name));
+                throw new InvalidOperationException($"'{Name}' entry already has a parent");
+            }
+            if (!parent.IsSolutionFolder)
+            {
+                throw new InvalidOperationException($"Parent '{parent.Name}' is not a solution folder");
             }
             Parent = parent;
             Nesting = nesting;
         }
 
-        public string GetFullPath()
+        // Gets full path with this project entry as the first elements, followed by optional
+        // parent project enties in reverse order.
+        public Stack<ProjectEntry> GetFullPath()
         {
-            if (Parent == null)
-            {
-                return Name;
-            }
-            var result = new StringBuilder(Name);
+            var result = new Stack<ProjectEntry>();
             var parent = this;
-            while ((parent = parent.Parent) != null)
+            do
             {
-                result.Insert(0, $"{parent.Name}{ParentDelimiter}");
-                parent = parent.Parent;
-            }
-            return result.ToString();
+                result.Push(parent);
+            } while ((parent = parent.Parent) != null);
+            return result;
         }
 
         private readonly List<Range> configurationPlatforms = new List<Range>();
 
         public IEnumerable<Range> ConfigurationPlatforms { get { return configurationPlatforms; } }
 
-        // Character before first valid character (space) is used as a delimiter to ensure correct sorting.
-        public const char ParentDelimiter = '\t';
+       
     }
 }
