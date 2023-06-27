@@ -19,6 +19,7 @@ namespace OrderProjectsInSlnFile
                 return;
             }
             projectConfigurationPlatforms = ReadProjectConfigurationPlatforms();
+            projectNestings = ReadProjectNestings();
         }
 
         public IEnumerable<ProjectEntry> ProjectEntries { get { return projectEntries; } }
@@ -26,6 +27,7 @@ namespace OrderProjectsInSlnFile
         // These ranges will be used to replace contents sorted alphabetically.
         public readonly Range projects;
         public readonly Range projectConfigurationPlatforms = Range.Empty;
+        public readonly Range projectNestings = Range.Empty;
 
         // Solution file must start with "Microsoft Visual Studio Solution File, Format Version n.00". See e.g. https://stackoverflow.com/a/32753067 
         private void CheckHeader()
@@ -40,7 +42,6 @@ namespace OrderProjectsInSlnFile
 
         private Range ReadProjectLines()
         {
-            const string patternGuid = @"\{[0-9a-fA-F]{8}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{12}\}";
             const string patternProject = $"^Project\\(\\\"{patternGuid}\\\"\\) = \\\"([^\\\"]+)\\\", \\\"[^\\\"]+\\\", \\\"({patternGuid})\\\"";
             const string patternProjectEnd = @"^EndProject";
 
@@ -79,14 +80,16 @@ namespace OrderProjectsInSlnFile
             var projectConfigurationMatch = projectConfigurationRegex.Match(fileContent, projects.End);
             if (!projectConfigurationMatch.Success)
             {
-                throw new FileFormatException(MessageConfiurationPlatformsNotFound);
+                throw new FileFormatException(MessageConfigurationPlatformsNotFound);
             }
-            var projectConfigurationEndMatch = endGlobalSectionRegex.Match(fileContent, projectConfigurationMatch.Index + projectConfigurationMatch.Length);
+
+            var start = projectConfigurationMatch.Index + projectConfigurationMatch.Length;
+            var projectConfigurationEndMatch = endGlobalSectionRegex.Match(fileContent, start);
+            
             if (!projectConfigurationEndMatch.Success)
             {
                 throw new FileFormatException(MessageEndTagForConfigurationPlatformsNotFound);
             }
-            var start = projectConfigurationMatch.Index + projectConfigurationMatch.Length;
             var end = projectConfigurationEndMatch.Index;
             // Limit regex searches up to the end of the section.
             var configurationPlatformSection = fileContent.Substring(0, end);
@@ -102,19 +105,64 @@ namespace OrderProjectsInSlnFile
             return new Range(start, end);
         }
 
+        private Range ReadProjectNestings()
+        {
+            const string projectNestingPattern = @"^\s+GlobalSection\(NestedProjects\) = preSolution";
+            var projectNestingRegex = new Regex(projectNestingPattern, RegexOptions.Multiline);
+            var projectNestingMatch = projectNestingRegex.Match(fileContent, projectConfigurationPlatforms.End);
+            if (!projectNestingMatch.Success)
+            {
+                return Range.Empty;
+            }
+            var start = projectNestingMatch.Index + projectNestingMatch.Length;
+            var projectConfigurationEndMatch = endGlobalSectionRegex.Match(fileContent, start);
+            if (!projectConfigurationEndMatch.Success)
+            {
+                throw new FileFormatException(MessageEndTagForNestedProjectsNotFound);
+            }
+            var end = projectConfigurationEndMatch.Index;
+            // Limit regex searches up to the end of the section.
+            var nestedProjectSection = fileContent.Substring(0, end);
+            const string nestingEntryPattern = @$"^\s+({patternGuid}) = ({patternGuid})\s+$";
+            var nestingRegex = new Regex(nestingEntryPattern, RegexOptions.Multiline);
+            var nestingMatches = nestingRegex.Matches(nestedProjectSection, start);
+            foreach (Match match in nestingMatches)
+            {
+                var childGuid = match.Groups[1].Value;
+                var child = FindProjectEntryByGuid(childGuid);
+                var parentGuid = match.Groups[2].Value;
+                var parent = FindProjectEntryByGuid(parentGuid);
+                child.SetParent(parent);
+            }
+            return new Range(start, end);
+        }
+
+        private ProjectEntry FindProjectEntryByGuid(string guid)
+        {
+            var found = projectEntries.FirstOrDefault(pe => pe.Guid == guid);
+            if (found == null)
+            {
+                throw new ArgumentException($"Entry with GUID '{guid}' not found");
+            }
+            return found;
+        }
+
         private readonly string fileContent;
 
         private readonly List<ProjectEntry> projectEntries = new List<ProjectEntry>();
+
+        // These patterns and regex are used in several places so we make it a class member to avoid multiple initalization.
+        const string patternGuid = @"\{[0-9a-fA-F]{8}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{12}\}";
 
         // This regex is used in several places so we make it a class member to avoid multiple initalization.
         const string endGlobalSectionPattern = @"^\s+EndGlobalSection";
         private readonly Regex endGlobalSectionRegex = new Regex(endGlobalSectionPattern, RegexOptions.Multiline);
 
-        // These message strings are public to make them visible in tests.
-        public const string MessageInvalidFile = "Not a valid Microsoft Visual Studio Solution File";
-        public const string MessageProjectEntriesOverlapping = "Project entries are overlapping";
-        public const string MessageProjectEndNotFound = "'ProjectEnd' tag not found";
-        public const string MessageConfiurationPlatformsNotFound = "'GlobalSection(ProjectConfigurationPlatforms)' tag not found";
-        public const string MessageEndTagForConfigurationPlatformsNotFound = "'EndGlobalSection' tag for GlobalSection(ProjectConfigurationPlatforms) not found";
+        private const string MessageInvalidFile = "Not a valid Microsoft Visual Studio Solution File";
+        private const string MessageProjectEntriesOverlapping = "Project entries are overlapping";
+        private const string MessageProjectEndNotFound = "'ProjectEnd' tag not found";
+        private const string MessageConfigurationPlatformsNotFound = "'GlobalSection(ProjectConfigurationPlatforms)' tag not found";
+        private const string MessageEndTagForConfigurationPlatformsNotFound = "'EndGlobalSection' tag for 'GlobalSection(ProjectConfigurationPlatforms)' not found";
+        private const string MessageEndTagForNestedProjectsNotFound = "'EndGlobalSection' tag for 'GlobalSection(NestedProjects)' not found";
     }
 }

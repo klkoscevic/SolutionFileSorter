@@ -12,7 +12,7 @@ namespace UnitTests
     public class SolutionParserTests
     {
         [TestMethod]
-        [ExpectedException(typeof(FileFormatException), SolutionParser.MessageInvalidFile)]
+        [ExpectedException(typeof(FileFormatException))]
         public void ConstructorThrowsExceptionForFileWithMissingHeader()
         {
             const string sln = "\r\n# Visual Studio Version 17";
@@ -23,7 +23,7 @@ namespace UnitTests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(FileFormatException), SolutionParser.MessageInvalidFile)]
+        [ExpectedException(typeof(FileFormatException))]
         public void ConstructorThrowsExceptionForFileThatDoesNotStartWithHeader()
         {
             const string sln = "a\r\n\r\nMicrosoft Visual Studio Solution File, Format Version 12.00";
@@ -34,7 +34,7 @@ namespace UnitTests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(FileFormatException), SolutionParser.MessageInvalidFile)]
+        [ExpectedException(typeof(FileFormatException))]
         public void ConstructorThrowsExceptionIfHeaderHasVersionIsLessThan8()
         {
             const string sln = "\r\n\r\nMicrosoft Visual Studio Solution File, Format Version 7.00";
@@ -45,7 +45,7 @@ namespace UnitTests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(FileFormatException), SolutionParser.MessageInvalidFile)]
+        [ExpectedException(typeof(FileFormatException))]
         public void ConstructorThrowsExceptionIfHeaderVersionIsNotFollowedByTwoDigitsAfterDot()
         {
             const string sln = "\r\n\r\nMicrosoft Visual Studio Solution File, Format Version 12.";
@@ -56,7 +56,7 @@ namespace UnitTests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(FileFormatException), SolutionParser.MessageInvalidFile)]
+        [ExpectedException(typeof(FileFormatException))]
         public void ConstructorThrowsExceptionIfHeaderVersionIsFollowedByTwoZeroesAfterDot()
         {
             const string sln = "\r\n\r\nMicrosoft Visual Studio Solution File, Format Version 12.01";
@@ -191,6 +191,27 @@ namespace UnitTests
             Assert.IsTrue(configurationPlatforms.Contains(new Range(4241, 4320)));
             Assert.IsTrue(configurationPlatforms.Contains(new Range(4321, 4402)));
             Assert.IsTrue(configurationPlatforms.Contains(new Range(4403, 4482)));
+        }
+
+        [TestMethod]
+        public void ProjectEntryProvidesParentPathForAProjectInSolutionFolder()
+        {
+            var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("UnitTests.Resources.SolutionWithMultipleProjectsOneInSolutionFolder");
+            SolutionParser slnFile = null;
+            using (var reader = new StreamReader(stream))
+            {
+                slnFile = new SolutionParser(reader);
+            }
+
+            var projectEntries = slnFile.ProjectEntries;
+            Assert.AreEqual(4, projectEntries.Count());
+
+            var solutionFolder = projectEntries.FirstOrDefault(pe => pe.Name == "Folder with project");
+            Assert.IsNotNull(solutionFolder);
+
+            var cppConsoleApp = projectEntries.FirstOrDefault(pe => pe.Name == "VisualCppConsoleApplication");
+            Assert.IsNotNull(cppConsoleApp);
+            Assert.AreEqual(solutionFolder, cppConsoleApp.Parent);
         }
     }
 }
