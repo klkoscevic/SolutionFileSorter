@@ -68,25 +68,13 @@ namespace OrderProjectsInSlnFile
 
             try
             {
-                SolutionFile solutionFile = null;
+                SolutionParser solutionFile = null;
                 System.Text.Encoding encoding = null;
 
                 using (var reader = new StreamReader(solutionFilePath))
                 {
-                    solutionFile = new SolutionFile(reader);
+                    solutionFile = new SolutionParser(reader);
                     encoding = reader.CurrentEncoding;
-                }
-
-                solutionFile.Sort();
-                var linesInFile = solutionFile.LinesInFile;
-
-                using (var writer = new StreamWriter(solutionFilePath, false, encoding))
-                {
-                    foreach (var line in linesInFile)
-                    {
-                        writer.WriteLine(line);
-                    }
-                    writer.Flush();
                 }
 
 
