@@ -298,5 +298,27 @@ namespace UnitTests
             Assert.IsNotNull(cppConsoleApp);
             Assert.AreEqual(solutionFolder, cppConsoleApp.Parent);
         }
+
+        [TestMethod]
+        public void ProjectEntriesCollectionContainsRangesForProjectEntryWithMultipleLines()
+        {
+            var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("UnitTests.Resources.SolutionWithVsPackageProject");
+            SolutionParser slnFile = null;
+            using (var reader = new StreamReader(stream))
+            {
+                slnFile = new SolutionParser(reader);
+            }
+
+            var projectEntries = slnFile.ProjectEntries;
+            Assert.AreEqual(17, projectEntries.Count());
+
+            var vsPackageApp = projectEntries.FirstOrDefault(pe => pe.Name == "VSPackage");
+            Assert.IsNotNull(vsPackageApp);
+            Assert.AreEqual(new Range(1295, 1600), vsPackageApp.Content);
+            Assert.AreEqual(20, vsPackageApp.ConfigurationPlatforms.Count());
+            var vsPackageFolder = projectEntries.FirstOrDefault(pe => pe.Name == "VS Package");
+            Assert.IsNotNull(vsPackageFolder);
+            Assert.AreEqual(vsPackageFolder, vsPackageApp.Parent);
+        }
     }
 }

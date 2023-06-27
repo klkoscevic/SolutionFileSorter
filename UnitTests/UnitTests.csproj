@@ -77,6 +77,7 @@
     <EmbeddedResource Include="Resources\SolutionWithFourProjectsInTheRootWithVariousSpacings" />
     <EmbeddedResource Include="Resources\SolutionWithProjectNamesContainingCroatianAndGermanCharacters" />
     <EmbeddedResource Include="Resources\SolutionWithWhitespacesInProjectAndFolderNames" />
+    <EmbeddedResource Include="Resources\SolutionWithVsPackageProject" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\OrderProjectsInSlnFile.csproj">
