@@ -21,7 +21,7 @@
         <Icon guid="ImageCatalogGuid" id="SortAscending" />
         <CommandFlag>IconIsMoniker</CommandFlag>
         <CommandFlag>DynamicVisibility</CommandFlag>
-        <CommandFlag>DefaultDisabled</CommandFlag>
+        <CommandFlag>DefaultInvisible</CommandFlag>
         <Strings>
           <ButtonText>&amp;Sort projects in .sln file</ButtonText>
           <LocCanonicalName>.OrderProjectsInSlnFile.MyCommand</LocCanonicalName>
@@ -29,6 +29,11 @@
       </Button>
     </Buttons>
   </Commands>
+
+  <VisibilityConstraints>
+    <VisibilityItem guid="OrderProjectsInSlnFile"
+                    id="MyCommand" context="UICONTEXT_SolutionHasMultipleProjects" />
+  </VisibilityConstraints>
 
   <Symbols>
     <GuidSymbol name="OrderProjectsInSlnFile" value="{7051c6e7-5c88-4117-847c-7288d821a87d}">

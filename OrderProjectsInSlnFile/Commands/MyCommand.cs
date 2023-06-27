@@ -35,44 +35,35 @@ namespace OrderProjectsInSlnFile
         {
             await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
             DTE dte = await Package.GetServiceAsync(typeof(DTE)) as DTE;
-            Command.Enabled = !string.IsNullOrEmpty(dte.Solution.FileName);
+            string filename = dte.Solution.FullName;
+            if (string.IsNullOrEmpty(filename) || dte.Solution.Projects.Count <= 1)
+            {
+                Command.Visible = false;
+                return;
+            }
+
+            using (var reader = new StreamReader(filename))
+            {
+                var sorter = new SlnProjectsSorter(reader);
+                Command.Visible = true;
+                Command.Enabled = !sorter.AlreadySorted;
+            }
         }
 
         public void OrderProjects(General options, EnvDTE.Solution solution)
         {
             ThreadHelper.ThrowIfNotOnUIThread();
-            var solutionFilePath = solution.FileName;
-
-            if (string.IsNullOrEmpty(solutionFilePath) || !File.Exists(solutionFilePath))
+            SlnProjectsSorter sorter;
+            using (var reader = new StreamReader(solution.FullName))
             {
-                System.Windows.Forms.MessageBox.Show($"Solution file '{solutionFilePath}' does not exist.", "File does not exist", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                return;
+                sorter = new SlnProjectsSorter(reader);
             }
-
-            try
+            if (!sorter.AlreadySorted)
             {
-                SolutionParser solutionFile = null;
-                System.Text.Encoding encoding = null;
-                using (var reader = new StreamReader(solutionFilePath))
+                using (var writer = new StreamWriter(solution.FullName))
                 {
-                    solutionFile = new SolutionParser(reader);
-                    encoding = reader.CurrentEncoding;
+                    sorter.WriteSorted(writer);
                 }
-
-                if (!options.DoNotShowMesssageAnymore)
-                {
-                    MyMessageDialog dialogForm = new MyMessageDialog(Path.GetFileName(solutionFilePath));
-                    DialogResult result = dialogForm.ShowDialog();
-                    if (result == DialogResult.OK)
-                    {
-                        options.DoNotShowMesssageAnymore = dialogForm.DoNotShowMesssageAnymoreChecked;
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                System.Windows.Forms.MessageBox.Show(ex.Message, "An error occurred", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
     }
