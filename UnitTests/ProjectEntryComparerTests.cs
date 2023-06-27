@@ -42,11 +42,11 @@ namespace UnitTests
         {
             var pe1 = new ProjectEntry("abc", "guid", Range.Empty);
             var parent1 = new ProjectEntry("parent1", "guid", Range.Empty);
-            pe1.SetParent(parent1);
+            pe1.SetParent(parent1, Range.Empty);
 
             var pe2 = new ProjectEntry("abc", "guid", Range.Empty);
             var parent2 = new ProjectEntry("parent2", "guid", Range.Empty);
-            pe2.SetParent(parent2);
+            pe2.SetParent(parent2, Range.Empty);
 
             Assert.IsTrue(comparer.Compare(pe1, pe2) < 0);
         }
@@ -56,10 +56,10 @@ namespace UnitTests
         {
             var pe1 = new ProjectEntry("abcd", "guid", Range.Empty);
             var parent = new ProjectEntry("parent", "guid", Range.Empty);
-            pe1.SetParent(parent);
+            pe1.SetParent(parent, Range.Empty);
 
             var pe2 = new ProjectEntry("abc", "guid", Range.Empty);
-            pe2.SetParent(parent);
+            pe2.SetParent(parent, Range.Empty);
 
             Assert.IsTrue(comparer.Compare(pe1, pe2) > 0);
         }
