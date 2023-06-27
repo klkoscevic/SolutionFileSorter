@@ -47,6 +47,7 @@
     <Compile Include="ProjectSorterTests.cs" />
     <Compile Include="SolutionParserTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SlnProjectSorterTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="MSTest.TestAdapter">
@@ -95,6 +96,15 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\SolutionWithVsPackageProject" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\SolutionWithFourProjectsInTheRoot.sorted" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\SolutionWithMultipleProjectsOneInSolutionFolder.sorted" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\SolutionWithFourProjectsInTheRootLfLineEndings.sorted" />
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
