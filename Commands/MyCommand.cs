@@ -76,8 +76,6 @@ namespace OrderProjectsInSlnFile
                     encoding = reader.CurrentEncoding;
                 }
 
-                new ProjectsSorter().GetSorted(slnFile.ProjectEntries);
-
                 if (!options.DoNotShowMesssageAnymore)
                 {
                     MyMessageDialog dialogForm = new MyMessageDialog(Path.GetFileName(solutionFilePath));
