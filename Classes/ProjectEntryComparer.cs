@@ -6,8 +6,7 @@ namespace OrderProjectsInSlnFile
     {
         public int Compare(ProjectEntry x, ProjectEntry y)
         {
-            int result = string.Compare(x.GetParentPath(), y.GetParentPath(), true);
-            return result != 0 ? result : string.Compare(x.Name, y.Name);
+            return string.Compare(x.GetFullPath(), y.GetFullPath(), StringComparison.OrdinalIgnoreCase);
         }
     }
 }

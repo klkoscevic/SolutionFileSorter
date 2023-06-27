@@ -39,15 +39,15 @@ namespace OrderProjectsInSlnFile
             Parent = parent;
         }
 
-        public string GetParentPath()
+        public string GetFullPath()
         {
             if (Parent == null)
             {
-                return string.Empty;
+                return Name;
             }
-            var result = new StringBuilder(Parent.Name);
-            var parent = Parent.Parent;
-            while (parent != null)
+            var result = new StringBuilder(Name);
+            var parent = this;
+            while ((parent = parent.Parent) != null)
             {
                 result.Insert(0, $"{parent.Name}{ParentDelimiter}");
                 parent = parent.Parent;
@@ -60,6 +60,6 @@ namespace OrderProjectsInSlnFile
         public IEnumerable<Range> ConfigurationPlatforms { get { return configurationPlatforms; } }
 
         // Character before first valid character (space) is used as a delimiter to ensure correct sorting.
-        public const char ParentDelimiter = (char)(' ' - 1);
+        public const char ParentDelimiter = '\t';
     }
 }
