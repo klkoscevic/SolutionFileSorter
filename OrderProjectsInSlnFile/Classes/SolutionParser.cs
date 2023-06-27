@@ -16,22 +16,22 @@ namespace OrderProjectsInSlnFile
         /// <param name="reader"></param>
         public SolutionParser(TextReader reader)
         {
-            fileContent = reader.ReadToEnd();
+            FileContent = reader.ReadToEnd();
 
             CheckHeader();
-            projects = ReadProjectLines();
-            if (projects.IsEmpty())
+            Projects = ReadProjectLines();
+            if (Projects.IsEmpty())
             {
                 return;
             }
-            projectConfigurationPlatforms = ReadProjectConfigurationPlatforms();
-            projectNestings = ReadProjectNestings();
+            ProjectConfigurationPlatforms = ReadProjectConfigurationPlatforms();
+            ProjectNestings = ReadProjectNestings();
         }
         
         /// <summary>
         /// Content of the original .sln file.
         /// </summary>
-        public readonly string fileContent;
+        public readonly string FileContent;
 
         /// <summary>
         /// Collection of <c>ProjectEntry</c> objects identified in the file.
@@ -44,25 +44,25 @@ namespace OrderProjectsInSlnFile
         /// Range in the .sln file inside which project entries (starting with <c>ProjectStart</c>, ending with <c>ProjectEnd</c>) are defined.
         /// Range starts with the first project entry, ends with the last project entry.
         /// </summary>
-        public readonly Range projects;
+        public readonly Range Projects;
 
         /// <summary>
         /// Range in the .sln file inside which project configuration platforms are defined (i.e. content of GlobalSection(ProjectConfigurationPlatforms) section).
         /// Range start corresponds to the first entry start in the section and end corresponds to the end of last entry.
         /// </summary>
-        public readonly Range projectConfigurationPlatforms = Range.Empty;
+        public readonly Range ProjectConfigurationPlatforms = Range.Empty;
 
         /// <summary>
         /// Range in the .sln file inside which project nestings are defined (i.e. content of GlobalSection(NestedProjects) section).
         /// Range start corresponds to the first entry start and end corresponds to the end of last entry.
         /// </summary>
-        public readonly Range projectNestings = Range.Empty;
+        public readonly Range ProjectNestings = Range.Empty;
 
         // Solution file must start with "Microsoft Visual Studio Solution File, Format Version n.00". See e.g. https://stackoverflow.com/a/32753067 
         private void CheckHeader()
         {
             const string patternFileHeader = @"\s*Microsoft Visual Studio Solution File, Format Version (8|9|1\d)\.00";
-            var match = Regex.Match(fileContent, patternFileHeader);
+            var match = Regex.Match(FileContent, patternFileHeader);
             if (!match.Success || match.Index != 0)
             {
                 throw new FileFormatException(MessageInvalidFile);
@@ -77,7 +77,7 @@ namespace OrderProjectsInSlnFile
             var regexProject = new Regex(patternProject, RegexOptions.Multiline);
             var regexProjectEnd = new Regex(patternProjectEnd, RegexOptions.Multiline);
 
-            var projectMatches = regexProject.Matches(fileContent);
+            var projectMatches = regexProject.Matches(FileContent);
             int projectEnd = 0;
             foreach (Match projectMatch in projectMatches)
             {
@@ -86,7 +86,7 @@ namespace OrderProjectsInSlnFile
                     throw new FileFormatException(MessageProjectEntriesOverlapping);
                 }
 
-                var projectEndMatch = regexProjectEnd.Match(fileContent, projectMatch.Index + projectMatch.Length);
+                var projectEndMatch = regexProjectEnd.Match(FileContent, projectMatch.Index + projectMatch.Length);
                 if (!projectEndMatch.Success)
                 {
                     throw new FileFormatException(MessageProjectEndNotFound);
@@ -108,20 +108,20 @@ namespace OrderProjectsInSlnFile
         {
             const string projectConfigurationPattern = @"^\s+GlobalSection\(ProjectConfigurationPlatforms\) = postSolution\s*[\r?\n]";
             var projectConfigurationRegex = new Regex(projectConfigurationPattern, RegexOptions.Multiline);
-            var projectConfigurationMatch = projectConfigurationRegex.Match(fileContent, projects.End);
+            var projectConfigurationMatch = projectConfigurationRegex.Match(FileContent, Projects.End);
             if (!projectConfigurationMatch.Success)
             {
                 throw new FileFormatException(MessageConfigurationPlatformsNotFound);
             }
             var start = projectConfigurationMatch.Index + projectConfigurationMatch.Length;
-            var projectConfigurationEndMatch = endGlobalSectionRegex.Match(fileContent, start);
+            var projectConfigurationEndMatch = endGlobalSectionRegex.Match(FileContent, start);
             if (!projectConfigurationEndMatch.Success)
             {
                 throw new FileFormatException(MessageEndTagForConfigurationPlatformsNotFound);
             }
             var end = projectConfigurationEndMatch.Index;
             // Limit regex searches up to the end of the section.
-            var configurationPlatformSection = fileContent.Substring(0, end);
+            var configurationPlatformSection = FileContent.Substring(0, end);
             foreach (var project in projectEntries)
             {
                 var guid = project.Guid;
@@ -138,20 +138,20 @@ namespace OrderProjectsInSlnFile
         {
             const string projectNestingPattern = @"^\s+GlobalSection\(NestedProjects\) = preSolution\s*[\r?\n]";
             var projectNestingRegex = new Regex(projectNestingPattern, RegexOptions.Multiline);
-            var projectNestingMatch = projectNestingRegex.Match(fileContent, projectConfigurationPlatforms.End);
+            var projectNestingMatch = projectNestingRegex.Match(FileContent, ProjectConfigurationPlatforms.End);
             if (!projectNestingMatch.Success)
             {
                 return Range.Empty;
             }
             var start = projectNestingMatch.Index + projectNestingMatch.Length;
-            var projectConfigurationEndMatch = endGlobalSectionRegex.Match(fileContent, start);
+            var projectConfigurationEndMatch = endGlobalSectionRegex.Match(FileContent, start);
             if (!projectConfigurationEndMatch.Success)
             {
                 throw new FileFormatException(MessageEndTagForNestedProjectsNotFound);
             }
             var end = projectConfigurationEndMatch.Index;
             // Limit regex searches up to the end of the section.
-            var nestedProjectSection = fileContent.Substring(0, end);
+            var nestedProjectSection = FileContent.Substring(0, end);
             const string nestingEntryPattern = @$"^\s+({patternGuid}) = ({patternGuid})\s*[\r?\n]";
             var nestingRegex = new Regex(nestingEntryPattern, RegexOptions.Multiline);
             var nestingMatches = nestingRegex.Matches(nestedProjectSection, start);
