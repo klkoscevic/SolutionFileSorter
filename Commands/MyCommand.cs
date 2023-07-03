@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using Community.VisualStudio.Toolkit;
 using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Microsoft.VisualStudio.Shell;
 
 namespace OrderProjectsInSlnFile
 {
@@ -31,7 +32,7 @@ namespace OrderProjectsInSlnFile
                                               System.Windows.MessageBoxButton.YesNo,
                                               System.Windows.MessageBoxImage.Question) == System.Windows.MessageBoxResult.Yes)
             {
-                OrderProjects(options);
+                OrderProjects(options, dte.Solution);
             }
 
             dte.Solution.IsDirty = false;
@@ -48,52 +49,43 @@ namespace OrderProjectsInSlnFile
         private async Task UpdateCommandStateAsync()
         {
             await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
-            DTE dte = await Package.GetServiceAsync(typeof(DTE)) as DTE;
-            Command.Enabled = !string.IsNullOrEmpty(dte.Solution.FileName);
-        }
-        public void OrderProjects(General options, string solutionFilePath = null)
-        {
-            if (string.IsNullOrEmpty(solutionFilePath))
+            DTE dte = await Package.GetServiceAsync(typeof(DTE)) as DTE; string filename = dte.Solution.FullName;
+            if (string.IsNullOrEmpty(filename) || dte.Solution.Projects.Count <= 1)
             {
-                solutionFilePath = ((OrderProjectsInSlnFilePackage)Package).SolutionFilename;
-            }
-
-            if (string.IsNullOrEmpty(solutionFilePath) || !File.Exists(solutionFilePath))
-            {
-                System.Windows.Forms.MessageBox.Show($"Solution file '{solutionFilePath}' does not exist.", "File does not exist", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
+                Command.Visible = false;
                 return;
             }
 
-            try
+            using (var reader = new StreamReader(filename))
             {
-                SolutionParser slnFile = null;
-                System.Text.Encoding encoding = null;
+                var sorter = new SlnProjectsSorter(reader);
+                Command.Visible = true;
+                Command.Enabled = !sorter.AlreadySorted;
+            }
+        }
+        public void OrderProjects(General options, EnvDTE.Solution solution)
+        {
+            ThreadHelper.ThrowIfNotOnUIThread();
+            SlnProjectsSorter sorter;
+            using (var reader = new StreamReader(solution.FullName))
+            {
+                sorter = new SlnProjectsSorter(reader);
+            }
 
-                using (var reader = new StreamReader(solutionFilePath))
+            if (!options.DoNotShowMesssageAnymore)
+            {
+                MyMessageDialog dialogForm = new MyMessageDialog(Path.GetFileName(solution.FullName));
+                DialogResult result = dialogForm.ShowDialog();
+                if (result == DialogResult.OK)
                 {
-                    slnFile = new SolutionParser(reader);
-                    encoding = reader.CurrentEncoding;
-                }
-
-                if (!options.DoNotShowMesssageAnymore)
-                {
-                    MyMessageDialog dialogForm = new MyMessageDialog(Path.GetFileName(solutionFilePath));
-                    DialogResult result = dialogForm.ShowDialog();
-                    if (result == DialogResult.OK)
+                    if (options.DoNotShowMesssageAnymore != dialogForm.DoNotShowMesssageAnymoreChecked)
                     {
-                        if (options.DoNotShowMesssageAnymore != dialogForm.DoNotShowMesssageAnymoreChecked)
-                        {
-                            options.DoNotShowMesssageAnymore = dialogForm.DoNotShowMesssageAnymoreChecked;
-                            options.Save();
-                        }
+                        options.DoNotShowMesssageAnymore = dialogForm.DoNotShowMesssageAnymoreChecked;
+                        options.Save();
                     }
                 }
             }
-            catch (Exception ex)
-            {
-                System.Windows.Forms.MessageBox.Show(ex.Message, "An error occurred", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
+
         }
     }
 }
