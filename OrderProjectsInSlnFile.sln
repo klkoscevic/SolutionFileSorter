@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "UnitTests\Unit
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleOrderProjectsInSlnFile", "ConsoleOrderProjectsInSlnFile\ConsoleOrderProjectsInSlnFile.csproj", "{623CC6FC-C3A5-4E4B-A920-17E19F801572}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SortingLibrary", "ClassLibraries\Range\SortingLibrary.csproj", "{6CECEE77-FD62-40EA-97BA-DC8EE6280BB9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SortingLibrary", "SortingLibrary\SortingLibrary.csproj", "{6CECEE77-FD62-40EA-97BA-DC8EE6280BB9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

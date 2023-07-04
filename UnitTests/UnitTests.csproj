@@ -82,13 +82,13 @@
     <EmbeddedResource Include="Resources\SolutionWithMultipleProjectsOneInSolutionFolder.sorted" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ClassLibraries\Range\SortingLibrary.csproj">
-      <Project>{6cecee77-fd62-40ea-97ba-dc8ee6280bb9}</Project>
-      <Name>SortingLibrary</Name>
-    </ProjectReference>
     <ProjectReference Include="..\OrderProjectsInSlnFile.csproj">
       <Project>{ab7e19bc-a153-4676-ad3c-b382edbb4463}</Project>
       <Name>OrderProjectsInSlnFile</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SortingLibrary\SortingLibrary.csproj">
+      <Project>{6cecee77-fd62-40ea-97ba-dc8ee6280bb9}</Project>
+      <Name>SortingLibrary</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
