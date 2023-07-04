@@ -32,11 +32,8 @@ namespace OrderProjectsInSlnFile
                                               System.Windows.MessageBoxButton.YesNo,
                                               System.Windows.MessageBoxImage.Question) == System.Windows.MessageBoxResult.Yes)
             {
-                OrderProjects(options, dte.Solution);
+                OrderProjects(options, dte.Solution.FullName);
             }
-
-            dte.Solution.IsDirty = false;
-            ((OrderProjectsInSlnFilePackage)Package).IsSorted = true;
         }
 
         // Called every time menu with command is opened. Updates Enabled/Disabled state depending if a solution is opened or not.
@@ -63,18 +60,19 @@ namespace OrderProjectsInSlnFile
                 Command.Enabled = !sorter.AlreadySorted;
             }
         }
-        public void OrderProjects(General options, EnvDTE.Solution solution)
+        public void OrderProjects(General options, string solutionFullName)
         {
-            ThreadHelper.ThrowIfNotOnUIThread();
+                ThreadHelper.ThrowIfNotOnUIThread();
             SlnProjectsSorter sorter;
-            using (var reader = new StreamReader(solution.FullName))
+
+            using (var reader = new StreamReader(solutionFullName))
             {
                 sorter = new SlnProjectsSorter(reader);
             }
 
             if (!sorter.AlreadySorted)
             {
-                using (var writer = new StreamWriter(solution.FullName))
+                using (var writer = new StreamWriter(solutionFullName))
                 {
                     sorter.WriteSorted(writer);
                 }
@@ -82,8 +80,9 @@ namespace OrderProjectsInSlnFile
 
             if (!options.DoNotShowMesssageAnymore)
             {
-                MyMessageDialog dialogForm = new MyMessageDialog(Path.GetFileName(solution.FullName));
+                MyMessageDialog dialogForm = new MyMessageDialog(Path.GetFileName(solutionFullName));
                 DialogResult result = dialogForm.ShowDialog();
+
                 if (result == DialogResult.OK)
                 {
                     if (options.DoNotShowMesssageAnymore != dialogForm.DoNotShowMesssageAnymoreChecked)
