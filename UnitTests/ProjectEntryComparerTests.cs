@@ -1,6 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using OrderProjectsInSlnFile;
-using System;
+using SortingLibrary;
 
 namespace UnitTests
 {

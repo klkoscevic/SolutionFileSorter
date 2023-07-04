@@ -1,7 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using OrderProjectsInSlnFile;
-using System;
-using System.Collections.Generic;
+using SortingLibrary;
 using System.IO;
 using System.Linq;
 using System.Reflection;

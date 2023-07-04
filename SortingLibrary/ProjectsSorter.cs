@@ -2,7 +2,7 @@
 using System.Globalization;
 using System.Linq;
 
-namespace OrderProjectsInSlnFile
+namespace SortingLibrary
 {
     public class ProjectsSorter
     {

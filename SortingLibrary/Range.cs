@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace OrderProjectsInSlnFile
+namespace SortingLibrary
 {
     public class Range : IEquatable<Range>
     {

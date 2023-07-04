@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace OrderProjectsInSlnFile
+namespace SortingLibrary
 {
     public class SolutionParser
     {
@@ -44,7 +45,7 @@ namespace OrderProjectsInSlnFile
 
         private Range ReadProjectLines()
         {
-            const string patternProject = $"^Project\\(\\\"({patternGuid})\\\"\\)\\s*=\\s*\\\"([^\\\"]+)\\\"\\s*,\\s*\\\"[^\\\"]+\\\"\\s*,\\s*\\\"({patternGuid})\\\"\\s*[\\r?\\n]";
+            const string patternProject = "^Project\\(\\\"(" + patternGuid + ")\\\"\\)\\s*=\\s*\\\"([^\\\"]+)\\\"\\s*,\\s*\\\"[^\\\"]+\\\"\\s*,\\s*\\\"(" + patternGuid + ")\\\"\\s*[\\r?\\n]";
             const string patternProjectEnd = @"^\s*EndProject\s*[\r?\n]";
 
             var regexProject = new Regex(patternProject, RegexOptions.Multiline);
@@ -89,7 +90,7 @@ namespace OrderProjectsInSlnFile
 
             var start = projectConfigurationMatch.Index + projectConfigurationMatch.Length;
             var projectConfigurationEndMatch = endGlobalSectionRegex.Match(FileContent, start);
-            
+
             if (!projectConfigurationEndMatch.Success)
             {
                 throw new FileFormatException(MessageEndTagForConfigurationPlatformsNotFound);
@@ -100,7 +101,7 @@ namespace OrderProjectsInSlnFile
             foreach (var project in projectEntries)
             {
                 var guid = project.Guid;
-                var guidRegex = new Regex(@$"^\s+({guid})\..*[\r?\n]", RegexOptions.Multiline);
+                var guidRegex = new Regex($@"^\s+({guid})\..*[\r?\n]", RegexOptions.Multiline);
                 foreach (Match match in guidRegex.Matches(configurationPlatformSection, start))
                 {
                     project.AddConfigurationPlatform(new Range(match.Index, match.Index + match.Length));
@@ -127,7 +128,7 @@ namespace OrderProjectsInSlnFile
             var end = projectConfigurationEndMatch.Index;
             // Limit regex searches up to the end of the section.
             var nestedProjectSection = FileContent.Substring(0, end);
-            const string nestingEntryPattern = @$"^\s+({patternGuid}) = ({patternGuid})\s*[\r?\n]";
+            const string nestingEntryPattern = "^\\s+(" + patternGuid + ") = (" + patternGuid + ")\\s*[\r?\n]";
             var nestingRegex = new Regex(nestingEntryPattern, RegexOptions.Multiline);
             var nestingMatches = nestingRegex.Matches(nestedProjectSection, start);
             foreach (Match match in nestingMatches)

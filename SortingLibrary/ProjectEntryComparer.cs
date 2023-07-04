@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Globalization;
 
-namespace OrderProjectsInSlnFile
+namespace SortingLibrary
 {
     public class ProjectEntryComparer : IComparer<ProjectEntry>
     {

@@ -4,10 +4,9 @@ global using System;
 global using Task = System.Threading.Tasks.Task;
 using EnvDTE;
 using Microsoft.VisualStudio.Shell.Interop;
-using System.Globalization;
+using SortingLibrary;
 using System.IO;
 using System.Runtime.InteropServices;
-using System.Text;
 using System.Threading;
 
 namespace OrderProjectsInSlnFile

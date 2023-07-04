@@ -1,9 +1,7 @@
-﻿using Microsoft.VisualStudio.RpcContracts.Utilities;
+﻿using System;
 using System.Collections.Generic;
-using System.Text;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.TextBox;
 
-namespace OrderProjectsInSlnFile
+namespace SortingLibrary
 {
     public class ProjectEntry
     {
@@ -66,6 +64,6 @@ namespace OrderProjectsInSlnFile
 
         public IEnumerable<Range> ConfigurationPlatforms { get { return configurationPlatforms; } }
 
-       
+
     }
 }

@@ -3,7 +3,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 
-namespace OrderProjectsInSlnFile
+namespace SortingLibrary
 {
     /// <summary>
     /// Class that writes sorted project entires. 

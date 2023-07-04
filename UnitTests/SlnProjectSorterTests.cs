@@ -1,9 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using OrderProjectsInSlnFile;
-using System;
+using SortingLibrary;
 using System.IO;
 using System.Reflection;
-using System.Runtime.Remoting.Messaging;
 
 namespace UnitTests
 {
