@@ -1,10 +1,6 @@
-﻿using OrderProjectsInSlnFile;
+﻿using SortingLibrary;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ConsoleOrderProjectsInSlnFile
 {
@@ -20,26 +16,27 @@ namespace ConsoleOrderProjectsInSlnFile
 
             string solutionFilePath = args[0];
 
-            Encoding encoding = null;
-            SolutionFile slnFile = null;
+            SlnProjectsSorter sorter;
+
             using (var reader = new StreamReader(solutionFilePath))
             {
-                slnFile = new SolutionFile(reader);
-                encoding = reader.CurrentEncoding;
+                sorter = new SlnProjectsSorter(reader);
             }
 
-            slnFile.Sort();
-
-            using (var writer = new StreamWriter(solutionFilePath, false, encoding))
+            if (!sorter.AlreadySorted)
             {
-                foreach (var line in slnFile.LinesInFile)
+                using (var writer = new StreamWriter(solutionFilePath))
                 {
-                    writer.WriteLine(line);
+                    sorter.WriteSorted(writer);
                 }
-                writer.Flush();
+                Console.WriteLine($@"Projects in the .sln file {solutionFilePath} are now sorted alphabetically.");
+            }
+            else
+            {
+                Console.WriteLine($@"Projects in the .sln file {solutionFilePath} are already sorted alphabetically.");
             }
 
-            Console.WriteLine("Sorting complete.");
+            Console.Read();
         }
     }
 }
