@@ -62,9 +62,9 @@
             this.labelCaption.AutoSize = true;
             this.labelCaption.Location = new System.Drawing.Point(50, 42);
             this.labelCaption.Name = "labelCaption";
-            this.labelCaption.Size = new System.Drawing.Size(292, 13);
+            this.labelCaption.Size = new System.Drawing.Size(247, 13);
             this.labelCaption.TabIndex = 2;
-            this.labelCaption.Text = "Are you sure you want to sort projects in current solution file?";
+            this.labelCaption.Text = "Do you want to sort projects in current solution file?";
             // 
             // pictureBox
             // 

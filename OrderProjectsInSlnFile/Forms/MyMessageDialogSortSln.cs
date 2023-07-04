@@ -23,7 +23,7 @@ namespace OrderProjectsInSlnFile.Forms
             labelCaption.Text = string.Format(caption, solutionFilename);
         }
 
-        const string caption = " Are you sure you want to sort projects in '{0}' solution file?";
+        const string caption = " Do you want to sort projects in '{0}' solution file?";
 
         private void PictureBox_Paint(object sender, PaintEventArgs e)
         {

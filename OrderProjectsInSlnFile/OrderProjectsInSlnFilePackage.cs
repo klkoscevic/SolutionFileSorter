@@ -4,10 +4,12 @@ global using System;
 global using Task = System.Threading.Tasks.Task;
 using EnvDTE;
 using Microsoft.VisualStudio.Shell.Interop;
+using OrderProjectsInSlnFile.Forms;
 using SortingLibrary;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Threading;
+using System.Windows.Forms;
 
 namespace OrderProjectsInSlnFile
 {
@@ -33,8 +35,6 @@ namespace OrderProjectsInSlnFile
             solutionEvents.AfterClosing += SolutionEvents_AfterClosing;
         }
 
-
-
         private void SolutionEvents_AfterClosing()
         {
             if (sortSlnFile)
@@ -46,31 +46,41 @@ namespace OrderProjectsInSlnFile
 
         private void SolutionEvents_BeforeClosing()
         {
-            ThreadHelper.ThrowIfNotOnUIThread();
-
-            solutionFullName = dte.Solution.FullName;
-            ProjectsSorter sorter;
-
-            using (var reader = new StreamReader(dte.Solution.FullName))
+            if (!options.NeverSortAfterClosingSolution)
             {
-                var parser = new SolutionParser(reader);
-                var projectEntries = parser.ProjectEntries;
+                ThreadHelper.ThrowIfNotOnUIThread();
 
-                sorter = new ProjectsSorter();
-                if (sorter.IsSorted(projectEntries))
+                solutionFullName = dte.Solution.FullName;
+                ProjectsSorter sorter;
+
+                using (var reader = new StreamReader(dte.Solution.FullName))
                 {
-                    sortSlnFile = false;
-                }
-                else
-                {
-                    sortSlnFile = true;
+                    var parser = new SolutionParser(reader);
+                    var projectEntries = parser.ProjectEntries;
+
+                    sorter = new ProjectsSorter();
+                    if (!sorter.IsSorted(projectEntries))
+                    {
+                        sortSlnFile = true;
+
+                        if (!options.SortAlwaysWithoutAsking)
+                        {
+                            MyMessageDialogSortSln dialogForm = new MyMessageDialogSortSln(Path.GetFileName(solutionFullName));
+                            DialogResult result = dialogForm.ShowDialog();
+
+                            if (result == DialogResult.No)
+                            {
+                                sortSlnFile = false;
+                            }
+                        }
+                    }
                 }
             }
         }
 
         private DTE dte;
         private General options;
-        private bool sortSlnFile;
+        private bool sortSlnFile = false;
         private string solutionFullName;
     }
 }

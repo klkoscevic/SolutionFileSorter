@@ -21,8 +21,14 @@ namespace OrderProjectsInSlnFile
 
         [Category("General")]
         [DisplayName("Sort .sln file always without asking")]
-        [Description("Determines whether the sorting the .sln file will always start without asking firts.")]
+        [Description("Determines whether the sorting the .sln file will always start without asking first.")]
         [DefaultValue(false)]
         public bool SortAlwaysWithoutAsking { get; set; }
+
+        [Category("General")]
+        [DisplayName("Never sort .sln file after closing solution")]
+        [Description("Determines whether the sorting can happen after closing solution.")]
+        [DefaultValue(false)]
+        public bool NeverSortAfterClosingSolution { get; set; }
     }
 }
