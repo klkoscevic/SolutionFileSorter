@@ -126,7 +126,7 @@
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="SortingLibrary\SortingLibrary.csproj">
+    <ProjectReference Include="..\SortingLibrary\SortingLibrary.csproj">
       <Project>{6cecee77-fd62-40ea-97ba-dc8ee6280bb9}</Project>
       <Name>SortingLibrary</Name>
     </ProjectReference>
