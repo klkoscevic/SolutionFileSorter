@@ -55,14 +55,20 @@ namespace OrderProjectsInSlnFile
 
             using (var reader = new StreamReader(filename))
             {
-                var sorter = new SlnProjectsSorter(reader);
+                var parser = new SolutionParser(reader);
+                var sorter = new ProjectsSorter();
+
+                var projectEntries = parser.ProjectEntries;
+
                 Command.Visible = true;
-                Command.Enabled = !sorter.AlreadySorted;
+
+                Command.Enabled = !sorter.IsSorted(projectEntries);
             }
         }
+
         public void OrderProjects(General options, string solutionFullName)
         {
-                ThreadHelper.ThrowIfNotOnUIThread();
+            ThreadHelper.ThrowIfNotOnUIThread();
             SlnProjectsSorter sorter;
 
             using (var reader = new StreamReader(solutionFullName))
