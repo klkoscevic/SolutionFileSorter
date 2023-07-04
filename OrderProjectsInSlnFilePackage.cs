@@ -52,7 +52,7 @@ namespace OrderProjectsInSlnFile
             if (sortSlnFile)
             {
                 var myCommand = new MyCommand();
-                myCommand.OrderProjects(options, solutionFilename);
+                myCommand.OrderProjects(options, dte.Solution);
             }
 
             solutionFilename = string.Empty;

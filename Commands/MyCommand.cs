@@ -72,6 +72,14 @@ namespace OrderProjectsInSlnFile
                 sorter = new SlnProjectsSorter(reader);
             }
 
+            if (!sorter.AlreadySorted)
+            {
+                using (var writer = new StreamWriter(solution.FullName))
+                {
+                    sorter.WriteSorted(writer);
+                }
+            }
+
             if (!options.DoNotShowMesssageAnymore)
             {
                 MyMessageDialog dialogForm = new MyMessageDialog(Path.GetFileName(solution.FullName));
