@@ -61,7 +61,7 @@ namespace OrderProjectsInSlnFile
                     sorter = new ProjectsSorter();
                     if (!sorter.IsSorted(projectEntries))
                     {
-                        if (System.Windows.MessageBox.Show($"Are you sure you want to sort projects in current ({solutionFullName}) solution file?",
+                        if (System.Windows.MessageBox.Show($"Are you sure you want to sort projects in current ({Path.GetFileName(solutionFullName)}) solution file?",
                                                 "Sorting .sln file",
                                                 System.Windows.MessageBoxButton.YesNo,
                                                 System.Windows.MessageBoxImage.Question) == System.Windows.MessageBoxResult.Yes)

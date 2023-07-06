@@ -18,7 +18,7 @@ namespace OrderProjectsInSlnFile
             DTE dte = await Package.GetServiceAsync(typeof(DTE)) as DTE;
 
 
-            if (System.Windows.MessageBox.Show($"Are you sure you want to sort projects in current ({dte.Solution.FullName}) solution file?",
+            if (System.Windows.MessageBox.Show($"Are you sure you want to sort projects in current ({Path.GetFileName(dte.Solution.FileName)}) solution file?",
                                                 "Sorting .sln file",
                                                 System.Windows.MessageBoxButton.YesNo,
                                                 System.Windows.MessageBoxImage.Question) == System.Windows.MessageBoxResult.Yes)
