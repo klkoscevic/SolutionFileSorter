@@ -37,37 +37,50 @@ namespace OrderProjectsInSlnFile
 
         private void SolutionEvents_AfterClosing()
         {
+            if (solutionNotSaved)
+            {
+                CheckIfSlnFileShouldSort();
+            }
             if (sortSlnFile)
             {
-                var myCommand = new MyCommand();
                 myCommand.OrderProjects(options, solutionFullName);
             }
         }
 
         private void SolutionEvents_BeforeClosing()
         {
-            if (!options.NeverSortAfterClosingSolution)
+            ThreadHelper.ThrowIfNotOnUIThread();
+            solutionFullName = dte.Solution.FullName;
+
+            if (!options.NeverSortAfterClosingSolution && dte.Solution.Saved)
             {
-                ThreadHelper.ThrowIfNotOnUIThread();
+                CheckIfSlnFileShouldSort();
+            }
+            else if (!dte.Solution.Saved)
+            {
+                solutionNotSaved = true;
+            }
+        }
 
-                solutionFullName = dte.Solution.FullName;
-                ProjectsSorter sorter;
+        private void CheckIfSlnFileShouldSort()
+        {
+            ProjectsSorter sorter;
 
-                using (var reader = new StreamReader(solutionFullName))
+            using (var reader = new StreamReader(solutionFullName))
+            {
+                var parser = new SolutionParser(reader);
+                var projectEntries = parser.ProjectEntries;
+
+                sorter = new ProjectsSorter();
+                if (!sorter.IsSorted(projectEntries))
                 {
-                    var parser = new SolutionParser(reader);
-                    var projectEntries = parser.ProjectEntries;
 
-                    sorter = new ProjectsSorter();
-                    if (!sorter.IsSorted(projectEntries))
+                    if (System.Windows.MessageBox.Show($"Are you sure you want to sort projects in current '{Path.GetFileName(dte.Solution.FileName)}' solution file?",
+                                                        "Sorting .sln file",
+                                                        System.Windows.MessageBoxButton.YesNo,
+                                                        System.Windows.MessageBoxImage.Question) == System.Windows.MessageBoxResult.Yes)
                     {
-                        if (System.Windows.MessageBox.Show($"Are you sure you want to sort projects in current ({Path.GetFileName(solutionFullName)}) solution file?",
-                                                "Sorting .sln file",
-                                                System.Windows.MessageBoxButton.YesNo,
-                                                System.Windows.MessageBoxImage.Question) == System.Windows.MessageBoxResult.Yes)
-                        {
-                            sortSlnFile = true;
-                        }
+                        sortSlnFile = true;
                     }
                 }
             }
@@ -77,5 +90,8 @@ namespace OrderProjectsInSlnFile
         private General options;
         private bool sortSlnFile = false;
         private string solutionFullName;
+        private bool solutionNotSaved = false;
+        private MyCommand myCommand = new MyCommand();
+
     }
 }

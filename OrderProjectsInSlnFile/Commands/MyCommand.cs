@@ -1,4 +1,5 @@
-﻿using EnvDTE;
+﻿using Community.VisualStudio.Toolkit;
+using EnvDTE;
 using OrderProjectsInSlnFile.Forms;
 using SortingLibrary;
 using System.IO;
@@ -17,13 +18,27 @@ namespace OrderProjectsInSlnFile
 
             DTE dte = await Package.GetServiceAsync(typeof(DTE)) as DTE;
 
-
-            if (System.Windows.MessageBox.Show($"Are you sure you want to sort projects in current ({Path.GetFileName(dte.Solution.FileName)}) solution file?",
-                                                "Sorting .sln file",
-                                                System.Windows.MessageBoxButton.YesNo,
-                                                System.Windows.MessageBoxImage.Question) == System.Windows.MessageBoxResult.Yes)
+            if (dte.Solution.Saved)
             {
-                OrderProjects(options, dte.Solution.FullName);
+                if (System.Windows.MessageBox.Show($"Are you sure you want to sort projects in current '{Path.GetFileName(dte.Solution.FileName)}' solution file?",
+                                                    "Sorting .sln file",
+                                                    System.Windows.MessageBoxButton.YesNo,
+                                                    System.Windows.MessageBoxImage.Question) == System.Windows.MessageBoxResult.Yes)
+                {
+                    OrderProjects(options, dte.Solution.FullName);
+
+                }
+            }
+            else
+            {
+                if (System.Windows.MessageBox.Show($"Solution '{Path.GetFileName(dte.Solution.FileName)}' is not saved. Do you want to save the solution and sort solution file?",
+                                                    "Sorting .sln file",
+                                                    System.Windows.MessageBoxButton.YesNo,
+                                                    System.Windows.MessageBoxImage.Question) == System.Windows.MessageBoxResult.Yes)
+                {
+                    dte.Solution.SaveAs(dte.Solution.FullName);
+                    OrderProjects(options, dte.Solution.FullName);
+                }
             }
         }
 
@@ -89,7 +104,6 @@ namespace OrderProjectsInSlnFile
                     }
                 }
             }
-
         }
     }
 }
