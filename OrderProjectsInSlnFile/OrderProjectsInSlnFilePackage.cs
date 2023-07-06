@@ -53,7 +53,7 @@ namespace OrderProjectsInSlnFile
                 solutionFullName = dte.Solution.FullName;
                 ProjectsSorter sorter;
 
-                using (var reader = new StreamReader(dte.Solution.FullName))
+                using (var reader = new StreamReader(solutionFullName))
                 {
                     var parser = new SolutionParser(reader);
                     var projectEntries = parser.ProjectEntries;
@@ -61,17 +61,12 @@ namespace OrderProjectsInSlnFile
                     sorter = new ProjectsSorter();
                     if (!sorter.IsSorted(projectEntries))
                     {
-                        sortSlnFile = true;
-
-                        if (!options.SortAlwaysWithoutAsking)
+                        if (System.Windows.MessageBox.Show($"Are you sure you want to sort projects in current ({solutionFullName}) solution file?",
+                                                "Sorting .sln file",
+                                                System.Windows.MessageBoxButton.YesNo,
+                                                System.Windows.MessageBoxImage.Question) == System.Windows.MessageBoxResult.Yes)
                         {
-                            MyMessageDialogSortSln dialogForm = new MyMessageDialogSortSln(Path.GetFileName(solutionFullName));
-                            DialogResult result = dialogForm.ShowDialog();
-
-                            if (result == DialogResult.No)
-                            {
-                                sortSlnFile = false;
-                            }
+                            sortSlnFile = true;
                         }
                     }
                 }

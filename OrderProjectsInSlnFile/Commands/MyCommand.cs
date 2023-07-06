@@ -17,17 +17,14 @@ namespace OrderProjectsInSlnFile
 
             DTE dte = await Package.GetServiceAsync(typeof(DTE)) as DTE;
 
-            if (!options.SortAlwaysWithoutAsking)
+
+            if (System.Windows.MessageBox.Show($"Are you sure you want to sort projects in current ({dte.Solution.FullName}) solution file?",
+                                                "Sorting .sln file",
+                                                System.Windows.MessageBoxButton.YesNo,
+                                                System.Windows.MessageBoxImage.Question) == System.Windows.MessageBoxResult.Yes)
             {
-                MyMessageDialogSortSln dialogForm = new MyMessageDialogSortSln(Path.GetFileName(dte.Solution.FullName));
-                DialogResult result = dialogForm.ShowDialog();
-
-                if (result == DialogResult.Yes)
-                {
-                    OrderProjects(options, dte.Solution.FullName);
-                }
+                OrderProjects(options, dte.Solution.FullName);
             }
-
         }
 
         // Called every time menu with command is opened. Updates Enabled/Disabled state depending if a solution is opened or not.
