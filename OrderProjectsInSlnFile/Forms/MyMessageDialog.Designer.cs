@@ -59,7 +59,7 @@
             // labelCaption
             // 
             this.labelCaption.AutoSize = true;
-            this.labelCaption.Location = new System.Drawing.Point(50, 42);
+            this.labelCaption.Location = new System.Drawing.Point(50, 32);
             this.labelCaption.Name = "labelCaption";
             this.labelCaption.Size = new System.Drawing.Size(252, 13);
             this.labelCaption.TabIndex = 2;
@@ -89,7 +89,7 @@
             this.MinimizeBox = false;
             this.Name = "MyMessageDialog";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Sorting .sln file";
+            this.Text = "Microsoft Visual Studio";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

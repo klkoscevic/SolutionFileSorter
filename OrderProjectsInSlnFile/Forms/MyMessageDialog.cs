@@ -23,7 +23,7 @@ namespace OrderProjectsInSlnFile.Forms
             labelCaption.Text = string.Format(caption, solutionFilename);
         }
 
-        const string caption = "Projects in '{0}' file are now sorted alphabetically.";
+        const string caption = "Sort .sln file\n\nProjects in '{0}' file are now sorted alphabetically.";
 
         private void PictureBox_Paint(object sender, PaintEventArgs e)
         {

@@ -74,11 +74,10 @@ namespace OrderProjectsInSlnFile
                 sorter = new ProjectsSorter();
                 if (!sorter.IsSorted(projectEntries))
                 {
-
-                    if (System.Windows.MessageBox.Show($"Are you sure you want to sort projects in current '{Path.GetFileName(dte.Solution.FileName)}' solution file?",
-                                                        "Sorting .sln file",
-                                                        System.Windows.MessageBoxButton.YesNo,
-                                                        System.Windows.MessageBoxImage.Question) == System.Windows.MessageBoxResult.Yes)
+                    if (System.Windows.MessageBox.Show($"Sort .sln file\n\nAre you sure you want to sort projects in current '{Path.GetFileName(dte.Solution.FileName)}' solution file?",
+                                            "Microsoft Visual Studio",
+                                            System.Windows.MessageBoxButton.YesNo,
+                                            System.Windows.MessageBoxImage.Question) == System.Windows.MessageBoxResult.Yes)
                     {
                         sortSlnFile = true;
                     }

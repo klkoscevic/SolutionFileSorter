@@ -20,8 +20,8 @@ namespace OrderProjectsInSlnFile
 
             if (dte.Solution.Saved)
             {
-                if (System.Windows.MessageBox.Show($"Are you sure you want to sort projects in current '{Path.GetFileName(dte.Solution.FileName)}' solution file?",
-                                                    "Sorting .sln file",
+                if (System.Windows.MessageBox.Show($"Sort .sln file\n\nAre you sure you want to sort projects in '{Path.GetFileName(dte.Solution.FileName)}' solution file?",
+                                                    "Microsoft Visual Studio",
                                                     System.Windows.MessageBoxButton.YesNo,
                                                     System.Windows.MessageBoxImage.Question) == System.Windows.MessageBoxResult.Yes)
                 {
@@ -31,8 +31,8 @@ namespace OrderProjectsInSlnFile
             }
             else
             {
-                if (System.Windows.MessageBox.Show($"Solution '{Path.GetFileName(dte.Solution.FileName)}' is not saved. Do you want to save the solution and sort solution file?",
-                                                    "Sorting .sln file",
+                if (System.Windows.MessageBox.Show($"Sort .sln file\n\nSolution '{Path.GetFileName(dte.Solution.FileName)}' is not saved. Do you want to save the solution and sort solution file?",
+                                                    "Microsoft Visual Studio",
                                                     System.Windows.MessageBoxButton.YesNo,
                                                     System.Windows.MessageBoxImage.Question) == System.Windows.MessageBoxResult.Yes)
                 {
