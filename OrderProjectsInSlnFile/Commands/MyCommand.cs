@@ -52,7 +52,8 @@ namespace OrderProjectsInSlnFile
         private async Task UpdateCommandStateAsync()
         {
             await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
-            DTE dte = await Package.GetServiceAsync(typeof(DTE)) as DTE; string filename = dte.Solution.FullName;
+            DTE dte = await Package.GetServiceAsync(typeof(DTE)) as DTE; 
+            string filename = dte.Solution.FullName;
             if (string.IsNullOrEmpty(filename) || dte.Solution.Projects.Count <= 1)
             {
                 Command.Visible = false;

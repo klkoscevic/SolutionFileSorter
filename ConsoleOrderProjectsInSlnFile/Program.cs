@@ -8,13 +8,21 @@ namespace ConsoleOrderProjectsInSlnFile
     {
         static void Main(string[] args)
         {
-            if (args.Length == 0 && string.IsNullOrEmpty(args[0]))
+            if (args.Length == 0)
             {
-                Console.WriteLine("Invalid input. Please provide a valid path to the .sln file.");
+                Console.WriteLine("No input was given.");
+                Console.Read();
                 return;
             }
 
             string solutionFilePath = args[0];
+
+            if (!File.Exists(solutionFilePath))
+            {
+                Console.WriteLine($@"File '{solutionFilePath}' does not exist.");
+                Console.Read();
+                return;
+            }
 
             SlnProjectsSorter sorter;
 
