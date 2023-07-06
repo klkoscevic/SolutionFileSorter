@@ -1,5 +1,6 @@
 ﻿using SortingLibrary;
 using System;
+using System.Globalization;
 using System.IO;
 
 namespace ConsoleOrderProjectsInSlnFile
@@ -16,6 +17,12 @@ namespace ConsoleOrderProjectsInSlnFile
             }
 
             string solutionFilePath = args[0];
+            CultureInfo cultureInfo = null;
+
+            if (args.Length == 2)
+            {
+                cultureInfo = CultureInfo.GetCultureInfo(args[1]);
+            }
 
             if (!File.Exists(solutionFilePath))
             {
@@ -28,7 +35,14 @@ namespace ConsoleOrderProjectsInSlnFile
 
             using (var reader = new StreamReader(solutionFilePath))
             {
-                sorter = new SlnProjectsSorter(reader);
+                if (cultureInfo != null)
+                {
+                    sorter = new SlnProjectsSorter(reader, cultureInfo);
+                }
+                else
+                {
+                    sorter = new SlnProjectsSorter(reader);
+                }
             }
 
             if (!sorter.AlreadySorted)
