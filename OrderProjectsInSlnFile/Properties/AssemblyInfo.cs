@@ -2,12 +2,12 @@
 using System.Reflection;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle(Vsix.Name)]
-[assembly: AssemblyDescription(Vsix.Description)]
+[assembly: AssemblyTitle("VSExtension")]
+[assembly: AssemblyDescription("Visual Studio extension provides the functionality to sort projects within a .sln file.")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany(Vsix.Author)]
-[assembly: AssemblyProduct(Vsix.Name)]
-[assembly: AssemblyCopyright(Vsix.Author)]
+[assembly: AssemblyCompany("Klara Koščević")]
+[assembly: AssemblyProduct("VSExtension")]
+[assembly: AssemblyCopyright("Copyright ©  2023 Klara Koščević")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

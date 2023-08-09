@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Range")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("Shared")]
+[assembly: AssemblyDescription("TShared classes for opening and saving .sln files along wth sorting projects in .sln file.")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Range")]
-[assembly: AssemblyCopyright("Copyright ©  2023")]
+[assembly: AssemblyCompany("Klara Koščević")]
+[assembly: AssemblyProduct("Shared")]
+[assembly: AssemblyCopyright("Copyright ©  2023 Klara Koščević")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

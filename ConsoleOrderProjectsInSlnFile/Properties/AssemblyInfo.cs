@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("ConsoleOrderProjectsInSlnFile")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("ConsoleApplication")]
+[assembly: AssemblyDescription("Console application checks if the provided path points to a .sln file and sorts the projects within it.")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("ConsoleOrderProjectsInSlnFile")]
-[assembly: AssemblyCopyright("Copyright ©  2023")]
+[assembly: AssemblyCompany("Klara Koščević")]
+[assembly: AssemblyProduct("ConsoleApplication")]
+[assembly: AssemblyCopyright("Copyright ©  2023 Klara Koščević")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

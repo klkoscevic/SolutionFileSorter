@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{623CC6FC-C3A5-4E4B-A920-17E19F801572}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>ConsoleOrderProjectsInSlnFile</RootNamespace>
-    <AssemblyName>SortSlnFile</AssemblyName>
+    <RootNamespace>ConsoleApplication</RootNamespace>
+    <AssemblyName>ConsoleApplication</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>

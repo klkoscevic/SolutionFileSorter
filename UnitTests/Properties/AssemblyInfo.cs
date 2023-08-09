@@ -3,11 +3,11 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 [assembly: AssemblyTitle("UnitTests")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Project fot testing the sorting of projects within a .sln file.")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Klara Koščević")]
 [assembly: AssemblyProduct("UnitTests")]
-[assembly: AssemblyCopyright("Copyright ©  2023")]
+[assembly: AssemblyCopyright("Copyright ©  2023 Klara Koščević")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
