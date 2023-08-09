@@ -34,16 +34,26 @@ namespace KKoščević.SolutionFileSorter.ConsoleApplication
             }
 
             string solutionFilePath = args[0];
+            string cultureName = args[1];
             CultureInfo cultureInfo = null;
 
             if (args.Length == 2)
             {
-                cultureInfo = CultureInfo.GetCultureInfo(args[1]);
+                try
+                {
+                    cultureInfo = CultureInfo.GetCultureInfo(cultureName);
+                }
+                catch (CultureNotFoundException)
+                {
+                    Console.WriteLine($@"'{args[1]}' is invalid culture. Sorting won't happen.");
+                    Console.Read();
+                    return;
+                }
             }
 
             if (!File.Exists(solutionFilePath))
             {
-                Console.WriteLine($@"File '{solutionFilePath}' does not exist.");
+                Console.WriteLine($@"File '{solutionFilePath}' does not exist. Sorting won't happen.");
                 Console.Read();
                 return;
             }
