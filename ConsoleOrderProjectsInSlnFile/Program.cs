@@ -94,6 +94,8 @@ namespace KKoščević.SolutionFileSorter.ConsoleApplication
             Console.WriteLine("SolutionFileSorter.exe <path-to-sln-file> <culture-info> [<culture-info>]");
             Console.WriteLine(" - Sorts the projects within a .sln file.");
             Console.WriteLine(" - <culture-info> is optional. Default is invariant culture.");
+            Console.Read();
+            return;
         }
     }
 }
