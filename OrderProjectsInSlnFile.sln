@@ -5,11 +5,11 @@ VisualStudioVersion = 17.5.33627.172
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "UnitTests\UnitTests.csproj", "{3FED2DC7-98B7-4519-8D94-CA34CB5C3279}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleOrderProjectsInSlnFile", "ConsoleOrderProjectsInSlnFile\ConsoleOrderProjectsInSlnFile.csproj", "{623CC6FC-C3A5-4E4B-A920-17E19F801572}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApplication", "ConsoleOrderProjectsInSlnFile\ConsoleApplication.csproj", "{623CC6FC-C3A5-4E4B-A920-17E19F801572}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SortingLibrary", "SortingLibrary\SortingLibrary.csproj", "{6CECEE77-FD62-40EA-97BA-DC8EE6280BB9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared", "SortingLibrary\Shared.csproj", "{6CECEE77-FD62-40EA-97BA-DC8EE6280BB9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrderProjectsInSlnFile", "OrderProjectsInSlnFile\OrderProjectsInSlnFile.csproj", "{AB7E19BC-A153-4676-AD3C-B382EDBB4463}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VSExtension", "OrderProjectsInSlnFile\VSExtension.csproj", "{AB7E19BC-A153-4676-AD3C-B382EDBB4463}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

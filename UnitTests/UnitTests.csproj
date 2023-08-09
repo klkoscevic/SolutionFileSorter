@@ -82,9 +82,9 @@
     <EmbeddedResource Include="Resources\SolutionWithMultipleProjectsOneInSolutionFolder.sorted" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SortingLibrary\SortingLibrary.csproj">
+    <ProjectReference Include="..\SortingLibrary\Shared.csproj">
       <Project>{6cecee77-fd62-40ea-97ba-dc8ee6280bb9}</Project>
-      <Name>SortingLibrary</Name>
+      <Name>Shared</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
