@@ -34,10 +34,10 @@ namespace KKoščević.SolutionFileSorter.VSExtension
     [PackageRegistration(UseManagedResourcesOnly = true, AllowsBackgroundLoading = true)]
     [InstalledProductRegistration(Vsix.Name, Vsix.Description, Vsix.Version)]
     [ProvideMenuResource("Menus.ctmenu", 1)]
-    [Guid(PackageGuids.OrderProjectsInSlnFileString)]
+    [Guid(PackageGuids.SolutionFileSorterString)]
     [ProvideOptionPage(typeof(OptionsProvider.GeneralOptions), "Sort projects in .sln file", "General", 0, 0, true, SupportsProfiles = true)]
 
-    public sealed class OrderProjectsInSlnFilePackage : ToolkitPackage
+    public sealed class SolutionFileSorterPackage : ToolkitPackage
     {
         protected override async Task InitializeAsync(CancellationToken cancellationToken, IProgress<ServiceProgressData> progress)
         {

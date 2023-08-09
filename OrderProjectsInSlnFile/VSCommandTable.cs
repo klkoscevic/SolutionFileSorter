@@ -29,8 +29,8 @@ namespace KKošèeviæ.SolutionFileSorter.VSExtension
     /// </summary>
     internal sealed partial class PackageGuids
     {
-        public const string OrderProjectsInSlnFileString = "7051c6e7-5c88-4117-847c-7288d821a87d";
-        public static Guid OrderProjectsInSlnFile = new Guid(OrderProjectsInSlnFileString);
+        public const string SolutionFileSorterString = "7051c6e7-5c88-4117-847c-7288d821a87d";
+        public static Guid OrderProjectsInSlnFile = new Guid(SolutionFileSorterString);
     }
     /// <summary>
     /// Helper class that encapsulates all CommandIDs uses across VS Package.
