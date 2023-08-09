@@ -26,22 +26,36 @@ namespace KKoščević.SolutionFileSorter.ConsoleApplication
     {
         static void Main(string[] args)
         {
+
             if (args.Length == 0)
             {
                 Console.WriteLine("No input was given.");
+                Console.WriteLine("Use '/?' for help.");
                 Console.Read();
                 return;
             }
 
+            if (args[0] == "/?")
+            {
+                DisplayHelp();
+            }
+
             string solutionFilePath = args[0];
-            string cultureName = args[1];
+
             CultureInfo cultureInfo = null;
+
+            if (!File.Exists(solutionFilePath))
+            {
+                Console.WriteLine($@"File '{solutionFilePath}' does not exist. Sorting won't happen.");
+                Console.Read();
+                return;
+            }
 
             if (args.Length == 2)
             {
                 try
                 {
-                    cultureInfo = CultureInfo.GetCultureInfo(cultureName);
+                    cultureInfo = CultureInfo.GetCultureInfo(args[1]);
                 }
                 catch (CultureNotFoundException)
                 {
@@ -51,25 +65,11 @@ namespace KKoščević.SolutionFileSorter.ConsoleApplication
                 }
             }
 
-            if (!File.Exists(solutionFilePath))
-            {
-                Console.WriteLine($@"File '{solutionFilePath}' does not exist. Sorting won't happen.");
-                Console.Read();
-                return;
-            }
-
             SlnProjectsSorter sorter;
 
             using (var reader = new StreamReader(solutionFilePath))
             {
-                if (cultureInfo != null)
-                {
-                    sorter = new SlnProjectsSorter(reader, cultureInfo);
-                }
-                else
-                {
-                    sorter = new SlnProjectsSorter(reader);
-                }
+                sorter = cultureInfo != null ? new SlnProjectsSorter(reader, cultureInfo) : new SlnProjectsSorter(reader);
             }
 
             if (!sorter.AlreadySorted)
@@ -86,6 +86,14 @@ namespace KKoščević.SolutionFileSorter.ConsoleApplication
             }
 
             Console.Read();
+        }
+
+        static void DisplayHelp()
+        {
+            Console.WriteLine("Usage:");
+            Console.WriteLine("SolutionFileSorter.exe <path-to-sln-file> <culture-info> [<culture-info>]");
+            Console.WriteLine(" - Sorts the projects within a .sln file.");
+            Console.WriteLine(" - <culture-info> is optional. Default is invariant culture.");
         }
     }
 }
