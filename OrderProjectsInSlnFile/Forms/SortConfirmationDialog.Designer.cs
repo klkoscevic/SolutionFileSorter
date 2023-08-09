@@ -17,7 +17,7 @@ SOFTWARE.
 
 namespace OrderProjectsInSlnFile.Forms
 {
-    partial class MyMessageDialog
+    partial class SortConfirmationDialog
     {
         /// <summary>
         /// Required designer variable.

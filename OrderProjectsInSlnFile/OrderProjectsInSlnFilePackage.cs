@@ -107,7 +107,7 @@ namespace OrderProjectsInSlnFile
         private bool sortSlnFile = false;
         private string solutionFullName;
         private bool solutionNotSaved = false;
-        private MyCommand myCommand = new MyCommand();
+        private Command myCommand = new Command();
 
     }
 }

@@ -25,7 +25,7 @@ using System.Windows.Forms;
 namespace OrderProjectsInSlnFile
 {
     [Command(PackageIds.MyCommand)]
-    internal sealed class MyCommand : BaseCommand<MyCommand>
+    internal sealed class Command : BaseCommand<Command>
     {
         protected override async Task ExecuteAsync(OleMenuCmdEventArgs e)
         {
@@ -110,7 +110,7 @@ namespace OrderProjectsInSlnFile
 
             if (!options.DoNotShowMesssageAnymore)
             {
-                MyMessageDialog dialogForm = new MyMessageDialog(Path.GetFileName(solutionFullName));
+                SortConfirmationDialog dialogForm = new SortConfirmationDialog(Path.GetFileName(solutionFullName));
                 DialogResult result = dialogForm.ShowDialog();
 
                 if (result == DialogResult.OK)

@@ -10,15 +10,15 @@ using System.Windows.Forms;
 
 namespace OrderProjectsInSlnFile.Forms
 {
-    public partial class MyMessageDialog : Form
+    public partial class SortConfirmationDialog : Form
     {
-        public MyMessageDialog()
+        public SortConfirmationDialog()
         {
             InitializeComponent();
             pictureBox.Paint += PictureBox_Paint;
         }
 
-        public MyMessageDialog(string solutionFilename) : this()
+        public SortConfirmationDialog(string solutionFilename) : this()
         {
             labelCaption.Text = string.Format(caption, solutionFilename);
         }
