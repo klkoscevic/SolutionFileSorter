@@ -21,14 +21,14 @@ global using System;
 global using Task = System.Threading.Tasks.Task;
 using EnvDTE;
 using Microsoft.VisualStudio.Shell.Interop;
-using OrderProjectsInSlnFile.Forms;
-using SortingLibrary;
+using KKoščević.SolutionFileSorter.VSExtension.Forms;
+using KKoščević.SolutionFileSorter.Shared;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows.Forms;
 
-namespace OrderProjectsInSlnFile
+namespace KKoščević.SolutionFileSorter.VSExtension
 {
     [ProvideAutoLoad(UIContextGuids80.NoSolution, PackageAutoLoadFlags.BackgroundLoad)]
     [PackageRegistration(UseManagedResourcesOnly = true, AllowsBackgroundLoading = true)]

@@ -18,7 +18,7 @@ SOFTWARE.
 using System.ComponentModel;
 using System.Runtime.InteropServices;
 
-namespace OrderProjectsInSlnFile
+namespace KKoščević.SolutionFileSorter.VSExtension
 {
     internal partial class OptionsProvider
     {

@@ -16,12 +16,12 @@ SOFTWARE.
 */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using SortingLibrary;
+using KKoščević.SolutionFileSorter.Shared;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 
-namespace UnitTests
+namespace KKoščević.SolutionFileSorter.UnitTests
 {
     [TestClass]
     public class SolutionParserTests

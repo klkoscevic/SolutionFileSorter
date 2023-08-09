@@ -18,7 +18,7 @@ SOFTWARE.
 using System.Collections.Generic;
 using System.Globalization;
 
-namespace SortingLibrary
+namespace KKoščević.SolutionFileSorter.Shared
 {
     public class ProjectEntryComparer : IComparer<ProjectEntry>
     {

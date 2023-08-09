@@ -17,7 +17,7 @@ SOFTWARE.
 
 using System;
 
-namespace SortingLibrary
+namespace KKoščević.SolutionFileSorter.Shared
 {
     public class Range : IEquatable<Range>
     {

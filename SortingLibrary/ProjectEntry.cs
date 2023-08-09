@@ -18,7 +18,7 @@ SOFTWARE.
 using System;
 using System.Collections.Generic;
 
-namespace SortingLibrary
+namespace KKoščević.SolutionFileSorter.Shared
 {
     public class ProjectEntry
     {

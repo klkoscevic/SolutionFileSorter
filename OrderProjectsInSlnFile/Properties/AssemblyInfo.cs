@@ -1,4 +1,4 @@
-﻿using OrderProjectsInSlnFile;
+﻿using KKoščević.SolutionFileSorter.VSExtension;
 using System.Reflection;
 using System.Runtime.InteropServices;
 

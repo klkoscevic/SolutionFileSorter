@@ -20,7 +20,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 
-namespace SortingLibrary
+namespace KKoščević.SolutionFileSorter.Shared
 {
     /// <summary>
     /// Class that writes sorted project entires. 

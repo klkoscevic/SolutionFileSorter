@@ -17,12 +17,12 @@ SOFTWARE.
 
 using Community.VisualStudio.Toolkit;
 using EnvDTE;
-using OrderProjectsInSlnFile.Forms;
-using SortingLibrary;
+using KKoščević.SolutionFileSorter.VSExtension.Forms;
+using KKoščević.SolutionFileSorter.Shared;
 using System.IO;
 using System.Windows.Forms;
 
-namespace OrderProjectsInSlnFile
+namespace KKoščević.SolutionFileSorter.VSExtension
 {
     [Command(PackageIds.MyCommand)]
     internal sealed class Command : BaseCommand<Command>
@@ -69,7 +69,7 @@ namespace OrderProjectsInSlnFile
         private async Task UpdateCommandStateAsync()
         {
             await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
-            DTE dte = await Package.GetServiceAsync(typeof(DTE)) as DTE; 
+            DTE dte = await Package.GetServiceAsync(typeof(DTE)) as DTE;
             string filename = dte.Solution.FullName;
             if (string.IsNullOrEmpty(filename) || dte.Solution.Projects.Count <= 1)
             {

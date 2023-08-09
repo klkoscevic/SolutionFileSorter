@@ -19,7 +19,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 
-namespace SortingLibrary
+namespace KKoščević.SolutionFileSorter.Shared
 {
     public class ProjectsSorter
     {

@@ -21,7 +21,7 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace SortingLibrary
+namespace KKoščević.SolutionFileSorter.Shared
 {
     public class SolutionParser
     {

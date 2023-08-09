@@ -16,9 +16,9 @@ SOFTWARE.
 */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using SortingLibrary;
+using KKoščević.SolutionFileSorter.Shared;
 
-namespace UnitTests
+namespace KKoščević.SolutionFileSorter.UnitTests
 {
     [TestClass]
     public class ProjectEntryComparerTests

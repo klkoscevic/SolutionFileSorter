@@ -15,12 +15,12 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OU
 SOFTWARE.
 */
 
-using SortingLibrary;
+using KKoščević.SolutionFileSorter.Shared;
 using System;
 using System.Globalization;
 using System.IO;
 
-namespace ConsoleOrderProjectsInSlnFile
+namespace KKoščević.SolutionFileSorter.ConsoleApplication
 {
     internal class Program
     {

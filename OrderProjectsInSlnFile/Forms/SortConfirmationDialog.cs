@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace OrderProjectsInSlnFile.Forms
+namespace KKoščević.SolutionFileSorter.VSExtension.Forms
 {
     public partial class SortConfirmationDialog : Form
     {

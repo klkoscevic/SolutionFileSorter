@@ -15,7 +15,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OU
 SOFTWARE.
 */
 
-namespace OrderProjectsInSlnFile.Forms
+namespace KKoščević.SolutionFileSorter.VSExtension.Forms
 {
     partial class SortConfirmationDialog
     {
