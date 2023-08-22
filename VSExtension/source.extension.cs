@@ -29,7 +29,7 @@ namespace KKošèeviæ.SolutionFileSorter.VSExtension
         public const string Description = @"SolutionFileSorter is a Visual Studio extension that provides the functionality to alphabetically sort projects within an open .sln (solution) file. This extension offers three methods of sorting projects: via a button within the Visual Studio solution, upon closing the solution, and through a console application for the given solution.";
         public const string Language = "en-US";
         public const string Version = "1.0";
-        public const string Author = "Company";
+        public const string Author = "Klara Košèeviæ";
         public const string Tags = "";
     }
 }
