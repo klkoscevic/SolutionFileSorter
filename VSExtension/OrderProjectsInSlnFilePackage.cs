@@ -69,13 +69,16 @@ namespace KKoščević.SolutionFileSorter.VSExtension
             ThreadHelper.ThrowIfNotOnUIThread();
             solutionFullName = dte.Solution.FullName;
 
-            if (!options.NeverSortAfterClosingSolution && dte.Solution.Saved)
+            if (!options.NeverSortAfterClosingSolution)
             {
-                CheckIfSlnFileShouldSort();
-            }
-            else if (!dte.Solution.Saved)
-            {
-                solutionNotSaved = true;
+                if (dte.Solution.Saved)
+                {
+                    CheckIfSlnFileShouldSort();
+                }
+                else if (!dte.Solution.Saved)
+                {
+                    solutionNotSaved = true;
+                }
             }
         }
 
