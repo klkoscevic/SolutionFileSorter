@@ -50,7 +50,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SortingLibrary\Shared.csproj">
+    <ProjectReference Include="..\Shared\Shared.csproj">
       <Project>{6cecee77-fd62-40ea-97ba-dc8ee6280bb9}</Project>
       <Name>Shared</Name>
     </ProjectReference>
