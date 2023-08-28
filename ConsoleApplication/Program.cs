@@ -29,13 +29,13 @@ namespace KKoščević.SolutionFileSorter.ConsoleApplication
             {
                 Console.WriteLine("No input was given.");
                 Console.WriteLine("Use '/?' for help.");
-                Console.Read();
                 return;
             }
 
             if (args[0] == "/?")
             {
                 DisplayHelp();
+                return;
             }
 
             string solutionFilePath = args[0];
@@ -45,7 +45,6 @@ namespace KKoščević.SolutionFileSorter.ConsoleApplication
             if (!File.Exists(solutionFilePath))
             {
                 Console.WriteLine($@"File '{solutionFilePath}' does not exist. Sorting won't happen.");
-                Console.Read();
                 return;
             }
 
@@ -58,7 +57,6 @@ namespace KKoščević.SolutionFileSorter.ConsoleApplication
                 catch (CultureNotFoundException)
                 {
                     Console.WriteLine($@"'{args[1]}' is invalid culture. Sorting won't happen.");
-                    Console.Read();
                     return;
                 }
             }
@@ -83,8 +81,6 @@ namespace KKoščević.SolutionFileSorter.ConsoleApplication
                 {
                     Console.WriteLine($@"Projects in the .sln file {solutionFilePath} are already sorted alphabetically.");
                 }
-
-                Console.Read();
             }
             catch (Exception ex)
             {
@@ -98,8 +94,6 @@ namespace KKoščević.SolutionFileSorter.ConsoleApplication
             Console.WriteLine("SolutionFileSorter.exe <path-to-sln-file> <culture-info> [<culture-info>]");
             Console.WriteLine(" - Sorts the projects within a .sln file.");
             Console.WriteLine(" - <culture-info> is optional. Default is invariant culture.");
-            Console.Read();
-            return;
         }
     }
 }
