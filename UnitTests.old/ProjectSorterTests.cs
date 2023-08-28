@@ -63,7 +63,7 @@ namespace KKoščević.SolutionFileSorter.UnitTests
         [TestMethod]
         public void SortOnSolutionWithProjectNamesContainingCroatianAndGermanCharactersReturnsProjectsSortedAlphabetically()
         {
-            var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("KKoščević.SolutionFileSorter.UnitTests.Resources.SolutionWithProjectNamesContainingCroatianAndGermanCharacters");
+            var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("UnitTests.Resources.SolutionWithProjectNamesContainingCroatianAndGermanCharacters");
             SolutionParser slnFile = null;
             using (var reader = new StreamReader(stream))
             {
@@ -93,7 +93,7 @@ namespace KKoščević.SolutionFileSorter.UnitTests
         [TestMethod]
         public void SortOnSolutionWithMultilineProject()
         {
-            var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("KKoščević.SolutionFileSorter.UnitTests.Resources.SolutionWithVsPackageProject");
+            var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("UnitTests.Resources.SolutionWithVsPackageProject");
             SolutionParser slnFile = null;
             using (var reader = new StreamReader(stream))
             {
@@ -126,7 +126,7 @@ namespace KKoščević.SolutionFileSorter.UnitTests
         [TestMethod]
         public void SortOnSolutionWithWhitespacesInProjectAndFolderNamesReturnsProjectsSortedAlphabetically()
         {
-            var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("KKoščević.SolutionFileSorter.UnitTests.Resources.SolutionWithWhitespacesInProjectAndFolderNames");
+            var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("UnitTests.Resources.SolutionWithWhitespacesInProjectAndFolderNames");
             SolutionParser slnFile = null;
             using (var reader = new StreamReader(stream))
             {

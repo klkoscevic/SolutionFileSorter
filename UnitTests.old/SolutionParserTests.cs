@@ -84,7 +84,7 @@ namespace KKoščević.SolutionFileSorter.UnitTests
         [TestMethod]
         public void ProjectEntriesReturnsEmptyCollectionForEmptySolution()
         {
-            var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("KKoščević.SolutionFileSorter.UnitTests.Resources.EmptySolution");
+            var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("UnitTests.Resources.EmptySolution");
             SolutionParser slnFile = null;
             using (var reader = new StreamReader(stream))
             {
@@ -97,7 +97,7 @@ namespace KKoščević.SolutionFileSorter.UnitTests
         [TestMethod]
         public void ProjectEntriesReturnsCollectionWithOneElementForSolutionWithASingleProject()
         {
-            var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("KKoščević.SolutionFileSorter.UnitTests.Resources.SolutionWithSingleProject");
+            var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("UnitTests.Resources.SolutionWithSingleProject");
             SolutionParser slnFile = null;
             using (var reader = new StreamReader(stream))
             {
@@ -117,7 +117,7 @@ namespace KKoščević.SolutionFileSorter.UnitTests
         [TestMethod]
         public void ProjectEntriesReturnsCollectionWithAllElementForSolutionWithFourProjectsInTheRoot()
         {
-            var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("KKoščević.SolutionFileSorter.UnitTests.Resources.SolutionWithFourProjectsInTheRoot");
+            var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("UnitTests.Resources.SolutionWithFourProjectsInTheRoot");
             SolutionParser slnFile = null;
             using (var reader = new StreamReader(stream))
             {
@@ -159,7 +159,7 @@ namespace KKoščević.SolutionFileSorter.UnitTests
         [TestMethod]
         public void ProjectEntriesReturnsCollectionWithAllElementForSolutionWithFourProjectsInTheRootLfLineEndings()
         {
-            var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("KKoščević.SolutionFileSorter.UnitTests.Resources.SolutionWithFourProjectsInTheRootLfLineEndings");
+            var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("UnitTests.Resources.SolutionWithFourProjectsInTheRootLfLineEndings");
             SolutionParser slnFile = null;
             using (var reader = new StreamReader(stream))
             {
@@ -201,7 +201,7 @@ namespace KKoščević.SolutionFileSorter.UnitTests
         [TestMethod]
         public void ProjectEntriesReturnsCollectionWithAllElementForSolutionWithFourProjectsInTheRootWithVariousSpacings()
         {
-            var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("KKoščević.SolutionFileSorter.UnitTests.Resources.SolutionWithFourProjectsInTheRootWithVariousSpacings");
+            var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("UnitTests.Resources.SolutionWithFourProjectsInTheRootWithVariousSpacings");
             SolutionParser slnFile = null;
             using (var reader = new StreamReader(stream))
             {
@@ -244,7 +244,7 @@ namespace KKoščević.SolutionFileSorter.UnitTests
         [TestMethod]
         public void ProjectEntriesCollectionContainsRangesForProjectConfigurationSections()
         {
-            var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("KKoščević.SolutionFileSorter.UnitTests.Resources.SolutionWithFourProjectsInTheRoot");
+            var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("UnitTests.Resources.SolutionWithFourProjectsInTheRoot");
             SolutionParser slnFile = null;
             using (var reader = new StreamReader(stream))
             {
@@ -296,7 +296,7 @@ namespace KKoščević.SolutionFileSorter.UnitTests
         [TestMethod]
         public void ProjectEntryProvidesParentPathForAProjectInSolutionFolder()
         {
-            var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("KKoščević.SolutionFileSorter.UnitTests.Resources.SolutionWithMultipleProjectsOneInSolutionFolder");
+            var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("UnitTests.Resources.SolutionWithMultipleProjectsOneInSolutionFolder");
             SolutionParser slnFile = null;
             using (var reader = new StreamReader(stream))
             {
@@ -317,7 +317,7 @@ namespace KKoščević.SolutionFileSorter.UnitTests
         [TestMethod]
         public void ProjectEntriesCollectionContainsRangesForProjectEntryWithMultipleLines()
         {
-            var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("KKoščević.SolutionFileSorter.UnitTests.Resources.SolutionWithVsPackageProject");
+            var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("UnitTests.Resources.SolutionWithVsPackageProject");
             SolutionParser slnFile = null;
             using (var reader = new StreamReader(stream))
             {

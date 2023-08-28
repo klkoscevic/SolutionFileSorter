@@ -17,10 +17,9 @@ SOFTWARE.
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using KKoščević.SolutionFileSorter.Shared;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System;
-using Range = KKoščević.SolutionFileSorter.Shared.Range;
 
 namespace KKoščević.SolutionFileSorter.UnitTests
 {
