@@ -85,23 +85,29 @@ namespace KKoščević.SolutionFileSorter.VSExtension
         private void CheckIfSlnFileShouldSort()
         {
             ProjectsSorter sorter;
-
-            using (var reader = new StreamReader(solutionFullName))
+            try
             {
-                var parser = new SolutionParser(reader);
-                var projectEntries = parser.ProjectEntries;
-
-                sorter = new ProjectsSorter();
-                if (!sorter.IsSorted(projectEntries))
+                using (var reader = new StreamReader(solutionFullName))
                 {
-                    if (System.Windows.MessageBox.Show($"Sort .sln file\n\nAre you sure you want to sort projects in current '{Path.GetFileName(dte.Solution.FileName)}' solution file?",
-                                            "Microsoft Visual Studio",
-                                            System.Windows.MessageBoxButton.YesNo,
-                                            System.Windows.MessageBoxImage.Question) == System.Windows.MessageBoxResult.Yes)
+                    var parser = new SolutionParser(reader);
+                    var projectEntries = parser.ProjectEntries;
+
+                    sorter = new ProjectsSorter();
+                    if (!sorter.IsSorted(projectEntries))
                     {
-                        sortSlnFile = true;
+                        if (System.Windows.MessageBox.Show($"Sort .sln file\n\nAre you sure you want to sort projects in current '{Path.GetFileName(dte.Solution.FileName)}' solution file?",
+                                                "Microsoft Visual Studio",
+                                                System.Windows.MessageBoxButton.YesNo,
+                                                System.Windows.MessageBoxImage.Question) == System.Windows.MessageBoxResult.Yes)
+                        {
+                            sortSlnFile = true;
+                        }
                     }
                 }
+            }
+            catch(Exception ex)
+            {
+                System.Windows.MessageBox.Show(ex.Message);
             }
         }
 

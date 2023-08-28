@@ -16,9 +16,7 @@ SOFTWARE.
 */
 
 using KKoščević.SolutionFileSorter.Shared;
-using System;
 using System.Globalization;
-using System.IO;
 
 namespace KKoščević.SolutionFileSorter.ConsoleApplication
 {
@@ -66,26 +64,32 @@ namespace KKoščević.SolutionFileSorter.ConsoleApplication
             }
 
             SlnProjectsSorter sorter;
-
-            using (var reader = new StreamReader(solutionFilePath))
+            try
             {
-                sorter = cultureInfo != null ? new SlnProjectsSorter(reader, cultureInfo) : new SlnProjectsSorter(reader);
-            }
-
-            if (!sorter.AlreadySorted)
-            {
-                using (var writer = new StreamWriter(solutionFilePath))
+                using (var reader = new StreamReader(solutionFilePath))
                 {
-                    sorter.WriteSorted(writer);
+                    sorter = cultureInfo != null ? new SlnProjectsSorter(reader, cultureInfo) : new SlnProjectsSorter(reader);
                 }
-                Console.WriteLine($@"Projects in the .sln file {solutionFilePath} are now sorted alphabetically.");
-            }
-            else
-            {
-                Console.WriteLine($@"Projects in the .sln file {solutionFilePath} are already sorted alphabetically.");
-            }
 
-            Console.Read();
+                if (!sorter.AlreadySorted)
+                {
+                    using (var writer = new StreamWriter(solutionFilePath))
+                    {
+                        sorter.WriteSorted(writer);
+                    }
+                    Console.WriteLine($@"Projects in the .sln file {solutionFilePath} are now sorted alphabetically.");
+                }
+                else
+                {
+                    Console.WriteLine($@"Projects in the .sln file {solutionFilePath} are already sorted alphabetically.");
+                }
+
+                Console.Read();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
         }
 
         static void DisplayHelp()
