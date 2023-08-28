@@ -94,18 +94,24 @@ namespace KKoščević.SolutionFileSorter.VSExtension
         {
             ThreadHelper.ThrowIfNotOnUIThread();
             SlnProjectsSorter sorter;
-
-            using (var reader = new StreamReader(solutionFullName))
+            try
             {
-                sorter = new SlnProjectsSorter(reader);
-            }
-
-            if (!sorter.AlreadySorted)
-            {
-                using (var writer = new StreamWriter(solutionFullName))
+                using (var reader = new StreamReader(solutionFullName))
                 {
-                    sorter.WriteSorted(writer);
+                    sorter = new SlnProjectsSorter(reader);
                 }
+
+                if (!sorter.AlreadySorted)
+                {
+                    using (var writer = new StreamWriter(solutionFullName))
+                    {
+                        sorter.WriteSorted(writer);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show(ex.Message);
             }
 
             if (!options.DoNotShowMesssageAnymore)

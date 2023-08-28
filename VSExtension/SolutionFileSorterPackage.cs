@@ -85,29 +85,22 @@ namespace KKoščević.SolutionFileSorter.VSExtension
         private void CheckIfSlnFileShouldSort()
         {
             ProjectsSorter sorter;
-            try
+            using (var reader = new StreamReader(solutionFullName))
             {
-                using (var reader = new StreamReader(solutionFullName))
-                {
-                    var parser = new SolutionParser(reader);
-                    var projectEntries = parser.ProjectEntries;
+                var parser = new SolutionParser(reader);
+                var projectEntries = parser.ProjectEntries;
 
-                    sorter = new ProjectsSorter();
-                    if (!sorter.IsSorted(projectEntries))
+                sorter = new ProjectsSorter();
+                if (!sorter.IsSorted(projectEntries))
+                {
+                    if (System.Windows.MessageBox.Show($"Sort .sln file\n\nAre you sure you want to sort projects in current '{Path.GetFileName(dte.Solution.FileName)}' solution file?",
+                                            "Microsoft Visual Studio",
+                                            System.Windows.MessageBoxButton.YesNo,
+                                            System.Windows.MessageBoxImage.Question) == System.Windows.MessageBoxResult.Yes)
                     {
-                        if (System.Windows.MessageBox.Show($"Sort .sln file\n\nAre you sure you want to sort projects in current '{Path.GetFileName(dte.Solution.FileName)}' solution file?",
-                                                "Microsoft Visual Studio",
-                                                System.Windows.MessageBoxButton.YesNo,
-                                                System.Windows.MessageBoxImage.Question) == System.Windows.MessageBoxResult.Yes)
-                        {
-                            sortSlnFile = true;
-                        }
+                        sortSlnFile = true;
                     }
                 }
-            }
-            catch(Exception ex)
-            {
-                System.Windows.MessageBox.Show(ex.Message);
             }
         }
 
