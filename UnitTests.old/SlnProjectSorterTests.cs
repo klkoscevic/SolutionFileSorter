@@ -28,7 +28,7 @@ namespace KKoščević.SolutionFileSorter.UnitTests
         [TestMethod]
         public void WritesSameContentForEmptySolution()
         {
-            var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("KKoščević.SolutionFileSorter.UnitTests.Resources.EmptySolution");
+            var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("UnitTests.Resources.EmptySolution");
             using (var reader = new StreamReader(stream))
             using (var writer = new StringWriter())
             {
@@ -42,7 +42,7 @@ namespace KKoščević.SolutionFileSorter.UnitTests
         [TestMethod]
         public void WritesSameContentForSolutionWithSingleProject()
         {
-            var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("KKoščević.SolutionFileSorter.UnitTests.Resources.SolutionWithSingleProject");
+            var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("UnitTests.Resources.SolutionWithSingleProject");
             using (var reader = new StreamReader(stream))
             using (var writer = new StringWriter())
             {
@@ -58,7 +58,7 @@ namespace KKoščević.SolutionFileSorter.UnitTests
         [TestMethod]
         public void WritesSortedContentForSolutionWithFourProjectInTheRoot()
         {
-            var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("KKoščević.SolutionFileSorter.UnitTests.Resources.SolutionWithFourProjectsInTheRoot");
+            var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("UnitTests.Resources.SolutionWithFourProjectsInTheRoot");
             using (var reader = new StreamReader(stream))
             using (var writer = new StringWriter())
             {
@@ -66,7 +66,7 @@ namespace KKoščević.SolutionFileSorter.UnitTests
                 sortedWriter.WriteSorted(writer);
                 var actual = writer.ToString();
 
-                stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("KKoščević.SolutionFileSorter.UnitTests.Resources.SolutionWithFourProjectsInTheRoot.sorted");
+                stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("UnitTests.Resources.SolutionWithFourProjectsInTheRoot.sorted");
                 var expected = new StreamReader(stream).ReadToEnd();
                 Assert.AreEqual(expected, actual);
             }
@@ -75,7 +75,7 @@ namespace KKoščević.SolutionFileSorter.UnitTests
         [TestMethod]
         public void WritesSortedContentForSolutionWithMultipleProjectsOneInSolutionFOlder()
         {
-            var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("KKoščević.SolutionFileSorter.UnitTests.Resources.SolutionWithMultipleProjectsOneInSolutionFolder");
+            var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("UnitTests.Resources.SolutionWithMultipleProjectsOneInSolutionFolder");
             using (var reader = new StreamReader(stream))
             using (var writer = new StringWriter())
             {
@@ -83,7 +83,7 @@ namespace KKoščević.SolutionFileSorter.UnitTests
                 sortedWriter.WriteSorted(writer);
                 var actual = writer.ToString();
 
-                stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("KKoščević.SolutionFileSorter.UnitTests.Resources.SolutionWithMultipleProjectsOneInSolutionFolder.sorted");
+                stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("UnitTests.Resources.SolutionWithMultipleProjectsOneInSolutionFolder.sorted");
                 var expected = new StreamReader(stream).ReadToEnd();
                 Assert.AreEqual(expected, actual);
             }
@@ -92,7 +92,7 @@ namespace KKoščević.SolutionFileSorter.UnitTests
         [TestMethod]
         public void WritesSortedContentForSolutionWithLfLineEndings()
         {
-            var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("KKoščević.SolutionFileSorter.UnitTests.Resources.SolutionWithFourProjectsInTheRootLfLineEndings");
+            var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("UnitTests.Resources.SolutionWithFourProjectsInTheRootLfLineEndings");
             using (var reader = new StreamReader(stream))
             using (var writer = new StringWriter())
             {
@@ -100,7 +100,7 @@ namespace KKoščević.SolutionFileSorter.UnitTests
                 sortedWriter.WriteSorted(writer);
                 var actual = writer.ToString();
 
-                stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("KKoščević.SolutionFileSorter.UnitTests.Resources.SolutionWithFourProjectsInTheRootLfLineEndings.sorted");
+                stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("UnitTests.Resources.SolutionWithFourProjectsInTheRootLfLineEndings.sorted");
                 var expected = new StreamReader(stream).ReadToEnd();
                 Assert.AreEqual(expected, actual);
             }
