@@ -13,7 +13,7 @@
     <ProjectGuid>{AB7E19BC-A153-4676-AD3C-B382EDBB4463}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>VSExtension</RootNamespace>
+    <RootNamespace>KKoščević.SolutionFileSorter.VSExtension</RootNamespace>
     <AssemblyName>VSExtension</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <GeneratePkgDefFile>true</GeneratePkgDefFile>

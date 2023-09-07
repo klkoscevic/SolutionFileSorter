@@ -20,13 +20,11 @@ global using Microsoft.VisualStudio.Shell;
 global using System;
 global using Task = System.Threading.Tasks.Task;
 using EnvDTE;
-using Microsoft.VisualStudio.Shell.Interop;
-using KKoščević.SolutionFileSorter.VSExtension.Forms;
 using KKoščević.SolutionFileSorter.Shared;
+using Microsoft.VisualStudio.Shell.Interop;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Threading;
-using System.Windows.Forms;
 
 namespace KKoščević.SolutionFileSorter.VSExtension
 {
@@ -84,6 +82,7 @@ namespace KKoščević.SolutionFileSorter.VSExtension
 
         private void CheckIfSlnFileShouldSort()
         {
+            ThreadHelper.ThrowIfNotOnUIThread();
             ProjectsSorter sorter;
             using (var reader = new StreamReader(solutionFullName))
             {

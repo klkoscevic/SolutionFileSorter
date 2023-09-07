@@ -15,7 +15,6 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OU
 SOFTWARE.
 */
 
-using Community.VisualStudio.Toolkit;
 using EnvDTE;
 using KKoščević.SolutionFileSorter.VSExtension.Forms;
 using KKoščević.SolutionFileSorter.Shared;
@@ -24,7 +23,7 @@ using System.Windows.Forms;
 
 namespace KKoščević.SolutionFileSorter.VSExtension
 {
-    [Command(PackageIds.MyCommand)]
+    [Command(PackageIds.Command)]
     internal sealed class Command : BaseCommand<Command>
     {
         protected override async Task ExecuteAsync(OleMenuCmdEventArgs e)

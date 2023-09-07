@@ -8,7 +8,7 @@
 
   <Commands package="SolutionFileSorter">
     <Groups>
-      <Group guid="SolutionFileSorter" id="MyMenuGroup" priority="0x0600">
+      <Group guid="SolutionFileSorter" id="MenuGroup" priority="0x0600">
         <Parent guid="VSMainMenu" id="Tools"/>
       </Group>
     </Groups>
@@ -16,15 +16,15 @@
     <!--This section defines the elements the user can interact with, like a menu command or a button
         or combo box in a toolbar. -->
     <Buttons>
-      <Button guid="SolutionFileSorter" id="MyCommand" priority="0x0100" type="Button">
-        <Parent guid="SolutionFileSorter" id="MyMenuGroup" />
+      <Button guid="SolutionFileSorter" id="Command" priority="0x0100" type="Button">
+        <Parent guid="SolutionFileSorter" id="MenuGroup" />
         <Icon guid="ImageCatalogGuid" id="SortAscending" />
         <CommandFlag>IconIsMoniker</CommandFlag>
         <CommandFlag>DynamicVisibility</CommandFlag>
         <CommandFlag>DefaultDisabled</CommandFlag>
         <Strings>
           <ButtonText>&amp;Sort projects in .sln file</ButtonText>
-          <LocCanonicalName>.SolutionFileSorter.MyCommand</LocCanonicalName>
+          <LocCanonicalName>.SolutionFileSorter.Command</LocCanonicalName>
         </Strings>
       </Button>
     </Buttons>
@@ -32,8 +32,8 @@
 
   <Symbols>
     <GuidSymbol name="SolutionFileSorter" value="{7051c6e7-5c88-4117-847c-7288d821a87d}">
-      <IDSymbol name="MyMenuGroup" value="0x0001" />
-      <IDSymbol name="MyCommand" value="0x0100" />
+      <IDSymbol name="MenuGroup" value="0x0001" />
+      <IDSymbol name="Command" value="0x0100" />
     </GuidSymbol>
   </Symbols>
 </CommandTable>
