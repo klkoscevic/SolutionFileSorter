@@ -67,7 +67,10 @@ To view available options and user support, you can use the following argument:
 
 ### Warnings and notifications
 The application will notify you of the following situations:
-1.	Incorrect solution file path: If you enter the wrong path or the solution file does not exist, the application will inform you about it and explain the reason why the sorting was not performed.
-2.	Incorrect culture: If you enter the wrong culture, the application will warn you the sorting will not be completed.
-3.	Successful sorting: After all entries are correct and the sorting is successful, you will receive a notification that the solution file is sorted or has already previously been sorted.
+1. Successful sorting: After all entries are correct and the sorting is successful, you will receive a notification that the solution file is sorted or has already previously been sorted, alo the application will exit witch code 0.
+2. No argument: If you call aplication with no argument or with /?, the application will exit with code 1.
+3. Incorrect solution file path: If you enter the wrong path or the solution file does not exist, the application will inform you about it and explain the reason why the sorting was not performed, also the application will exit with code 2.
+4. Incorrect culture: If you enter the wrong culture, the application will warn you the sorting will not be completed, also the application will exit with code 3.
+5. File corrupted: If there is something wrong with solution file, the application will inform you about it and also exit with code 4.
+
 You are now ready to use the console application to sort projects. Follow the instructions and enjoy sorting your projects quickly!
