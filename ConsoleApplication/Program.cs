@@ -22,20 +22,30 @@ namespace KKoščević.SolutionFileSorter.ConsoleApplication
 {
     internal class Program
     {
-        static void Main(string[] args)
+        private enum Result
+        {
+            OK = 0,
+            NoArguments = 1,
+            FileNotFound = 2,
+            InvalidCulture = 3,
+            FileCorrupted = 4
+        }
+
+        static int Main(string[] args)
         {
 
             if (args.Length == 0)
             {
                 Console.WriteLine("No input was given.");
                 Console.WriteLine("Use '/?' for help.");
-                return;
+                return (int)Result.NoArguments;
             }
 
             if (args[0] == "/?")
             {
                 DisplayHelp();
-                return;
+                return (int)Result.NoArguments;
+
             }
 
             string solutionFilePath = args[0];
@@ -45,7 +55,8 @@ namespace KKoščević.SolutionFileSorter.ConsoleApplication
             if (!File.Exists(solutionFilePath))
             {
                 Console.WriteLine($@"File '{solutionFilePath}' does not exist. Sorting won't happen.");
-                return;
+                return (int)Result.FileNotFound;
+
             }
 
             if (args.Length == 2)
@@ -57,7 +68,7 @@ namespace KKoščević.SolutionFileSorter.ConsoleApplication
                 catch (CultureNotFoundException)
                 {
                     Console.WriteLine($@"'{args[1]}' is invalid culture. Sorting won't happen.");
-                    return;
+                    return (int)Result.InvalidCulture;
                 }
             }
 
@@ -76,15 +87,19 @@ namespace KKoščević.SolutionFileSorter.ConsoleApplication
                         sorter.WriteSorted(writer);
                     }
                     Console.WriteLine($@"Projects in the .sln file {solutionFilePath} are now sorted alphabetically.");
+                    return (int)Result.OK;
+
                 }
                 else
                 {
                     Console.WriteLine($@"Projects in the .sln file {solutionFilePath} are already sorted alphabetically.");
+                    return (int)Result.OK;
                 }
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
+                return (int)Result.FileCorrupted;
             }
         }
 
