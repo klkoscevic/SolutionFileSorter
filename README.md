@@ -38,7 +38,7 @@ The way it functions is as follows:
 5.	After pressing the sorting button, a window connected to the sorting process will open.
 6.	You might notice changes in the .sln file after the sorting is complete. In that case, a window allowing you to reload the solution will open so you can see the changes made.
 
- ![image](https://github.com/klkoscevic/SolutionFileSorter/assets/102737720/f04341f7-883d-43a3-aeea-eb72a3e4d21a)
+ ![ManuallyExtension](https://github.com/klkoscevic/SolutionFileSorter/blob/22d11ca7e7c3cb54bf52b9c289bfa9d4b39de650/ManuallyExtension.png)
 
 
 ### Settings
@@ -49,7 +49,7 @@ Here’s how to change it:
 3.	Find "Sort Project" and select "Settings".
 4.	You can change the "Do not show message box" option according to whether you would like to see sorting notifications or not.
   
-![image](https://github.com/klkoscevic/SolutionFileSorter/assets/102737720/53768de3-4c47-4491-b804-eba1a92c98da)
+![SettingsExtension](https://github.com/klkoscevic/SolutionFileSorter/blob/22d11ca7e7c3cb54bf52b9c289bfa9d4b39de650/SettingsExtension.png)
 
 
 ## Instructions for using the console application to sort projects
@@ -59,11 +59,11 @@ Launching the application
 To run the application, open Command Prompt on a Windows operating system or a terminal on a Linux operating system.
 Use the following syntax to run the application:
  
-![image](https://github.com/klkoscevic/SolutionFileSorter/assets/102737720/da5faaa6-473a-436f-a26f-2fcee0aa054b)
+![SyntaxConsoleApp](https://github.com/klkoscevic/SolutionFileSorter/blob/22d11ca7e7c3cb54bf52b9c289bfa9d4b39de650/SyntaxConsole.png)
 
 To view available options and user support, you can use the following argument:
 
- ![image](https://github.com/klkoscevic/SolutionFileSorter/assets/102737720/7c55ffb8-af32-4915-919a-a2bde7d1688e)
+ ![InfoConsoleApp](https://github.com/klkoscevic/SolutionFileSorter/blob/22d11ca7e7c3cb54bf52b9c289bfa9d4b39de650/InfoConsole.png)
 
 ### Warnings and notifications
 The application will notify you of the following situations:
