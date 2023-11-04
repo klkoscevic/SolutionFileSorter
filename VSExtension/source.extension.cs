@@ -9,9 +9,9 @@ namespace KKoščević.SolutionFileSorter.VSExtension
     {
         public const string Id = "SolutionFileSorter.174ef47e-feac-4a26-9e71-7566c9439c82";
         public const string Name = "SolutionFileSorter";
-        public const string Description = @"SolutionFileSorter is a Visual Studio extension that provides the functionality to alphabetically sort projects within an open .sln (solution) file. This extension offers three methods of sorting projects: via a button within the Visual Studio solution, upon closing the solution, and through a console application for the given solution.";
+        public const string Description = @"SolutionFileSorter provides the functionality to alphabetically sort projects within an open .sln file. Two methods of sorting projects: via a button and upon closing the solution.";
         public const string Language = "en-US";
-        public const string Version = "1.1";
+        public const string Version = "1.2";
         public const string Author = "Klara Koščević";
         public const string Tags = "";
     }
