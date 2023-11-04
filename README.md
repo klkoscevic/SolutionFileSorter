@@ -28,18 +28,16 @@ Here's how to do it:
 ### Automatically:
 Automatic extension startup depends on several factors, including Visual Studio settings. 
 The way it functions is as follows:
-1.	Open solution in Visual Studio
-2.	The extension will automatically sort projects when Visual Studio is closed if the "Sort Project in .sln file after closing solution" setting is set to "True". By default, this setting is set to "False".
-3.	Even if the "Sort Project in .sln file after closing solution" setting is set to "True", sorting will not be performed if projects are already sorted in the .sln file. 
-4.	If the projects are not sorted before the sorting process is done, a prompt window will open asking for confirmation. 
+1.	Close solution in Visual Studio
+2.	The extension will automatically sort projects when Visual Studio is closed if the "Automatically sort .sln file on closing solution" setting is enabled, which is default state.Sorting will not be performed if projects are already sorted in the .sln file, even when the setting is enabled. 
+3.	If the projects are not sorted before the sorting process is done, a prompt window will open asking for confirmation. 
 
 ### Manually:
 1.	Open solution in Visual Studio
 2.	Go to the toolbar and select "Tools".
-3.	In the drop-down menu find and click "Sort Project".
-4.	If the projects have already been sorted or if only a single project exists, the sort button will not be available.
-5.	After pressing the sorting button, a confirmation message box will open..
-6.	Sorting changes the content of currently open solution file and Visual Studio will prompt on this change outside the environment, asking to reload the solution or ignore changes. You should press Reload to sync environment with actual content, although there will be no changes in the environment.
+3.	In the drop-down menu find and click "Sort Project". If projects have already been sorted or if only a single project exists, the sort button will not be available.
+4.	After pressing the sorting button, a confirmation message box will open..
+5.	Sorting changes the content of currently open solution file and Visual Studio will prompt on this change outside the environment, asking to reload the solution or ignore changes. You should press Reload to sync environment with actual content, although there will be no changes in the environment.
 
  ![ManuallyExtension](https://github.com/klkoscevic/SolutionFileSorter/blob/22d11ca7e7c3cb54bf52b9c289bfa9d4b39de650/ManuallyExtension.png)
 
