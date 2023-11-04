@@ -84,6 +84,9 @@ namespace KKoščević.SolutionFileSorter.ConsoleApplication
                 {
                     using (var writer = new StreamWriter(solutionFilePath))
                     {
+                        var backupFilePath = solutionFilePath + ".bak";
+                        File.Copy(solutionFilePath, backupFilePath, true);
+
                         sorter.WriteSorted(writer);
                     }
                     Console.WriteLine($@"Projects in the .sln file {solutionFilePath} are now sorted alphabetically.");

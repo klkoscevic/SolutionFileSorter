@@ -104,6 +104,9 @@ namespace KKoščević.SolutionFileSorter.VSExtension
                 {
                     using (var writer = new StreamWriter(solutionFullName))
                     {
+                        var backupFilePath = solutionFullName + ".bak";
+                        File.Copy(solutionFullName, backupFilePath, true);
+
                         sorter.WriteSorted(writer);
                     }
                 }
