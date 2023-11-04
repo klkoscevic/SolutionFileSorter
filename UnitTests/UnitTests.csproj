@@ -9,6 +9,7 @@
     <IsTestProject>true</IsTestProject>
     <RootNamespace>KKoščević.SolutionFileSorter.UnitTests</RootNamespace>
     <AssemblyName>SlnSort</AssemblyName>
+    <Authors>Klara Koščević</Authors>
   </PropertyGroup>
 
   <ItemGroup>

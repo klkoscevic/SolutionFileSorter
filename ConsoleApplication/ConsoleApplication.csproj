@@ -7,6 +7,7 @@
     <Nullable>enable</Nullable>
     <RootNamespace>KKoščević.SolutionFileSorter.ConsoleApplication</RootNamespace>
     <AssemblyName>SlnSort</AssemblyName>
+    <Authors>Klara Koščević</Authors>
   </PropertyGroup>
 
   <ItemGroup>

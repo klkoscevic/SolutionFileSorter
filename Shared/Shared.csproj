@@ -6,6 +6,7 @@
     <ImplicitUsings>disabled</ImplicitUsings>
     <Nullable>enable</Nullable>
     <RootNamespace>KKoščević.SolutionFileSorter.Shared</RootNamespace>
+    <Authors>Klara Koščević</Authors>
   </PropertyGroup>
 
 </Project>
