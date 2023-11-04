@@ -11,7 +11,7 @@ namespace KKoščević.SolutionFileSorter.VSExtension
         public const string Name = "SolutionFileSorter";
         public const string Description = @"SolutionFileSorter provides the functionality to alphabetically sort projects within an open .sln file. Two methods of sorting projects: via a button and upon closing the solution.";
         public const string Language = "en-US";
-        public const string Version = "1.2";
+        public const string Version = "1.3";
         public const string Author = "Klara Koščević";
         public const string Tags = "";
     }

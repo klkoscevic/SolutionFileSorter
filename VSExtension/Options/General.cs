@@ -37,9 +37,9 @@ namespace KKoščević.SolutionFileSorter.VSExtension
         public bool DoNotShowMesssageAnymore { get; set; }
 
         [Category("General")]
-        [DisplayName("Never sort .sln file after closing solution")]
+        [DisplayName("Automatically sort .sln file on closing solution")]
         [Description("Determines whether the sorting can happen after closing solution.")]
-        [DefaultValue(false)]
-        public bool NeverSortAfterClosingSolution { get; set; }
+        [DefaultValue(true)]
+        public bool AutomaticallySortAfterClosingSolution { get; set; }
     }
 }
