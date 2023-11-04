@@ -29,14 +29,14 @@ Here's how to do it:
 Automatic extension startup depends on several factors, including Visual Studio settings. 
 The way it functions is as follows:
 1.	Close solution in Visual Studio
-2.	The extension will automatically sort projects when Visual Studio is closed if the "Automatically sort .sln file on closing solution" setting is enabled, which is default state.Sorting will not be performed if projects are already sorted in the .sln file, even when the setting is enabled. 
+2.	The extension will automatically sort projects when Visual Studio is closed if the "Automatically sort .sln file on closing solution" setting is enabled, which is default state. Sorting will not be performed if projects are already sorted in the .sln file, even when the setting is enabled. 
 3.	If the projects are not sorted before the sorting process is done, a prompt window will open asking for confirmation. 
 
 ### Manually:
 1.	Open solution in Visual Studio
 2.	Go to the toolbar and select "Tools".
-3.	In the drop-down menu find and click "Sort Project". If projects have already been sorted or if only a single project exists, the sort button will not be available.
-4.	After pressing the sorting button, a confirmation message box will open..
+3.	In the drop-down menu find and click "Sort projects in .sln file". If projects have already been sorted or if only a single project exists, the sort button will not be available.
+4.	After pressing the sorting button, a confirmation message box will open.
 5.	Sorting changes the content of currently open solution file and Visual Studio will prompt on this change outside the environment, asking to reload the solution or ignore changes. You should press Reload to sync environment with actual content, although there will be no changes in the environment.
 
  ![ManuallyExtension](https://github.com/klkoscevic/SolutionFileSorter/blob/22d11ca7e7c3cb54bf52b9c289bfa9d4b39de650/ManuallyExtension.png)
@@ -46,7 +46,7 @@ The way it functions is as follows:
 You can also configure the display of notifications shown when sorting is complete in the extension settings. By default, the window is always displayed after each sorting. 
 To change it go to "Tools" -> Options" - "Sort projects in .sln file". In the settings, you have the option to change the display of message boxes and automatic sorting.
 
-![SettingsExtension](https://github.com/klkoscevic/SolutionFileSorter/blob/1a62c803fc9943fa078a26eb43e5a9e6fc57cbd7/SettingsExtension.png)
+![SettingsExtension](https://github.com/klkoscevic/SolutionFileSorter/blob/6f5addf98f87a147323cf0e1fdcf96f36cf585fe/SettingsExtension.png)
 
 
 ## Instructions for using the console application to sort projects
@@ -58,7 +58,7 @@ Use the following syntax to run the application:
 
 To view available options and user support, you can use the following argument:
 
- ![InfoConsoleApp](https://github.com/klkoscevic/SolutionFileSorter/blob/1a62c803fc9943fa078a26eb43e5a9e6fc57cbd7/InfoConsole.png)
+![InfoConsoleApp](https://github.com/klkoscevic/SolutionFileSorter/blob/1a62c803fc9943fa078a26eb43e5a9e6fc57cbd7/InfoConsole.png)
 
 ### Warnings and notifications
 The application will notify you of the following situations:
