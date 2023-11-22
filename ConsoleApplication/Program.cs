@@ -75,6 +75,9 @@ namespace KKoščević.SolutionFileSorter.ConsoleApplication
             SlnProjectsSorter sorter;
             try
             {
+                var backupFilePath = solutionFilePath + ".bak";
+                File.Copy(solutionFilePath, backupFilePath, true);
+
                 using (var reader = new StreamReader(solutionFilePath))
                 {
                     sorter = cultureInfo != null ? new SlnProjectsSorter(reader, cultureInfo) : new SlnProjectsSorter(reader);
@@ -84,9 +87,6 @@ namespace KKoščević.SolutionFileSorter.ConsoleApplication
                 {
                     using (var writer = new StreamWriter(solutionFilePath))
                     {
-                        var backupFilePath = solutionFilePath + ".bak";
-                        File.Copy(solutionFilePath, backupFilePath, true);
-
                         sorter.WriteSorted(writer);
                     }
                     Console.WriteLine($@"Projects in the .sln file {solutionFilePath} are now sorted alphabetically.");

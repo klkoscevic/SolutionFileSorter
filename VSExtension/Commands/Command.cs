@@ -95,6 +95,9 @@ namespace KKoščević.SolutionFileSorter.VSExtension
             SlnProjectsSorter sorter;
             try
             {
+                var backupFilePath = solutionFullName + ".bak";
+                File.Copy(solutionFullName, backupFilePath, true);
+
                 using (var reader = new StreamReader(solutionFullName))
                 {
                     sorter = new SlnProjectsSorter(reader);
@@ -104,8 +107,6 @@ namespace KKoščević.SolutionFileSorter.VSExtension
                 {
                     using (var writer = new StreamWriter(solutionFullName))
                     {
-                        var backupFilePath = solutionFullName + ".bak";
-                        File.Copy(solutionFullName, backupFilePath, true);
 
                         sorter.WriteSorted(writer);
                     }
